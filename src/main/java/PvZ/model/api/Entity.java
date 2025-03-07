@@ -3,10 +3,10 @@ package PvZ.model.api;
 import PvZ.utilities.*;
 
 public interface Entity {
-    //setting delle posizioni
+    //setting delle posizioni uguali per tutte le entità
     void setPosition(Position Position);
     Position getPosition();
 
     //updating plants
-    void update();
+    protected void update();
 }
