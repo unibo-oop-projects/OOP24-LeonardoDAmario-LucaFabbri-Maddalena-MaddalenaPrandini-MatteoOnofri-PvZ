@@ -8,5 +8,5 @@ public interface Entity {
     Position getPosition();
 
     //updating plants
-    protected void update();
+    void update();
 }
