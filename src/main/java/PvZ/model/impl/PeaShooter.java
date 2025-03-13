@@ -25,7 +25,7 @@ public class PeaShooter extends AbstractEntity implements BasePlant {
 
     @Override
     public void plantAction() {
-        /*chiamare metodo sparasemi proiettili dams passando come parametro la mia posizione*/
+        BulletImpl bullet=new BulletImpl(getPosition());
     }
 
     @Override
