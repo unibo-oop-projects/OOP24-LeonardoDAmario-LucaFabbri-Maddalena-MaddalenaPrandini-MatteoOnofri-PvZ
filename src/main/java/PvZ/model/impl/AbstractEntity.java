@@ -3,7 +3,7 @@ package PvZ.model.impl;
 import PvZ.model.api.Entity;
 import PvZ.utilities.Position;
 
-public abstract class AbstractEntity implements Entity {
+public abstract class AbstractEntity implements Entity{
     private Position position;
 
     @Override
@@ -15,5 +15,4 @@ public abstract class AbstractEntity implements Entity {
     public Position getPosition() {
         return position;
     }
-
 }
