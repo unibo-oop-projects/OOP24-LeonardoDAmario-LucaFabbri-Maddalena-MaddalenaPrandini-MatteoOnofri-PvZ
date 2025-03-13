@@ -4,7 +4,8 @@ public interface BasePlant extends Entity { //dato che la estende ha come metodi
     //plants fetures
     int getPrice();
     int getLife();
-    void setLife(int life);
+    /*
+    void setLife(int life);*/
     void decreaseLife(int life);
 
     //action plants
