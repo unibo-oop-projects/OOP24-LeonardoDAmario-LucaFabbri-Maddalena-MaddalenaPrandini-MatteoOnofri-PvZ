@@ -4,7 +4,7 @@ import PvZ.model.api.BasePlant;
 import PvZ.model.api.PlantActionStrategy;
 
 public class SunflowerStrategy implements PlantActionStrategy{
-    private final int CONST=80;
+    private final int INITIAL_LIFE=80;
 
     @Override
     public void PlantAction(BasePlant plant) {
@@ -13,7 +13,7 @@ public class SunflowerStrategy implements PlantActionStrategy{
 
     @Override
     public int getInitialLife() {
-        return this.CONST;
+        return this.INITIAL_LIFE;
     }
 
 
