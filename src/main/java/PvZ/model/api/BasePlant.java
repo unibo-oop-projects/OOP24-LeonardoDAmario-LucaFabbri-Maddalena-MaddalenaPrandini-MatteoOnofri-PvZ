@@ -5,7 +5,7 @@ public interface BasePlant extends Entity { //dato che la estende ha come metodi
     int getLife();
     /*
     void setLife(int life);*/
-    void decreaseLife(int life);
+    void decreaseLife(int damage);
 
     //action plants
     void plantAction();
