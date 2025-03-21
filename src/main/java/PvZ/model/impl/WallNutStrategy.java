@@ -7,7 +7,7 @@ public class WallNutStrategy implements PlantActionStrategy {
     private final int INITIAL_LIFE=200;
 
     @Override
-    public void PlantAction(BasePlant plant) {
+    public void plantAction(BasePlant plant) {
         /*da mettere metodo per dimezzare la vita */
     }
 

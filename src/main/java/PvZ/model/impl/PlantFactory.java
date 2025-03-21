@@ -5,7 +5,7 @@ import PvZ.utilities.Position;
 
 public class PlantFactory {
     public static BasePlant createPlant(String type, Position position) {
-        Plant plant=null;
+        Plant plant;
        switch(type){
             case "PeaShooter":
                 plant= new Plant(new PeaShooterStrategy());
@@ -16,6 +16,8 @@ public class PlantFactory {
             case "Wallnut":
                 plant= new Plant(new WallNutStrategy());
                 break;
+            default:
+                throw new IllegalArgumentException("Invalid plant type");
        }
         plant.setPosition(position);   
         return plant;

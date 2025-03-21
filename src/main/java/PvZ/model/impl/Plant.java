@@ -5,12 +5,15 @@ import PvZ.model.api.PlantActionStrategy;
 
 public class Plant extends AbstractEntity implements BasePlant{
     private int life;
-    private PlantActionStrategy actionStrategy;
+    private PlantActionStrategy strategy;
     private boolean alive=true;
 
-    public Plant(PlantActionStrategy action) {
-        this.life = actionStrategy.getInitialLife();
-        this.actionStrategy = action;
+    public Plant(PlantActionStrategy strategy) {
+        if(strategy==null) {
+            throw new IllegalArgumentException("Strategy cannot be null");
+        }
+        this.strategy=strategy;
+        this.life=strategy.getInitialLife();
     }
 
     @Override
@@ -18,7 +21,7 @@ public class Plant extends AbstractEntity implements BasePlant{
         if(this.life<=0) {
             this.alive=false;
         }
-        actionStrategy.PlantAction(this);
+        strategy.plantAction(this);
     }
 
     @Override
@@ -33,7 +36,7 @@ public class Plant extends AbstractEntity implements BasePlant{
 
     @Override
     public void plantAction() {
-        actionStrategy.PlantAction(this);
+        strategy.plantAction(this);
     }
 
 }

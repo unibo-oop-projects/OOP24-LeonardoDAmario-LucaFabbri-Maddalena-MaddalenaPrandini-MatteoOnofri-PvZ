@@ -7,7 +7,7 @@ public class SunflowerStrategy implements PlantActionStrategy{
     private final int INITIAL_LIFE=80;
 
     @Override
-    public void PlantAction(BasePlant plant) {
+    public void plantAction(BasePlant plant) {
         /*da mettere metodo che genera soli */
     }
 

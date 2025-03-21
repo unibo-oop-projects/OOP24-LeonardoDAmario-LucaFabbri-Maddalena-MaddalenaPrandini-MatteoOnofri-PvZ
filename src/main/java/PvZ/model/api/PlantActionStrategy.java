@@ -1,6 +1,6 @@
 package PvZ.model.api;
 
 public interface PlantActionStrategy {
-    void PlantAction(BasePlant plant);
+    void plantAction(BasePlant plant);
     int getInitialLife();
 }

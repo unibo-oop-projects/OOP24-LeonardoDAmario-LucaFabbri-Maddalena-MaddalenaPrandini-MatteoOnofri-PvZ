@@ -7,7 +7,7 @@ public class PeaShooterStrategy implements PlantActionStrategy {
     private final int INITIAL_LIFE=100;
 
     @Override
-    public void PlantAction(BasePlant plant) {
+    public void plantAction(BasePlant plant) {
         new BulletImpl(plant.getPosition()).update();
     }
 
