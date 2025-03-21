@@ -8,9 +8,9 @@ public class Plant extends AbstractEntity implements BasePlant{
     private PlantActionStrategy actionStrategy;
     private boolean alive=true;
 
-    public Plant(PlantActionStrategy actionStrategy) {
+    public Plant(PlantActionStrategy action) {
         this.life = actionStrategy.getInitialLife();
-        this.actionStrategy = actionStrategy;
+        this.actionStrategy = action;
     }
 
     @Override
@@ -18,7 +18,7 @@ public class Plant extends AbstractEntity implements BasePlant{
         if(this.life<=0) {
             this.alive=false;
         }
-        this.plantAction();
+        actionStrategy.PlantAction(this);
     }
 
     @Override
@@ -33,7 +33,7 @@ public class Plant extends AbstractEntity implements BasePlant{
 
     @Override
     public void plantAction() {
-        this.actionStrategy.PlantAction(this);
+        actionStrategy.PlantAction(this);
     }
 
 }
