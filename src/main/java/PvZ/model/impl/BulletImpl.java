@@ -24,17 +24,13 @@ public class BulletImpl extends AbstractEntity implements Bullet{
 
     @Override
     public void update() {
-        this.setPosition(this.pos); //THIS.POS + UNA CERTA POS CHE FA MOVE
-        final List<Zombie> zombieList = GameModelImpl.getZombieList();
-        final Optional<Zombie> zombie = this.giveZombieHitted(zombieList); //DOVREBBE PRENDE COME ARGOMENTO NA LISTA DE ZOMBIE VIVI
-        if(zombie.isPresent()) { 
-            zombie.decreaseLife(this.DAMAGE);
-            this.alive = false;
+        if(this.alive) {
+            this.setPosition(this.pos); //THIS.POS + UNA CERTA POS CHE FA MOVE
         }
     }
 
-    private Optional<Zombie> giveZombieHitted(final List<Zombie> zombieList) {
-        return zombieList.stream().filter(z -> z.getPosition().equals(this.getPosition())).findFirst();
+    public void die() {
+        this.alive = false;
     }
     
 }
