@@ -39,4 +39,8 @@ public class GameModelImpl implements GameModel {
         return this.entities;
     }
 
+    public SunCounter getSunCounter() {
+        return this.sunCounter;
+    }
+
 }

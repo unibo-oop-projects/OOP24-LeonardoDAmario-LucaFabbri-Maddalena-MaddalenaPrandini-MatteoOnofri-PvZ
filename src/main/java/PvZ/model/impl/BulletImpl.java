@@ -1,10 +1,6 @@
 package PvZ.model.impl;
 
-import java.util.List;
-import java.util.Optional;
-
 import PvZ.model.api.Bullet;
-import PvZ.model.api.Zombie;
 import PvZ.utilities.Position;
 
 public class BulletImpl extends AbstractEntity implements Bullet{
