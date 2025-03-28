@@ -1,25 +1,24 @@
 package PvZ.model.impl;
 
+import java.util.Objects;
 import PvZ.model.api.BasePlant;
 import PvZ.model.api.PlantActionStrategy;
 
-public class Plant extends AbstractEntity implements BasePlant{
+public class Plant extends AbstractEntity implements BasePlant {
     private int life;
-    private PlantActionStrategy strategy;
-    private boolean alive=true;
+    private final PlantActionStrategy strategy;
+    private boolean alive = true;
 
-    public Plant(PlantActionStrategy strategy) {
-        if(strategy==null) {
-            throw new IllegalArgumentException("Strategy cannot be null");
-        }
-        this.strategy=strategy;
-        this.life=strategy.getInitialLife();
+    public Plant(final PlantActionStrategy strategy) {
+        Objects.requireNonNull(strategy, "The strategy cannot be null");
+        this.strategy = strategy;
+        this.life = this.strategy.getInitialLife();
     }
 
     @Override
     public void update() {
-        if(this.life<=0) {
-            this.alive=false;
+        if (this.life <= 0) {
+            this.alive = false;
         }
         strategy.plantAction(this);
     }
@@ -30,13 +29,18 @@ public class Plant extends AbstractEntity implements BasePlant{
     }
 
     @Override
-    public void decreaseLife(int damage) {
-        this.life-=damage;
+    public void decreaseLife(final int damage) {
+        this.life -= damage;
     }
 
     @Override
     public void plantAction() {
-        strategy.plantAction(this);
+        this.strategy.plantAction(this);
+    }
+
+    @Override
+    public boolean isAlive() {
+        return this.alive;
     }
 
 }
