@@ -4,22 +4,19 @@ import PvZ.model.api.BasePlant;
 import PvZ.utilities.Position;
 
 public class PlantFactory {
-    public static BasePlant createPlant(String type, Position position) {
-        Plant plant;
-       switch(type){
-            case "PeaShooter":
-                plant= new Plant(new PeaShooterStrategy());
-                break;
-            case "Sunflower":
-                plant= new Plant(new SunflowerStrategy());
-                break;  
-            case "Wallnut":
-                plant= new Plant(new WallNutStrategy());
-                break;
-            default:
-                throw new IllegalArgumentException("Invalid plant type");
-       }
-        plant.setPosition(position);   
+    public enum PLANT_NAMES{
+        PEASHOOTER,
+        SUNFLOWER,
+        WALLNUT
+    }
+
+    public static BasePlant createPlant(PLANT_NAMES type, Position position) {
+        BasePlant plant= switch(type){
+            case PEASHOOTER -> new Plant(new PeaShooterStrategy());
+            case SUNFLOWER -> new Plant(new SunflowerStrategy());
+            case WALLNUT -> new Plant(new WallNutStrategy());
+        };
+        plant.setPosition(position);
         return plant;
     }
 }
