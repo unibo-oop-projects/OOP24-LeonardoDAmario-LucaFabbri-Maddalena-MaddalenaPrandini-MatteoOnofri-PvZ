@@ -7,8 +7,8 @@ import PvZ.model.api.Entity;
 import PvZ.model.api.GameModel;
 import PvZ.model.api.Zombie;
 public class GameModelImpl implements GameModel {
-    private static List<Entity> entities;
-    private static SunCounter sunCounter;
+    private List<Entity> entities;
+    private SunCounter sunCounter;
     
     @Override
     public void startGame() {
@@ -35,12 +35,8 @@ public class GameModelImpl implements GameModel {
         throw new UnsupportedOperationException("Unimplemented method 'isVictory'");
     }
 
-    public static SunCounter getSunCounter() {
-        return sunCounter;
-    }
-
-    public static List<Zombie> getZombieList() {
-        return entities.stream().filter(entity -> entity instanceof Zombie).map(entity -> (Zombie) entity).toList();
+    public List<Entity> getEntityList() {
+        return this.entities;
     }
 
 }
