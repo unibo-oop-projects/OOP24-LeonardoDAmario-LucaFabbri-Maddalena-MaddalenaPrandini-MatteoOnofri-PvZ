@@ -7,4 +7,6 @@ public interface Sun {
     int getSunValue();
 
     void startSunTimer();
+
+    boolean isAlreadyWorking();
 }

@@ -70,7 +70,7 @@ public class GameController {
             if(sun.canIncrementSunCounter()) {
                 sunCounter.increment(sun.getSunValue());
             }
-            else {
+            if(!sun.isAlreadyWorking()) {
                 sun.startSunTimer();
             }
         });
