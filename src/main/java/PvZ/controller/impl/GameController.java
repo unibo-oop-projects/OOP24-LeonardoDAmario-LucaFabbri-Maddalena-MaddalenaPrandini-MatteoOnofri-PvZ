@@ -5,9 +5,11 @@ import java.util.List;
 import PvZ.model.api.BasePlant;
 import PvZ.model.api.Bullet;
 import PvZ.model.api.Entity;
+import PvZ.model.api.Sun;
 import PvZ.model.api.Zombie;
 import PvZ.model.impl.GameModelImpl;
 import PvZ.model.impl.SunCounter;
+import PvZ.model.impl.SunImpl;
 
 public class GameController {
 
@@ -63,6 +65,14 @@ public class GameController {
 
     void updateSunCounter(final int value) {
         final SunCounter sunCounter = this.currentGame.getSunCounter();
-        sunCounter.increment(value);
+        final List<Sun> sunList = sunCounter.getSunList();
+        sunList.stream().forEach(sun -> {
+            if(sun.canIncrementSunCounter()) {
+                sunCounter.increment(sun.getSunValue());
+            }
+            else {
+                sun.startSunTimer();
+            }
+        });
     }
 }

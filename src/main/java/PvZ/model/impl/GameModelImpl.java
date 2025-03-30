@@ -43,4 +43,6 @@ public class GameModelImpl implements GameModel {
         return this.sunCounter;
     }
 
+    
+
 }

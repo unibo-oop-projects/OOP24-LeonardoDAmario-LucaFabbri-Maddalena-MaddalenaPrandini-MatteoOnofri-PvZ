@@ -8,14 +8,24 @@ import PvZ.model.api.Sun;
 
 public class SunImpl implements Sun{
     
-    private final int VALUE = 25;
+    private static final int VALUE = 25;
     private final ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();
-
+    private boolean isReady = false;
 
     @Override
-    public void incrementSunCounter() { 
-        scheduler.scheduleAtFixedRate(() -> GameController.(VALUE), 5, 5, TimeUnit.SECONDS);
+    public void startSunTimer() { 
+        this.isReady = false;
+        scheduler.scheduleAtFixedRate(() -> this.isReady = true, 5, 5, TimeUnit.SECONDS);
     }
 
+    @Override
+    public boolean canIncrementSunCounter() {
+        return this.isReady;
+    } 
+
+    @Override
+    public int getSunValue() {
+        return VALUE;
+    }
     
 }
