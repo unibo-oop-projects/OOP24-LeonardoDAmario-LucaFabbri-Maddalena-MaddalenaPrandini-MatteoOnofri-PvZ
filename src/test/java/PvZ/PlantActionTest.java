@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 
 import PvZ.model.api.BasePlant;
 import PvZ.model.api.PlantActionStrategy;
+import PvZ.model.api.PlantType;
 import PvZ.model.impl.Plant;
 import PvZ.utilities.Position;
 
@@ -34,8 +35,7 @@ public class PlantActionTest {
     @Test
         public void testPlantAction() {
             TryStrategy strategy = new TryStrategy(50);
-            BasePlant plant = new Plant(strategy);
-            plant.setPosition(new Position(0, 0));
+            BasePlant plant = new Plant(strategy, PlantType.PEASHOOTER, new Position(0, 0));
             plant.plantAction();
             assert(strategy.isActionCalled());
         }

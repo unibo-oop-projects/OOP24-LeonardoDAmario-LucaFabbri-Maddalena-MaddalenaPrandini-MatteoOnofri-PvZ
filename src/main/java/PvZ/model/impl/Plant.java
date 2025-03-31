@@ -3,16 +3,22 @@ package PvZ.model.impl;
 import java.util.Objects;
 import PvZ.model.api.BasePlant;
 import PvZ.model.api.PlantActionStrategy;
+import PvZ.model.api.PlantType;
+import PvZ.utilities.Position;
 
 public class Plant extends AbstractEntity implements BasePlant {
+
     private int life;
     private final PlantActionStrategy strategy;
     private boolean alive = true;
+    private PlantType plantType;
 
-    public Plant(final PlantActionStrategy strategy) {
+    public Plant(final PlantActionStrategy strategy, final PlantType plantType, final Position position) {
+        super(position);
         Objects.requireNonNull(strategy, "The strategy cannot be null");
         this.strategy = strategy;
         this.life = this.strategy.getInitialLife();
+        this.plantType = plantType;
     }
 
     @Override
@@ -41,6 +47,11 @@ public class Plant extends AbstractEntity implements BasePlant {
     @Override
     public boolean isAlive() {
         return this.alive;
+    }
+
+    @Override
+    public PlantType getType() {
+        return this.plantType;
     }
 
 }

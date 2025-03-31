@@ -26,4 +26,11 @@ public interface BasePlant extends Entity {
      * @return {@code boolean} true if the plant is alive, false otherwise.
      */
     boolean isAlive();
+
+    /**
+     * Get the plant's type.
+     * 
+     * @return {@code PlantType} the plant's type.
+     */
+    PlantType getType();
 }

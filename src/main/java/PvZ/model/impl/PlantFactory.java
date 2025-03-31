@@ -20,13 +20,11 @@ public final class PlantFactory {
      */
     public static BasePlant createPlant(final PlantType type, final Position position) {
         Objects.requireNonNull(position, "Position cannot be null");
-        final BasePlant plant = switch(type) {
-            case PEASHOOTER -> new Plant(new PeaShooterStrategy());
-            case SUNFLOWER -> new Plant(new SunflowerStrategy());
-            case WALLNUT -> new Plant(new WallNutStrategy());
+        return switch(type) {
+            case PEASHOOTER -> new Plant(new PeaShooterStrategy(), type, position);
+            case SUNFLOWER -> new Plant(new SunflowerStrategy(), type, position);
+            case WALLNUT -> new Plant(new WallNutStrategy(), type, position);
             default -> throw new IllegalArgumentException("Invalid plant type: " + type);
         };    
-        plant.setPosition(position);
-        return plant;
     }
 }
