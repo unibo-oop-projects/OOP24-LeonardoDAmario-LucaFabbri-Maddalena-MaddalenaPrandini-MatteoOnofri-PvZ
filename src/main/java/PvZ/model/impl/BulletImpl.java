@@ -1,10 +1,10 @@
 package PvZ.model.impl;
 
-
+import java.util.Optional;
 import PvZ.model.api.Bullet;
-import PvZ.utilities.Position;
+import PvZ.utilities.Position; 
 
-public class BulletImpl extends AbstractEntity implements Bullet{
+public class BulletImpl extends AbstractEntity implements Bullet {
 
     private final int DAMAGE=25;
     private Position pos;
@@ -28,6 +28,5 @@ public class BulletImpl extends AbstractEntity implements Bullet{
             this.alive = false;
         }
     }
-
     
 }

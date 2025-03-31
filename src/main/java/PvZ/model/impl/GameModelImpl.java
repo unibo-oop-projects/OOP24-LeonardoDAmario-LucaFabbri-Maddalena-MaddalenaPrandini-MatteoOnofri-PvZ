@@ -1,10 +1,10 @@
 package PvZ.model.impl;
 
 import java.util.List;
-
 import PvZ.model.api.Entity;
 import PvZ.model.api.GameModel;
-public class GameModelImpl implements GameModel {
+
+public final class GameModelImpl implements GameModel {
     private List<Entity> entities;
     
     @Override
@@ -15,9 +15,7 @@ public class GameModelImpl implements GameModel {
 
     @Override
     public void updateGame() {
-        for(int i=0; i<entities.size(); i++){
-            entities.get(i).update();
-        }
+        this.entities.forEach(Entity::update);
     }
 
     @Override
