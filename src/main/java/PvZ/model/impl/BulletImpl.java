@@ -10,8 +10,8 @@ public class BulletImpl extends AbstractEntity implements Bullet {
     private Position pos;
     private boolean alive;
 
-    BulletImpl(final Position pos) {
-        this.pos = pos;
+    public BulletImpl(final Position pos) {
+        super(pos);
         this.alive = true;
     }
 
@@ -21,12 +21,13 @@ public class BulletImpl extends AbstractEntity implements Bullet {
 
     @Override
     public void update() {
-        this.setPosition(this.pos); //THIS.POS + UNA CERTA POS CHE FA MOVE
-        final Optional<Zombie> zombie = this.giveZombieHitted(); //DOVREBBE PRENDE COME ARGOMENTO NA LISTA DE ZOMBIE VIVI
-        if(zombie.isPresent()) { 
-            zombie.decreaseLife(this.DAMAGE);
-            this.alive = false;
+        if(this.alive) {
+            this.setPosition(this.pos); //THIS.POS + UNA CERTA POS CHE FA MOVE
         }
+    }
+
+    public void die() {
+        this.alive = false;
     }
     
 }

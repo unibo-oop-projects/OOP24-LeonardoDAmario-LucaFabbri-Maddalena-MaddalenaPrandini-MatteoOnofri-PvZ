@@ -1,11 +1,14 @@
 package PvZ.model.impl;
 
 import java.util.List;
+import java.util.stream.Stream;
+
 import PvZ.model.api.Entity;
 import PvZ.model.api.GameModel;
-
-public final class GameModelImpl implements GameModel {
+import PvZ.model.api.Zombie;
+public class GameModelImpl implements GameModel {
     private List<Entity> entities;
+    private SunCounter sunCounter;
     
     @Override
     public void startGame() {
@@ -29,4 +32,15 @@ public final class GameModelImpl implements GameModel {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'isVictory'");
     }
+
+    public List<Entity> getEntityList() {
+        return this.entities;
+    }
+
+    public SunCounter getSunCounter() {
+        return this.sunCounter;
+    }
+
+    
+
 }

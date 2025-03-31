@@ -1,4 +1,4 @@
-package PvZ.model.impl;
+package PvZ.model.impl.Plants;
 
 import java.util.Objects;
 import PvZ.model.api.BasePlant;

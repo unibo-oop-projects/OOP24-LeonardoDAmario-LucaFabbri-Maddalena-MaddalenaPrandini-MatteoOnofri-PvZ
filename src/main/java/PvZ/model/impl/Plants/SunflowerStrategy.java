@@ -1,19 +1,20 @@
-package PvZ.model.impl;
+package PvZ.model.impl.Plants;
 
 import PvZ.model.api.BasePlant;
 import PvZ.model.api.PlantActionStrategy;
 
-public class WallNutStrategy implements PlantActionStrategy {
-    private final int INITIAL_LIFE=200;
+public class SunflowerStrategy implements PlantActionStrategy{
+    private final int INITIAL_LIFE=80;
 
     @Override
     public void plantAction(BasePlant plant) {
-        /*da mettere metodo per dimezzare la vita */
+        /*da mettere metodo che genera soli */
     }
 
     @Override
     public int getInitialLife() {
         return this.INITIAL_LIFE;
     }
+
 
 }

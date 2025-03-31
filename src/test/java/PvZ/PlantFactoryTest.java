@@ -3,8 +3,8 @@ package PvZ;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.Test;
 import PvZ.model.api.PlantType;
+import PvZ.model.impl.Plants.PlantFactory;
 import PvZ.model.api.BasePlant;
-import PvZ.model.impl.PlantFactory;
 import PvZ.utilities.Position;
 
 public class PlantFactoryTest {

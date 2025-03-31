@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 import PvZ.model.api.BasePlant;
 import PvZ.model.api.PlantActionStrategy;
 import PvZ.model.api.PlantType;
-import PvZ.model.impl.Plant;
+import PvZ.model.impl.Plants.Plant;
 import PvZ.utilities.Position;
 
 public class PlantActionTest {

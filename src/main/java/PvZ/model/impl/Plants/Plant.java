@@ -1,9 +1,10 @@
-package PvZ.model.impl;
+package PvZ.model.impl.Plants;
 
 import java.util.Objects;
 import PvZ.model.api.BasePlant;
 import PvZ.model.api.PlantActionStrategy;
 import PvZ.model.api.PlantType;
+import PvZ.model.impl.AbstractEntity;
 import PvZ.utilities.Position;
 
 public class Plant extends AbstractEntity implements BasePlant {

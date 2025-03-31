@@ -1,7 +1,8 @@
 package PvZ.model.api.GameBoard;
 
-import PvZ.model.impl.Plant;
 import java.util.List;
+
+import PvZ.model.impl.Plants.Plant;
 
 /**
  * This interface defines the methods for a Plant Roaster.

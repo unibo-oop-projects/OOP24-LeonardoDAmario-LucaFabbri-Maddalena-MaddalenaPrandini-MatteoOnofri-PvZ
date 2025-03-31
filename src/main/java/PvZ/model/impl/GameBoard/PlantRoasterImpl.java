@@ -4,8 +4,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
 import PvZ.model.api.GameBoard.PlantRoaster;
-import PvZ.model.impl.Plant;
-
+import PvZ.model.impl.Plants.Plant;
 /**
  * This class implements the PlantRoaster interface.
  */
