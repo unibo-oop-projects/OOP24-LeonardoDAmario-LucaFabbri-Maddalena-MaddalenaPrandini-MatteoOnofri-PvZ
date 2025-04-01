@@ -10,6 +10,8 @@ import PvZ.model.api.Zombie;
 import PvZ.model.impl.GameModelImpl;
 import PvZ.model.impl.SunCounter;
 import PvZ.model.impl.SunImpl;
+import PvZ.model.impl.Plants.PeaShooterStrategy;
+import PvZ.model.impl.Plants.SunflowerStrategy;
 
 public class GameController {
 
@@ -19,9 +21,16 @@ public class GameController {
         this.currentGame = game;
     }
 
-    void updatePlants() {
+    void updatePeaShoter() {
         final List<BasePlant> plantList = this.currentGame.getEntityList().stream()
-                                        .filter(entity -> entity instanceof BasePlant)
+                                        .filter(entity -> entity instanceof PeaShooterStrategy)
+                                        .map(entity -> (BasePlant) entity).toList();
+        plantList.forEach(plant -> plant.update());
+    }   
+
+    void updateSunFlower() {
+        final List<BasePlant> plantList = this.currentGame.getEntityList().stream()
+                                        .filter(entity -> entity instanceof SunflowerStrategy)
                                         .map(entity -> (BasePlant) entity).toList();
         plantList.forEach(plant -> plant.update());
     }   
