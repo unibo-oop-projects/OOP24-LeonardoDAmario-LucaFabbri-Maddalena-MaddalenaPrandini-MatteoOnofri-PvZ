@@ -21,7 +21,15 @@ public class GameModelImpl implements GameModel {
     private SunCounter sunCounter;
 
     private static final long SUNFLOWER_TIME = 5000;
+    private static final long ZOMBIE_TIME = 5000;
+    private static final long BULLET_TIME = 5000;
+    private static final long PEASHOOTERTIME_TIME = 5000;
+    private static final long WALNUT_TIME = 5000;
     private long sunFlowerTime = 0;
+    private long walNutTime = 0;
+    private long peaShooterTime = 0;
+    private long zombieTime = 0;
+    private long bulletTime = 0;
 
     @Override
     public void startGame() {
@@ -43,22 +51,32 @@ public class GameModelImpl implements GameModel {
 
     @Override
     public void update(long deltaTime) {
-        sunFlowerTime += deltaTime;
-        if(sunFlowerTime >= SUNFLOWER_TIME) {
-            this.updateSunFlower();
-            sunFlowerTime = 0;
-        }
+        sunFlowerTime = controlTime(sunFlowerTime, deltaTime, SUNFLOWER_TIME, () -> this.updateSunFlowers());
+        walNutTime = controlTime(walNutTime, deltaTime, WALNUT_TIME, () -> this.updateWalnuts());
+        peaShooterTime = controlTime(peaShooterTime, deltaTime, PEASHOOTERTIME_TIME, () -> this.updatePeaShooters());
+        zombieTime = controlTime(zombieTime, deltaTime, ZOMBIE_TIME, () -> this.updateZombies());
+        bulletTime = controlTime(bulletTime, deltaTime, BULLET_TIME, () -> this.updateBullets());
     }
 
-    void updateWalnut() {
+
+    private long controlTime(long entityTime, long deltaTime, long maxTime, Runnable updateMethod) {
+        entityTime += deltaTime;
+        if (entityTime >= maxTime) {
+            updateMethod.run();
+            return 0;
+        }
+        return entityTime;
+    }
+
+    void updateWalnuts() {
         plants.stream().filter(plant -> plant instanceof WallNutStrategy).forEach(walNut -> walNut.update());
     }
 
-    void updatePeaShooter() {
+    void updatePeaShooters() {
         plants.stream().filter(plant -> plant instanceof PeaShooterStrategy).forEach(peaShooter -> peaShooter.update());
     }   
 
-    void updateSunFlower() {
+    void updateSunFlowers() {
         plants.stream().filter(plant -> plant instanceof SunflowerStrategy).forEach(sunFlower -> sunFlower.update());
     }   
 
@@ -83,19 +101,6 @@ public class GameModelImpl implements GameModel {
             }
             else {
                 bullet.update();
-            }
-        });
-    }
-
-    void updateSunCounter(final int value) {
-        final SunCounter sunCounter = this.currentGame.getSunCounter();
-        final List<Sun> sunList = sunCounter.getSunList();
-        sunList.stream().forEach(sun -> {
-            if(sun.canIncrementSunCounter()) {
-                sunCounter.increment(sun.getSunValue());
-            }
-            if(!sun.isAlreadyWorking()) {
-                sun.startSunTimer();
             }
         });
     }
