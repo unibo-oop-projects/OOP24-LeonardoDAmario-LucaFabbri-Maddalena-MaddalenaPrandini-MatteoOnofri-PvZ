@@ -21,7 +21,7 @@ public class GameController {
         this.currentGame = game;
     }
 
-    void updatePeaShoter() {
+    void updatePeaShooter() {
         final List<BasePlant> peaShooterList = this.currentGame.getEntityList().stream()
                                         .filter(entity -> entity instanceof PeaShooterStrategy)
                                         .map(entity -> (BasePlant) entity).toList();
