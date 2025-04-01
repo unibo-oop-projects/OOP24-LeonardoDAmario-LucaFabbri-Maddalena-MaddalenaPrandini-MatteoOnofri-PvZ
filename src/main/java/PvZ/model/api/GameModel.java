@@ -5,4 +5,5 @@ public interface GameModel {
     void updateGame();
     boolean isGameOver();
     boolean isVictory();
+    void update(long deltaTime);
 }

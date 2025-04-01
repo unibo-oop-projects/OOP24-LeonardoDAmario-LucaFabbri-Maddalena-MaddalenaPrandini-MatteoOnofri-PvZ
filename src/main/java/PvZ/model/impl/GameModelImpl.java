@@ -33,6 +33,11 @@ public class GameModelImpl implements GameModel {
         throw new UnsupportedOperationException("Unimplemented method 'isVictory'");
     }
 
+    @Override
+    public void update(long deltaTime) {
+        
+    }
+
     public List<Entity> getEntityList() {
         return this.entities;
     }
