@@ -22,14 +22,14 @@ public class GameController {
     }
 
     void updatePeaShoter() {
-        final List<BasePlant> plantList = this.currentGame.getEntityList().stream()
+        final List<BasePlant> peaShooterList = this.currentGame.getEntityList().stream()
                                         .filter(entity -> entity instanceof PeaShooterStrategy)
                                         .map(entity -> (BasePlant) entity).toList();
         plantList.forEach(plant -> plant.update());
     }   
 
     void updateSunFlower() {
-        final List<BasePlant> plantList = this.currentGame.getEntityList().stream()
+        final List<BasePlant> sunFlowerList = this.currentGame.getEntityList().stream()
                                         .filter(entity -> entity instanceof SunflowerStrategy)
                                         .map(entity -> (BasePlant) entity).toList();
         plantList.forEach(plant -> plant.update());
