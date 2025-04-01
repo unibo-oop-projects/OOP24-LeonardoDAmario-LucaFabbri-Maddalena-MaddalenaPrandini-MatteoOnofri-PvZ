@@ -51,13 +51,12 @@ public class GameModelImpl implements GameModel {
 
     @Override
     public void update(long deltaTime) {
-        sunFlowerTime = controlTime(sunFlowerTime, deltaTime, SUNFLOWER_TIME, () -> this.updateSunFlowers());
-        walNutTime = controlTime(walNutTime, deltaTime, WALNUT_TIME, () -> this.updateWalnuts());
-        peaShooterTime = controlTime(peaShooterTime, deltaTime, PEASHOOTERTIME_TIME, () -> this.updatePeaShooters());
-        zombieTime = controlTime(zombieTime, deltaTime, ZOMBIE_TIME, () -> this.updateZombies());
-        bulletTime = controlTime(bulletTime, deltaTime, BULLET_TIME, () -> this.updateBullets());
+        this.sunFlowerTime = controlTime(sunFlowerTime, deltaTime, SUNFLOWER_TIME, () -> this.updateSunFlowers());
+        this.walNutTime = controlTime(walNutTime, deltaTime, WALNUT_TIME, () -> this.updateWalnuts());
+        this.peaShooterTime = controlTime(peaShooterTime, deltaTime, PEASHOOTERTIME_TIME, () -> this.updatePeaShooters());
+        this.zombieTime = controlTime(zombieTime, deltaTime, ZOMBIE_TIME, () -> this.updateZombies());
+        this.bulletTime = controlTime(bulletTime, deltaTime, BULLET_TIME, () -> this.updateBullets());
     }
-
 
     private long controlTime(long entityTime, long deltaTime, long maxTime, Runnable updateMethod) {
         entityTime += deltaTime;
