@@ -1,9 +1,6 @@
 package PvZ.model.impl.Plants;
-
-import java.util.Objects;
-import PvZ.model.api.BasePlant;
+import PvZ.model.api.Plant;
 import PvZ.model.api.PlantType;
-import PvZ.utilities.Position;
 /**
  * Factory class for creating plants.
  */
@@ -18,13 +15,13 @@ public final class PlantFactory {
      * @throws NullPointerException if the position is null
      * @return the created plant
      */
-    public static BasePlant createPlant(final PlantType type, final Position position) {
-        Objects.requireNonNull(position, "Position cannot be null");
+    public static Plant createPlant(final PlantType type) {
         return switch(type) {
-            case PEASHOOTER -> new Plant(new PeaShooterStrategy(), type, position);
-            case SUNFLOWER -> new Plant(new SunflowerStrategy(), type, position);
-            case WALLNUT -> new Plant(new WallNutStrategy(), type, position);
-            default -> throw new IllegalArgumentException("Invalid plant type: " + type);
+            case PEASHOOTER -> new PeaShooter();
+            case SUNFLOWER -> new Sunflower();
+            case WALLNUT -> new WallNut();
+
+            default-> throw new IllegalArgumentException();
         };    
     }
 }
