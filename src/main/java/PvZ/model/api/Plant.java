@@ -3,7 +3,7 @@ package PvZ.model.api;
 /**
  * Interface for the base plant.
  */
-public interface BasePlant extends Entity {
+public interface Plant extends Entity {
     /** 
      * Get the plant's health points.
      * @return {@code int} the plant's health points.
