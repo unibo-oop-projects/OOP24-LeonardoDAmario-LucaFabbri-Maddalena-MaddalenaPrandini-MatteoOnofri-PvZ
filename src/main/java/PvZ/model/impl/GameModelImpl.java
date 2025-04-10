@@ -104,5 +104,4 @@ public class GameModelImpl implements GameModel {
         });
     }
     
-
 }
