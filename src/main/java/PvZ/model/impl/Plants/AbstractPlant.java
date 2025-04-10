@@ -35,13 +35,25 @@ public abstract class AbstractPlant implements Plant{
     public int getLife() {
         return this.life;
     }
+
     @Override
     public void decreaseLife(int damage) {
         this.life -= damage;
     }
+
+    @Override
+    public boolean isAlive() {
+        return this.life > 0;
+    }
+
     @Override
     public PlantType getType() {
         return this.type;
+    }
+
+    @Override
+    public void setPosition(Position position) {
+        this.position = position;
     }
 
     @Override
