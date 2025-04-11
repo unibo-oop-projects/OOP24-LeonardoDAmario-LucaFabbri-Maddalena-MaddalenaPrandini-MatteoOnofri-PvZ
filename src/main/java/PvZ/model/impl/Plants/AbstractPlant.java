@@ -15,20 +15,11 @@ public abstract class AbstractPlant implements Plant{
         this.life = type.getLife();
     }
 
-    public final void plantAction(){
-        if(isAlive()){
-            this.action();
-        }
-        else {
-            System.out.println("The plant is dead and cannot perform any action.");
-        }
-    }
-
-    protected abstract void action();
+    protected abstract void action(EntitiesManager entitiesManager);
 
     @Override
     public void update(long deltaTime, EntitiesManager entitiesManager) {
-        this.plantAction();
+        this.action(entitiesManager);
     }
 
     @Override
