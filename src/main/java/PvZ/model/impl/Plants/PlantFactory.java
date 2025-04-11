@@ -1,6 +1,8 @@
 package PvZ.model.impl.Plants;
 import PvZ.model.api.Plant;
 import PvZ.model.api.PlantType;
+import PvZ.utilities.Position;
+
 /**
  * Factory class for creating plants.
  */
