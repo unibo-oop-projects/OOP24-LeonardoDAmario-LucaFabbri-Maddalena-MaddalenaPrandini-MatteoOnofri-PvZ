@@ -10,9 +10,7 @@ public final class PlantFactory {
      * Creates a plant of the specified type at the given position.
      * 
      * @param type the type of plant to create
-     * @param position the position of the plant
      * @throws IllegalArgumentException if the plant type is invalid
-     * @throws NullPointerException if the position is null
      * @return the created plant
      */
     public static Plant createPlant(final PlantType type) {
