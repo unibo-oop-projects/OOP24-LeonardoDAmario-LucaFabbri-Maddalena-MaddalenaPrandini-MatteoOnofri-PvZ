@@ -6,31 +6,39 @@ package PvZ.model.api;
  */
 public enum PlantType {
     /**
-     * Represents a Peashooter plant.
+     * Represents a Peashooter plant with his life and price.
      */
-    PEASHOOTER(10),
+    PEASHOOTER(50, 100),
     /**
-     * Represents a Sunflower plant.
+     * Represents a Sunflower plant with his life and price.
      */
-    SUNFLOWER(20),
+    SUNFLOWER(25, 75),
     /**
-     * Represents a Wallnut plant.
+     * Represents a Wallnut plant with his life and price.
      */
-    WALLNUT(30);
+    WALLNUT(75, 200);
 
     private int price;
+    private int life;
 
     /**
      * Constructor for PlantType enum.
      * 
      * @param price The price of the plant type.
      * @throws IllegalArgumentException if the price is negative.
+     * 
+     * @param life The life of the plant type.
+     * @throws IllegalArgumentException if the life is negative.
      */
-    PlantType(final int price) {
+    PlantType(final int price, final int life) {
+        if (life < 0) {
+            throw new IllegalArgumentException("Life cannot be negative.");
+        }
         if (price < 0) {
             throw new IllegalArgumentException("Price cannot be negative.");
         }
         this.price = price;
+        this.life=life;
     }
 
     /**
@@ -40,5 +48,14 @@ public enum PlantType {
      */
     public int getPrice() {
         return this.price;
+    }
+
+    /**
+     * Gets the life of the plant type.
+     * 
+     * @return The life of the plant type.
+     */
+    public int getLife() {
+        return this.life;
     }
 }

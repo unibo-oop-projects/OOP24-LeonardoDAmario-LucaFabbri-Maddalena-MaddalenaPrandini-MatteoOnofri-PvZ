@@ -1,7 +1,7 @@
 package PvZ.model.impl;
 
-import java.util.Optional;
 import PvZ.model.api.Bullet;
+import PvZ.model.api.EntitiesManager;
 import PvZ.utilities.Position; 
 
 public class BulletImpl extends AbstractEntity implements Bullet {
@@ -19,15 +19,14 @@ public class BulletImpl extends AbstractEntity implements Bullet {
         return this.DAMAGE;
     }
 
-    @Override
-    public void update() {
-        if(this.alive) {
-            this.setPosition(this.pos); //THIS.POS + UNA CERTA POS CHE FA MOVE
-        }
-    }
-
     public void die() {
         this.alive = false;
+    }
+
+    @Override
+    public void update(long deltaTime, EntitiesManager entitiesManager) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'update'");
     }
     
 }
