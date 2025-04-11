@@ -8,20 +8,16 @@ public class GameModelImpl implements GameModel {
 
     private static final int ROWS = 5;
     private static final int COLS = 9;
-    private static final int DEFAULTSUNS = 50;
 
     private final List<List<Cell>> grid;
-    private final List<Zombie> zombies;
-    private final List<Plant> plants;
 
-    private int sunCount;
     private GameStatus status;
 
     private long lastSunTime;
     private long lastZombieSpawnTime;
 
-    public GameModelImpl(EntitiesManager entitiesManager) {
-        this.entitiesManager = entitiesManager;
+    public GameModelImpl() {
+        this.entitiesManager = new EntitiesManagerImpl();
 
         this.grid = new ArrayList<>();
         for (int i = 0; i < ROWS; i++) {
@@ -31,10 +27,6 @@ public class GameModelImpl implements GameModel {
             }
             grid.add(row);
         }
-
-        this.zombies = new ArrayList<>();
-        this.plants = new ArrayList<>();
-        this.sunCount = DEFAULTSUNS;
         this.status = GameStatus.IN_PROGRESS;
         this.lastSunTime = System.currentTimeMillis();
         this.lastZombieSpawnTime = System.currentTimeMillis();
@@ -62,19 +54,6 @@ public class GameModelImpl implements GameModel {
         return status;
     }
 
-    @Override
-    public void addSun(int amount) {
-        sunCount += amount;
-    }
-
-    @Override
-    public boolean spendSun(int amount) {
-        if (sunCount >= amount) {
-            sunCount -= amount;
-            return true;
-        }
-        return false;
-    }
 
     @Override
     public void update(long deltaTime) {
