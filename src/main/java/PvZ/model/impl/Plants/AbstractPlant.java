@@ -15,11 +15,11 @@ public abstract class AbstractPlant implements Plant{
         this.life = type.getLife();
     }
 
-    protected abstract void action(EntitiesManager entitiesManager);
+    protected abstract void action(long deltaTime, EntitiesManager entitiesManager);
 
     @Override
     public void update(long deltaTime, EntitiesManager entitiesManager) {
-        this.action(entitiesManager);
+        this.action(deltaTime, entitiesManager);
     }
 
     @Override
