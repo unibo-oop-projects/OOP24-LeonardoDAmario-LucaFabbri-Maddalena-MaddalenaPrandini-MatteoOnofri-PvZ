@@ -1,35 +1,25 @@
 package PvZ.model.impl.GameBoard;
-
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Objects;
+import PvZ.model.api.EntitiesManager;
+import PvZ.model.api.PlantType;
 import PvZ.model.api.GameBoard.PlantRoaster;
-import PvZ.model.impl.Plants.Plant;
+import PvZ.model.impl.Plants.PlantFactory;
+import PvZ.utilities.Position;
 /**
  * This class implements the PlantRoaster interface.
  */
 public final class PlantRoasterImpl implements PlantRoaster {
 
-    private final List<Plant> availablePlants = new LinkedList<>();
+    private final EntitiesManager entitiesManager;
 
-    @Override
-    public List<Plant> getAvailablePlants(final int sun) {
-        if (sun <= 0) {
-            return List.of();
-        }
-        if (this.availablePlants.isEmpty()) {
-            return List.of();
-        }
-
-        return this.availablePlants.stream()
-            .filter(plant -> plant.getType().getPrice() <= sun)
-            .toList();
+    public PlantRoasterImpl(EntitiesManager entitiesManager) {
+        this.entitiesManager = entitiesManager;
     }
 
     @Override
-    public void addPlant(final Plant plant) {
-        Objects.requireNonNull(plant, "Plant cannot be null");
-        this.availablePlants.add(plant);
+    public void addPlantGame(PlantType plantType, Position position) {
+        entitiesManager.addEntity(PlantFactory.createPlant(plantType, position));
     }
+
+    
     
 }
