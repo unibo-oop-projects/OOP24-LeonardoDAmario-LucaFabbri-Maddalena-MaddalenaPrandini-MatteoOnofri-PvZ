@@ -12,11 +12,22 @@ public final class PlantFactory {
      * Creates a plant of the specified type at the given position.
      * 
      * @param type the type of plant to create
+     * @param position the position of the plant
+     * @throws NullPointerException if the type or position is null
      * @throws IllegalArgumentException if the plant type is invalid
      * @return the created plant
      */
     public static Plant createPlant(final PlantType type, Position position) {
-         Plant plant = switch(type) {
+        
+        if(type == null) {
+            throw new IllegalArgumentException("Plant type cannot be null");
+        }
+
+        if(position == null) {
+            throw new IllegalArgumentException("Position cannot be null");
+        }
+
+        Plant plant = switch(type) {
             case PEASHOOTER -> new PeaShooter();
             case SUNFLOWER -> new Sunflower();
             case WALLNUT -> new WallNut();
