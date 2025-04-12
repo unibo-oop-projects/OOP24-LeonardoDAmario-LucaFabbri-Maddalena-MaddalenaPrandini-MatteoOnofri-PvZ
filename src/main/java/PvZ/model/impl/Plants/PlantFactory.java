@@ -15,13 +15,15 @@ public final class PlantFactory {
      * @throws IllegalArgumentException if the plant type is invalid
      * @return the created plant
      */
-    public static Plant createPlant(final PlantType type) {
-        return switch(type) {
+    public static Plant createPlant(final PlantType type, Position position) {
+         Plant plant = switch(type) {
             case PEASHOOTER -> new PeaShooter();
             case SUNFLOWER -> new Sunflower();
             case WALLNUT -> new WallNut();
+            default-> throw new IllegalArgumentException("unsupported type: " + type);
+        };
+        plant.setPosition(position);
+        return plant;
 
-            default-> throw new IllegalArgumentException();
-        };    
     }
 }
