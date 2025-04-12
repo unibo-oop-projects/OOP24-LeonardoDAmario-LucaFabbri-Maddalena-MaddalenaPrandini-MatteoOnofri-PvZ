@@ -4,7 +4,6 @@ package PvZ.model.impl.Plants;
 import PvZ.model.api.EntitiesManager;
 import PvZ.model.api.PlantType;
 import PvZ.model.impl.BulletImpl;
-import PvZ.utilities.Position;
 
 public class PeaShooter extends AbstractPlant{
     private double elapsedTime=0;

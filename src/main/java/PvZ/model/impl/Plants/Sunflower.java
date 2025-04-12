@@ -2,7 +2,6 @@ package PvZ.model.impl.Plants;
 
 import PvZ.model.api.EntitiesManager;
 import PvZ.model.api.PlantType;
-import PvZ.model.impl.BulletImpl;
 
 public class Sunflower extends AbstractPlant{
     private final int SUN_VALUE = 25;
