@@ -9,4 +9,5 @@ public interface Entity {
 
     //updating plants
     void update(long deltaTime, EntitiesManager entitiesManager);
+    HitBox getHitBox();
 }

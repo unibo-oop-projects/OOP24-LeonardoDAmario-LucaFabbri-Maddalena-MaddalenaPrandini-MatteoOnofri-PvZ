@@ -1,11 +1,9 @@
 package PvZ.model.impl;
 
-import java.util.Set;
-import java.util.stream.Collectors;
-
 import PvZ.model.api.Bullet;
 import PvZ.model.api.EntitiesManager;
-import PvZ.model.api.Zombie;
+import PvZ.utilities.CollisionManager;
+import PvZ.utilities.CollisionManagerImpl;
 import PvZ.utilities.HitBox;
 import PvZ.utilities.HitBoxImpl;
 import PvZ.utilities.Position; 
@@ -15,6 +13,7 @@ public class BulletImpl extends AbstractEntity implements Bullet {
     private Position pos;
     private HitBox hitBox;
     private long elapsedTime = 0;
+    private CollisionManager collisionManager;
 
     private static final double SPEED = 0.1;
     private static final int DAMAGE = 25;
@@ -23,6 +22,7 @@ public class BulletImpl extends AbstractEntity implements Bullet {
     public BulletImpl(final Position pos) {
         super(pos);
         this.hitBox = new HitBoxImpl(pos);
+        this.collisionManager = new CollisionManagerImpl();
     }
 
     private boolean canUpdate(final long deltaTime) {
@@ -39,24 +39,16 @@ public class BulletImpl extends AbstractEntity implements Bullet {
         if(this.canUpdate(deltaTime)) {            
             this.setPosition(this.move(deltaTime));
             this.hitBox.update(pos);
-            Set<Zombie> zombieSet = entitiesManager.getEntities().stream()
-                    .filter(entity -> entity instanceof Zombie)
-                    .map(entity -> (Zombie) entity)
-                    .collect(Collectors.toSet());
-            for (Zombie zombie : zombieSet) {
-                if(this.hitBox.isColliding(zombie.getHitBox())) {
-                    zombie.decreaseLife(DAMAGE);
-                    if(!zombie.isAlive()) {
-                        entitiesManager.removeEntity(zombie);
-                        entitiesManager.addKill();
-                    }
-                    entitiesManager.removeEntity(this);
-                };
-            }
+            this.collisionManager.handleCollision(this, entitiesManager);
         }
     }
     
     private Position move(final long time) {
         return new Position(this.getPosition().x() + time * SPEED, this.getPosition().y());
+    }
+
+    @Override
+    public int getDamage() {
+        return DAMAGE;
     }
 }
