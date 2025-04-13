@@ -48,6 +48,7 @@ public class BulletImpl extends AbstractEntity implements Bullet {
                     zombie.decreaseLife(DAMAGE);
                     if(!zombie.isAlive()) {
                         entitiesManager.removeEntity(zombie);
+                        entitiesManager.addKill();
                     }
                     entitiesManager.removeEntity(this);
                 };
