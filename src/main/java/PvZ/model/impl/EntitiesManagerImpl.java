@@ -7,15 +7,17 @@ import PvZ.model.api.EntitiesManager;
 import PvZ.model.api.Entity;
 
 public class EntitiesManagerImpl implements EntitiesManager{
+    
+    private static final int DEFAULT_SUNS = 50;
+    private static final int DEFAULT_KILLS = 0;
+
     Set<Entity> entities = new HashSet<>();
-    private static final int DEFAULTSUNS = 50;
-    private static final int DEFAULTKILLS = 0;
     private int sunCount;
     private int killCount;
 
     public EntitiesManagerImpl() {
-        this.sunCount = DEFAULTSUNS;
-        this.killCount = DEFAULTKILLS;
+        this.sunCount = DEFAULT_SUNS;
+        this.killCount = DEFAULT_KILLS;
     }
 
     @Override
@@ -35,13 +37,13 @@ public class EntitiesManagerImpl implements EntitiesManager{
 
     @Override
     public void addSun(int amount) {
-        this.sunCount += amount;
+        this.sunCount = this.sunCount + amount;
     }
 
     @Override
     public boolean spendSun(int amount) {
-        if (sunCount >= amount) {
-            sunCount -= amount;
+        if (this.sunCount >= amount) {
+            this.sunCount = this.sunCount-amount;
             return true;
         }
         return false;
@@ -49,7 +51,7 @@ public class EntitiesManagerImpl implements EntitiesManager{
 
     @Override
     public void addKill() {
-        this.killCount += 1;
+        this.killCount = this.killCount + 1;
     }
 
     @Override
