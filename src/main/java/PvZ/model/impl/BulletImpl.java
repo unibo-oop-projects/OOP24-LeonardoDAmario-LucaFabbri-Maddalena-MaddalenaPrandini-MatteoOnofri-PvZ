@@ -1,5 +1,7 @@
 package PvZ.model.impl;
 
+import java.math.BigDecimal;
+
 import PvZ.model.api.Bullet;
 import PvZ.model.api.EntitiesManager;
 import PvZ.utilities.CollisionManager;
@@ -45,7 +47,9 @@ public class BulletImpl extends AbstractEntity implements Bullet {
     }
     
     private Position move(final long time) {
-        return new Position(this.getPosition().x() + time * SPEED, this.getPosition().y());
+        final BigDecimal move = BigDecimal.valueOf(SPEED).multiply(BigDecimal.valueOf(time));
+        final BigDecimal newX = move.add(BigDecimal.valueOf(this.getPosition().x()));
+        return new Position(newX.doubleValue(), this.getPosition().y());
     }
 
     @Override

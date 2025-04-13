@@ -1,5 +1,6 @@
 package PvZ.utilities;
 
+import java.math.BigDecimal;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -24,6 +25,8 @@ public class CollisionManagerImpl implements CollisionManager{
     private void handleBulletZombieCollision(Bullet bullet, EntitiesManager entitiesManager) {
         Set<Zombie> zombieSet = entitiesManager.getEntities().stream()
             .filter(entity -> entity instanceof Zombie)
+            .filter(zombie -> BigDecimal.valueOf(zombie.getPosition().y())
+                   .compareTo(BigDecimal.valueOf(bullet.getPosition().y())) == 0)
             .map(entity -> (Zombie) entity)
             .collect(Collectors.toSet());
         for (Zombie zombie : zombieSet) {
@@ -43,6 +46,8 @@ public class CollisionManagerImpl implements CollisionManager{
         Set<Plant> plantSet = entitiesManager.getEntities().stream()
             .filter(entity -> entity instanceof Plant)
             .map(entity -> (Plant) entity)
+            .filter(plant -> BigDecimal.valueOf(plant.getPosition().y())
+                    .compareTo(BigDecimal.valueOf(zombie.getPosition().y())) == 0)
             .collect(Collectors.toSet());
         for (Plant plant : plantSet) {
             if(zombie.getHitBox().isColliding(plant.getHitBox())) {
