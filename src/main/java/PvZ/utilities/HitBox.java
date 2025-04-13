@@ -6,4 +6,6 @@ public interface HitBox {
     void update(final Position pos);    
     double getX();
     double getY();
+    double getHeight();
+    double getWidth();
 }

@@ -5,8 +5,9 @@ import PvZ.model.api.EntitiesManager;
 import PvZ.utilities.CollisionManager;
 import PvZ.utilities.CollisionManagerImpl;
 import PvZ.utilities.HitBox;
-import PvZ.utilities.HitBoxImpl;
-import PvZ.utilities.Position; 
+import PvZ.utilities.HitBoxFactory;
+import PvZ.utilities.Position;
+import PvZ.utilities.HitBoxFactory.HitBoxType; 
 
 public class BulletImpl extends AbstractEntity implements Bullet {
 
@@ -21,7 +22,7 @@ public class BulletImpl extends AbstractEntity implements Bullet {
 
     public BulletImpl(final Position pos) {
         super(pos);
-        this.hitBox = new HitBoxImpl(pos);
+        this.hitBox = HitBoxFactory.createHitBox(pos, HitBoxType.BULLET);
         this.collisionManager = new CollisionManagerImpl();
     }
 
