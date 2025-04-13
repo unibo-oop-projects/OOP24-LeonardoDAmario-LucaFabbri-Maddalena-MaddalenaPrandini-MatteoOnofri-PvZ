@@ -1,5 +1,5 @@
 package PvZ.utilities;
 
-public record Position(int x, int y) {
+public record Position(double x, double y) {
     
 }
