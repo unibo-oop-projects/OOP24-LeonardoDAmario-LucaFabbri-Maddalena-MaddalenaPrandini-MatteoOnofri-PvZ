@@ -17,11 +17,6 @@ public interface Plant extends Entity {
     void decreaseLife(int damage);
 
     /**
-     * Execute the plant's action.
-     */
-    void plantAction();
-
-    /**
      * Check if the plant is alive.
      * @return {@code boolean} true if the plant is alive, false otherwise.
      */

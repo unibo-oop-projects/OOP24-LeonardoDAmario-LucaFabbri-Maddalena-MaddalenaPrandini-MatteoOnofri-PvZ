@@ -1,5 +1,6 @@
 package PvZ.model.impl.Plants;
 
+import PvZ.model.api.EntitiesManager;
 import PvZ.model.api.PlantType;
 
 public class WallNut extends AbstractPlant {
@@ -9,9 +10,7 @@ public class WallNut extends AbstractPlant {
     }
 
     @Override
-    protected void action() {
-        //da mettere il metodo che uccide il primo zombie che gli passa sopra
-    }
-   
+    protected void action(long deltaTime, EntitiesManager entitiesManager) {
 
+    }
 }
