@@ -16,16 +16,4 @@ public interface Plant extends Entity {
      */
     void decreaseLife(int damage);
 
-    /**
-     * Check if the plant is alive.
-     * @return {@code boolean} true if the plant is alive, false otherwise.
-     */
-    boolean isAlive();
-
-    /**
-     * Get the plant's type.
-     * 
-     * @return {@code PlantType} the plant's type.
-     */
-    PlantType getType();
 }
