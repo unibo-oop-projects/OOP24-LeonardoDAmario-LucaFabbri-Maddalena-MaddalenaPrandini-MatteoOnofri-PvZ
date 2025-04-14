@@ -1,12 +1,37 @@
 package PvZ.model.impl;
+import PvZ.model.api.*;
 
-import java.util.List;
+import java.util.*;
 
-import PvZ.model.api.Entity;
-import PvZ.model.api.GameModel;
 public class GameModelImpl implements GameModel {
-    private List<Entity> entities;
-    
+    EntitiesManager entitiesManager;
+
+    private static final int ROWS = 5;
+    private static final int COLS = 9;
+
+    private final List<List<Cell>> grid;
+
+    private GameStatus status;
+
+    private long lastSunTime;
+    private long lastZombieSpawnTime;
+
+    public GameModelImpl() {
+        this.entitiesManager = new EntitiesManagerImpl();
+
+        this.grid = new ArrayList<>();
+        for (int i = 0; i < ROWS; i++) {
+            List<Cell> row = new ArrayList<>();
+            for (int j = 0; j < COLS; j++) {
+                row.add(new Cell());
+            }
+            grid.add(row);
+        }
+        this.status = GameStatus.IN_PROGRESS;
+        this.lastSunTime = System.currentTimeMillis();
+        this.lastZombieSpawnTime = System.currentTimeMillis();
+    }
+
     @Override
     public void startGame() {
         // TODO Auto-generated method stub
@@ -14,16 +39,8 @@ public class GameModelImpl implements GameModel {
     }
 
     @Override
-    public void updateGame() {
-        for(int i=0; i<entities.size(); i++){
-            entities.get(i).update();
-        }
-    }
-
-    @Override
     public boolean isGameOver() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'isGameOver'");
+            return status != GameStatus.IN_PROGRESS;
     }
 
     @Override
@@ -31,4 +48,18 @@ public class GameModelImpl implements GameModel {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'isVictory'");
     }
+
+    @Override
+    public GameStatus getGameStatus() {
+        return status;
+    }
+
+
+    @Override
+    public void update(long deltaTime) {
+        this.entitiesManager.getEntities().forEach(e->e.update(deltaTime, entitiesManager));
+    }
+    
+    
+
 }

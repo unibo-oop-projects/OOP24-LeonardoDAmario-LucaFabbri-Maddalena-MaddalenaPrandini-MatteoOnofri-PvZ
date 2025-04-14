@@ -1,34 +1,29 @@
 package PvZ;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-
-import javax.lang.model.SourceVersion;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
-
-import PvZ.model.api.PlantActionStrategy;
-import PvZ.model.api.BasePlant;
-import PvZ.model.impl.PlantFactory;
-import PvZ.model.impl.PlantFactory.PLANT_NAMES;
-import PvZ.utilities.Position;
+import PvZ.model.impl.Plants.PlantFactory;
 
 public class PlantFactoryTest {
 
-    @Test
-    public void testCreatePeaShooter() {
-        BasePlant peaShooter = PlantFactory.createPlant(PLANT_NAMES.PEASHOOTER, new Position(0, 0));
-        assertEquals(100,peaShooter.getLife());
+    private final PlantFactory plantFactory;
+
+    public PlantFactoryTest() {
+        this.plantFactory = new PlantFactory();
     }
 
     @Test
-    public void testCreateSunFlower() {
-        BasePlant sunFlower = PlantFactory.createPlant(PLANT_NAMES.SUNFLOWER, new Position(0, 0));
-        assertEquals(80,sunFlower.getLife());
-    }
+    public void testNullPositionThrowsException() {
+        Exception exception1 = assertThrows(NullPointerException.class, ()-> plantFactory.createPeashooter(null));
+        assertEquals("Position cannot be null", exception1.getMessage());
 
-    @Test
-    public void testCreateWallNut() {
-        BasePlant wallNuts = PlantFactory.createPlant(PLANT_NAMES.WALLNUT, new Position(0, 0));
-        assertEquals(200,wallNuts.getLife());
+        Exception exception2 = assertThrows(NullPointerException.class, ()-> plantFactory.createSunflower(null));
+        assertEquals("Position cannot be null", exception2.getMessage());
+
+        Exception exception3 = assertThrows(NullPointerException.class, ()-> plantFactory.createWallnut(null));
+        assertEquals("Position cannot be null", exception3.getMessage());
     }
+    
 }

@@ -8,5 +8,5 @@ public interface Entity {
     Position getPosition();
 
     //updating plants
-    void update();
+    void update(long deltaTime, EntitiesManager entitiesManager);
 }

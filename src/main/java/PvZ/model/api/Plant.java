@@ -3,7 +3,7 @@ package PvZ.model.api;
 /**
  * Interface for the base plant.
  */
-public interface BasePlant extends Entity {
+public interface Plant extends Entity {
     /** 
      * Get the plant's health points.
      * @return {@code int} the plant's health points.
@@ -16,14 +16,4 @@ public interface BasePlant extends Entity {
      */
     void decreaseLife(int damage);
 
-    /**
-     * Execute the plant's action.
-     */
-    void plantAction();
-
-    /**
-     * Check if the plant is alive.
-     * @return {@code boolean} true if the plant is alive, false otherwise.
-     */
-    boolean isAlive();
 }
