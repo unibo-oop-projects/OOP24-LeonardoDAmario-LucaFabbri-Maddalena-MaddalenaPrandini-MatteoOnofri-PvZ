@@ -1,10 +1,10 @@
 package PvZ.model.api;
 
-import PvZ.model.zombies.Zombie;
+import PvZ.model.zombies.ZombieImpl;
 
 public interface ZombieActionStrategy {
 
-    void zombieAction(Zombie zombie);
+   void zombieAction(ZombieImpl zombie);
 
-    void takeDamage(Zombie zombie, int damage);
+   void takeDamage(ZombieImpl zombie, int damage);
 }

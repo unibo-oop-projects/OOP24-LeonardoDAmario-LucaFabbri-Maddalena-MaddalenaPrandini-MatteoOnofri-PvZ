@@ -1,5 +1,20 @@
 package PvZ.model.api;
 
-public interface Zombie extends Entity{
+import PvZ.utilities.Position;
 
+public interface Zombie extends Entity {
+
+    int getHealth();
+
+    int getSpeed();
+
+    void takeDamage(int damage);
+
+    boolean isAlive();
+
+    void setPosition(Position position);
+
+    Position getPosition();
+
+    void move();
 }

@@ -3,14 +3,15 @@ package PvZ.model.zombies;
 import PvZ.model.api.Entity;
 import PvZ.model.api.ZombieActionStrategy;
 import PvZ.utilities.Position;
+import PvZ.model.api.EntitiesManager;
 
-public class Zombie implements Entity {
+public class ZombieImpl implements Entity {
     private int health;
     private int speed;
     private ZombieActionStrategy strategy;
     private Position position;
 
-    public Zombie(int health, int speed, ZombieActionStrategy strategy) {
+    public ZombieImpl(int health, int speed, ZombieActionStrategy strategy) {
         this.health = health;
         this.speed = speed;
         this.strategy = strategy;
@@ -27,10 +28,11 @@ public class Zombie implements Entity {
     }
 
     @Override
-    public void update() {
+    public void update(long deltaTime, EntitiesManager entitiesManager) {
         if (strategy != null) {
             strategy.zombieAction(this);
         }
+        move();
     }
 
     public void move() {
