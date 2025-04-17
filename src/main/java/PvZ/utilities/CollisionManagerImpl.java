@@ -52,7 +52,7 @@ public class CollisionManagerImpl implements CollisionManager{
         for (Plant plant : plantSet) {
             if(zombie.getHitBox().isColliding(plant.getHitBox())) {
                 plant.decreaseLife(zombie.getDamage());
-                if(!plant.isAlive()) {
+                if(plant.getLife() <= 0) {
                     entitiesManager.removeEntity(plant);
                 }
                 return;
