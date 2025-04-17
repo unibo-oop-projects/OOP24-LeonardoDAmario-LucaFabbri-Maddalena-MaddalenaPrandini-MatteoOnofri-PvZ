@@ -2,54 +2,29 @@ package PvZ.model.impl.Plants;
 
 import PvZ.model.api.EntitiesManager;
 import PvZ.model.api.Plant;
-import PvZ.model.api.PlantType;
+import PvZ.model.impl.AbstractEntity;
 import PvZ.utilities.Position;
 
-public abstract class AbstractPlant implements Plant{
-    protected int life;
-    protected PlantType type;
-    protected Position position;
+public abstract class AbstractPlant extends AbstractEntity implements Plant{
+    private int damage;
 
-    public AbstractPlant(PlantType type) {
-        this.type = type;
-        this.life = type.getLife();
-    }
-
-    protected abstract void action(long deltaTime, EntitiesManager entitiesManager);
-
-    @Override
-    public void update(long deltaTime, EntitiesManager entitiesManager) {
-        this.action(deltaTime, entitiesManager);
+    public AbstractPlant(Position position) {
+        super(position);
     }
 
     @Override
-    public int getLife() {
-        return this.life;
+    public abstract void update(long deltaTime, EntitiesManager entitiesManager);
+
+    @Override
+    public final int getLife(){
+        return this.getMaxLife() - this.damage;
     }
 
     @Override
-    public void decreaseLife(int damage) {
-        this.life -= damage;
+    public final void decreaseLife(int damage){
+        this.damage= this.damage + damage;
     }
 
-    @Override
-    public boolean isAlive() {
-        return this.life > 0;
-    }
-
-    @Override
-    public PlantType getType() {
-        return this.type;
-    }
-
-    @Override
-    public void setPosition(Position position) {
-        this.position = position;
-    }
-
-    @Override
-    public Position getPosition() {
-        return this.position;
-    }
+    protected abstract int getMaxLife();
     
 }
