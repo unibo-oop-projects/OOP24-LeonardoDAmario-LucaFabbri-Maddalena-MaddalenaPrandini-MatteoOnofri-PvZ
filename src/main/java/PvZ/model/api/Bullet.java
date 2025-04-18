@@ -1,9 +1,0 @@
-package PvZ.model.api;
-
-public interface Bullet extends Entity{
-
-    int getDamage();
-
-    void die();
-
-}
