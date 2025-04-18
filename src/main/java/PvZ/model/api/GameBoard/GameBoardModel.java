@@ -1,6 +1,6 @@
 package PvZ.model.api.GameBoard;
 
-import PvZ.model.api.Entity;
+import PvZ.model.api.Entities.Entity;
 
 public interface GameBoardModel {
     int getRows();
