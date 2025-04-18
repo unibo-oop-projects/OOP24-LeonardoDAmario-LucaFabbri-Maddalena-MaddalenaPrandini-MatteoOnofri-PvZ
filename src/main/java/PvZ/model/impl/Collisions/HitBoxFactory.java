@@ -1,4 +1,7 @@
-package PvZ.utilities;
+package PvZ.model.impl.Collisions;
+
+import PvZ.model.api.Collisions.HitBox;
+import PvZ.utilities.Position;
 
 public final class HitBoxFactory {
 

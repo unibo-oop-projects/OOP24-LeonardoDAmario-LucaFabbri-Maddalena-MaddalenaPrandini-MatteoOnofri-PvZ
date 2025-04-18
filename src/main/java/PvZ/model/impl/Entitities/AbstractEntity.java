@@ -1,6 +1,6 @@
 package PvZ.model.impl.Entitities;
 
-import PvZ.utilities.HitBox;
+import PvZ.model.api.Collisions.HitBox;
 import PvZ.model.api.Entities.Entity;
 import PvZ.utilities.Position;
 

@@ -1,5 +1,6 @@
 package PvZ.model.api.Entities;
 
+import PvZ.model.api.Collisions.HitBox;
 import PvZ.utilities.*;
 
 public interface Entity {

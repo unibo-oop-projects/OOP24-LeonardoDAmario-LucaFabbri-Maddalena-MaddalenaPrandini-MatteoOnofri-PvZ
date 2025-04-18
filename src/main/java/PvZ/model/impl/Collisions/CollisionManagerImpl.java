@@ -1,4 +1,4 @@
-package PvZ.utilities;
+package PvZ.model.impl.Collisions;
 
 import java.math.BigDecimal;
 import java.util.Set;
@@ -6,7 +6,8 @@ import java.util.stream.Collectors;
 
 
 import PvZ.model.api.Zombie;
-import PvZ.model.api.Collisions.Bullet;
+import PvZ.model.api.Bullets.Bullet;
+import PvZ.model.api.Collisions.CollisionManager;
 import PvZ.model.api.Entities.EntitiesManager;
 import PvZ.model.api.Entities.Entity;
 import PvZ.model.api.Plants.Plant;

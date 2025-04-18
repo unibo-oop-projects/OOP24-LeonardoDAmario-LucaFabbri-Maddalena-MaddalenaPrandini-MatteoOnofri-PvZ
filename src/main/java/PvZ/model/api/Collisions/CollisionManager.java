@@ -1,4 +1,4 @@
-package PvZ.utilities;
+package PvZ.model.api.Collisions;
 
 import PvZ.model.api.Entities.EntitiesManager;
 import PvZ.model.api.Entities.Entity;

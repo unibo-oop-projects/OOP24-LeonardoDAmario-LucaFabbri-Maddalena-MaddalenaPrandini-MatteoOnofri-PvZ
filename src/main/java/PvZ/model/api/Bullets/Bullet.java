@@ -1,4 +1,4 @@
-package PvZ.model.api.Collisions;
+package PvZ.model.api.Bullets;
 
 import PvZ.model.api.Entities.Entity;
 

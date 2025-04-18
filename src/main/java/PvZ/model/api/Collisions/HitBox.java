@@ -1,4 +1,6 @@
-package PvZ.utilities;
+package PvZ.model.api.Collisions;
+
+import PvZ.utilities.Position;
 
 public interface HitBox {
     

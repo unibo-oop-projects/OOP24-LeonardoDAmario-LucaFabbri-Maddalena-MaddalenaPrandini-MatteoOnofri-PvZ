@@ -1,15 +1,15 @@
-package PvZ.model.impl.Collisions;
+package PvZ.model.impl.Bullets;
 
 import java.math.BigDecimal;
 
-import PvZ.utilities.CollisionManager;
-import PvZ.utilities.CollisionManagerImpl;
-import PvZ.utilities.HitBox;
-import PvZ.utilities.HitBoxFactory;
 import PvZ.utilities.Position;
-import PvZ.utilities.HitBoxFactory.HitBoxType; 
-import PvZ.model.api.Collisions.Bullet;
+import PvZ.model.api.Bullets.Bullet;
+import PvZ.model.api.Collisions.CollisionManager;
+import PvZ.model.api.Collisions.HitBox;
 import PvZ.model.api.Entities.EntitiesManager;
+import PvZ.model.impl.Collisions.CollisionManagerImpl;
+import PvZ.model.impl.Collisions.HitBoxFactory;
+import PvZ.model.impl.Collisions.HitBoxFactory.HitBoxType;
 import PvZ.model.impl.Entitities.AbstractEntity;
 
 public class BulletImpl extends AbstractEntity implements Bullet {
