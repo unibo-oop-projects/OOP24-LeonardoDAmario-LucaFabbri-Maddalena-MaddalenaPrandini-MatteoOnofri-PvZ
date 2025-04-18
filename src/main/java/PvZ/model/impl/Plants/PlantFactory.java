@@ -70,10 +70,11 @@ public final class PlantFactory {
                 entitiesManager.getEntities().stream()
                         .filter(e -> e instanceof Zombie)
                         .filter(z -> z.getHitBox().isColliding(this.getHitBox()))
-                        .findAny().ifPresent(z->{
+                        .findAny()
+                        .ifPresent(z->{
                             entitiesManager.removeEntity(z);
                             entitiesManager.removeEntity(this);
-                        });;
+                        });
             }
 
             @Override
