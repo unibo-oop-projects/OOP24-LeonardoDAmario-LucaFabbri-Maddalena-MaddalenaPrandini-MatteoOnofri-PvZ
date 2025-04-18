@@ -1,4 +1,4 @@
-package PvZ.model.api;
+package PvZ.model.api.Collisions;
 
 public interface Sun {
 

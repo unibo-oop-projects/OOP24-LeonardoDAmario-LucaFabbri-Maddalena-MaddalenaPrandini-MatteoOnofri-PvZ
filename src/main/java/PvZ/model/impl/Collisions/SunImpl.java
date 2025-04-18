@@ -1,10 +1,10 @@
-package PvZ.model.impl;
+package PvZ.model.impl.Collisions;
 
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
-import PvZ.model.api.Sun;
+import PvZ.model.api.Collisions.Sun;
 
 public class SunImpl implements Sun{
     

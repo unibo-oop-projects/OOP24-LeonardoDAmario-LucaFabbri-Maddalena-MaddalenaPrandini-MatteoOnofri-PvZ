@@ -1,8 +1,8 @@
 package PvZ.model.impl.Plants;
-import PvZ.model.api.EntitiesManager;
-import PvZ.model.api.Plant;
-import PvZ.model.api.PlantType;
-import PvZ.model.impl.BulletImpl;
+import PvZ.model.api.Entities.EntitiesManager;
+import PvZ.model.api.Plants.PlantType;
+import PvZ.model.api.Plants.Plant;
+import PvZ.model.impl.Collisions.BulletImpl;
 import PvZ.utilities.Position;
 import java.util.Objects;
 

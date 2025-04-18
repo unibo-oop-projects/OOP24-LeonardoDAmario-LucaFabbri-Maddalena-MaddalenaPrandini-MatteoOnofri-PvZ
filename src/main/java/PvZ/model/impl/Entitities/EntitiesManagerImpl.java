@@ -1,10 +1,10 @@
-package PvZ.model.impl;
+package PvZ.model.impl.Entitities;
 
 import java.util.HashSet;
 import java.util.Set;
 
-import PvZ.model.api.EntitiesManager;
-import PvZ.model.api.Entity;
+import PvZ.model.api.Entities.EntitiesManager;
+import PvZ.model.api.Entities.Entity;
 
 public class EntitiesManagerImpl implements EntitiesManager{
     

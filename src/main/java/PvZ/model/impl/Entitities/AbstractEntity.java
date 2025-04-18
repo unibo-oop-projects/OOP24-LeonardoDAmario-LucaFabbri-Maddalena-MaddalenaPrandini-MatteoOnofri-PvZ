@@ -1,7 +1,7 @@
-package PvZ.model.impl;
+package PvZ.model.impl.Entitities;
 
-import PvZ.model.api.Entity;
 import PvZ.utilities.HitBox;
+import PvZ.model.api.Entities.Entity;
 import PvZ.utilities.Position;
 
 public abstract class AbstractEntity implements Entity {

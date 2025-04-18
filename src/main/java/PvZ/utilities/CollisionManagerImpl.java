@@ -4,11 +4,12 @@ import java.math.BigDecimal;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import PvZ.model.api.Bullet;
-import PvZ.model.api.EntitiesManager;
-import PvZ.model.api.Entity;
-import PvZ.model.api.Plant;
+
 import PvZ.model.api.Zombie;
+import PvZ.model.api.Collisions.Bullet;
+import PvZ.model.api.Entities.EntitiesManager;
+import PvZ.model.api.Entities.Entity;
+import PvZ.model.api.Plants.Plant;
 
 public class CollisionManagerImpl implements CollisionManager{
 

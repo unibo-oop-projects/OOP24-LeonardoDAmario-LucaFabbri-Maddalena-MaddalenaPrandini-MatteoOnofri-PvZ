@@ -1,8 +1,8 @@
 package PvZ.model.impl.Plants;
 
-import PvZ.model.api.EntitiesManager;
-import PvZ.model.api.Plant;
-import PvZ.model.impl.AbstractEntity;
+import PvZ.model.api.Entities.EntitiesManager;
+import PvZ.model.api.Plants.Plant;
+import PvZ.model.impl.Entitities.AbstractEntity;
 import PvZ.utilities.Position;
 
 public abstract class AbstractPlant extends AbstractEntity implements Plant{
