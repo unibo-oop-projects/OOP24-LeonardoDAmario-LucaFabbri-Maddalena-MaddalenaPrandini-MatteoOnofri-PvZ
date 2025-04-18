@@ -23,7 +23,7 @@ public abstract class AbstractPlant extends AbstractEntity implements Plant{
 
     @Override
     public final void decreaseLife(int damage){
-        this.damage= this.damage + damage;
+        this.damage = this.damage + damage;
     }
 
     protected abstract int getMaxLife();
