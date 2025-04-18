@@ -67,15 +67,13 @@ public final class PlantFactory {
 
             @Override
             public void update(long deltaTime, EntitiesManager entitiesManager) {
-                var zombie = entitiesManager.getEntities().stream()
+                entitiesManager.getEntities().stream()
                         .filter(e -> e instanceof Zombie)
                         .filter(z -> z.getHitBox().isColliding(this.getHitBox()))
-                        .findAny();
-
-                if(zombie.isPresent()){
-                    entitiesManager.removeEntity(zombie.get());
-                    entitiesManager.removeEntity(this);
-                }
+                        .findAny().ifPresent(z->{
+                            entitiesManager.removeEntity(z);
+                            entitiesManager.removeEntity(this);
+                        });;
             }
 
             @Override
