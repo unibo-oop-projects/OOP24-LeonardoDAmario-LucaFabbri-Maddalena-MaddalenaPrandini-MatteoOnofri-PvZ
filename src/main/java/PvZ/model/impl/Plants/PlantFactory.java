@@ -5,6 +5,7 @@ import PvZ.model.impl.Bullets.BulletImpl;
 import PvZ.model.api.Plants.Plant;
 import PvZ.utilities.Position;
 import java.util.Objects;
+import PvZ.model.api.Zombie;
 
 /**
  * Factory class for creating plants.
@@ -66,7 +67,15 @@ public final class PlantFactory {
 
             @Override
             public void update(long deltaTime, EntitiesManager entitiesManager) {
-                // Wallnut does not do anything
+                var zombie = entitiesManager.getEntities().stream()
+                        .filter(e -> e instanceof Zombie)
+                        .filter(z -> z.getHitBox().isColliding(this.getHitBox()))
+                        .findAny();
+
+                if(zombie.isPresent()){
+                    entitiesManager.removeEntity(zombie.get());
+                    entitiesManager.removeEntity(this);
+                }
             }
 
             @Override
