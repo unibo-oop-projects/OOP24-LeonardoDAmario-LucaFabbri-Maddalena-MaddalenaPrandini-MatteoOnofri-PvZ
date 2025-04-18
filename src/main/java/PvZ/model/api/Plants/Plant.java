@@ -1,7 +1,9 @@
-package PvZ.model.api;
+package PvZ.model.aapi.Plants;
+
+import PvZ.model.api.Entities.Entity;
 
 /**
- * Interface for the base plant.
+ * Interface for the base plant
  */
 public interface Plant extends Entity {
     /** 

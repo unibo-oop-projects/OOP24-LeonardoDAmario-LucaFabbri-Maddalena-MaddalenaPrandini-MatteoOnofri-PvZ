@@ -1,8 +1,9 @@
-package PvZ.model.impl;
+package PvZ.model.impl.Collisions;
 
 import java.util.Optional;
 
 import PvZ.model.api.Collisions.Bullet;
+import PvZ.model.impl.Entitities.AbstractEntity;
 import PvZ.utilities.Position; 
 
 public class BulletImpl extends AbstractEntity implements Bullet {

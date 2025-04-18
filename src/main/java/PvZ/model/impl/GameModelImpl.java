@@ -1,8 +1,8 @@
 package PvZ.model.impl;
 import PvZ.model.api.*;
 import PvZ.model.api.Entities.EntitiesManager;
-import PvZ.model.api.Plants.Plant;
 import PvZ.model.api.Plants.PlantType;
+import PvZ.model.api.Plants.Plant;
 import PvZ.model.impl.Entitities.EntitiesManagerImpl;
 import PvZ.model.impl.Plants.PlantFactory;
 import PvZ.utilities.Position;
