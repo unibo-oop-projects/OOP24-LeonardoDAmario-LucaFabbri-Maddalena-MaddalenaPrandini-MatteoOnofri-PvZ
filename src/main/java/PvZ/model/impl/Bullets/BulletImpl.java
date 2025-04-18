@@ -5,17 +5,13 @@ import java.math.BigDecimal;
 import PvZ.utilities.Position;
 import PvZ.model.api.Bullets.Bullet;
 import PvZ.model.api.Collisions.CollisionManager;
-import PvZ.model.api.Collisions.HitBox;
 import PvZ.model.api.Entities.EntitiesManager;
 import PvZ.model.impl.Collisions.CollisionManagerImpl;
-import PvZ.model.impl.Collisions.HitBoxFactory;
 import PvZ.model.impl.Collisions.HitBoxFactory.HitBoxType;
 import PvZ.model.impl.Entitities.AbstractEntity;
 
 public class BulletImpl extends AbstractEntity implements Bullet {
 
-    private Position pos;
-    private HitBox hitBox;
     private long elapsedTime = 0;
     private CollisionManager collisionManager;
 
@@ -24,8 +20,7 @@ public class BulletImpl extends AbstractEntity implements Bullet {
     private static final long UPDATE_RATE = 500;
 
     public BulletImpl(final Position pos) {
-        super(pos);
-        this.hitBox = HitBoxFactory.createHitBox(pos, HitBoxType.BULLET);
+        super(pos, HitBoxType.BULLET);
         this.collisionManager = new CollisionManagerImpl();
     }
 
@@ -42,7 +37,7 @@ public class BulletImpl extends AbstractEntity implements Bullet {
     public void update(long deltaTime, EntitiesManager entitiesManager) {
         if(this.canUpdate(deltaTime)) {            
             this.setPosition(this.move(deltaTime));
-            this.hitBox.update(pos);
+            this.getHitBox().update(this.getPosition());
             this.collisionManager.handleCollision(this, entitiesManager);
         }
     }
