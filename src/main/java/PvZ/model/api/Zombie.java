@@ -17,4 +17,6 @@ public interface Zombie extends Entity {
     Position getPosition();
 
     void move();
+
+    void forceKill();
 }

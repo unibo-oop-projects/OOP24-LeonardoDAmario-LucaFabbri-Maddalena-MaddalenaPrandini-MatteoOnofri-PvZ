@@ -8,6 +8,7 @@ import PvZ.model.api.EntitiesManager;
 public class ZombieImpl implements Entity {
     private int health;
     private int speed;
+    private boolean alive;
     private ZombieActionStrategy strategy;
     private Position position;
 
@@ -15,6 +16,7 @@ public class ZombieImpl implements Entity {
         this.health = health;
         this.speed = speed;
         this.strategy = strategy;
+        this.alive=true;
     }
 
     @Override
@@ -43,11 +45,16 @@ public class ZombieImpl implements Entity {
         health -= damage;
         if (health < 0) {
             health = 0; 
+            alive=false;
         }
     }
 
     public boolean isAlive() {
-        return health > 0;
+        return alive && health > 0;
+    }
+
+    public void forceKill(){
+        alive = false;
     }
 
     public int getHealth() {

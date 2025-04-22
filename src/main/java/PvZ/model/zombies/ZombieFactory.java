@@ -9,7 +9,7 @@ public class ZombieFactory {
             case "basic" -> BasicZombie.create(strategy);
             case "fast" -> new ZombieImpl(80, 2, strategy); 
             case "strong" -> new ZombieImpl(150, 1, strategy);
-            default -> throw new IllegalArgumentException("Tipo di zombie non supportato: " + type);
+            default -> throw new IllegalArgumentException("Unsupported zombie type: " + type);
         };
     }
 }
