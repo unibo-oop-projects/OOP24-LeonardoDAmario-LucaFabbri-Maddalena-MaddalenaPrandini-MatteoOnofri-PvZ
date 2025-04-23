@@ -2,10 +2,12 @@ package PvZ.controller.impl;
 
 import PvZ.controller.api.GameController;
 import PvZ.model.api.GameModel;
+import PvZ.model.api.Entities.EntitiesManager;
+import PvZ.model.api.Plants.PlantType;
+import PvZ.model.impl.Plants.PlantFactory;
 import PvZ.view.api.GameView;
 
 public class GameControllerImpl implements GameController {
-
     private static final int FPS = 60;
     private static final long TIME_PER_TICK = 1000 / FPS;
 
