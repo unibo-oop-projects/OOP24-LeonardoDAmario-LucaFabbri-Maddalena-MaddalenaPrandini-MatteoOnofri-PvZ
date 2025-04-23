@@ -6,7 +6,7 @@ import PvZ.model.api.GameModel;
 import PvZ.model.impl.GameModelImpl;
 import PvZ.view.api.GameView;
 
-public class Main {
+public class PvZ {
     public static void main(String[] args) {
         GameModel model = new GameModelImpl();
         GameView view = new GameViewImpl();
