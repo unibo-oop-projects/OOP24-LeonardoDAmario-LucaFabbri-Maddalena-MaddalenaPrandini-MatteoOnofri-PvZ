@@ -1,5 +1,6 @@
 package PvZ.model.api.GameMenu;
 
+import PvZ.model.api.Difficulty;
 import java.util.List;
 
 public interface MenuModel {
@@ -12,4 +13,7 @@ public interface MenuModel {
 
         MenuOption getSelectedOption();
 
+        Difficulty getSelectedDifficulty();
+
+        void cycleDifficulty();
 }

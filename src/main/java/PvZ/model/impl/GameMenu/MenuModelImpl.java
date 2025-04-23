@@ -1,37 +1,52 @@
 package PvZ.model.impl.GameMenu;
 
+import PvZ.model.api.Difficulty;
 import PvZ.model.api.GameMenu.MenuModel;
 import PvZ.model.api.GameMenu.MenuOption;
 
-import java.util.Arrays;
 import java.util.List;
 
 public class MenuModelImpl implements MenuModel {
 
-    private final List<MenuOption> options = Arrays.asList(MenuOption.values());
-    private int selectedIndex = 0;
-
+    private Difficulty selectedDifficulty = Difficulty.NORMAL;
 
     @Override
     public List<MenuOption> getOptions() {
-        return options;
+        return List.of();
     }
 
     @Override
     public void setSelectedOption(int index) {
-        if (index >= 0 && index < options.size()) {
-            this.selectedIndex = index;
-        }
 
     }
 
     @Override
     public int getSelectedIndex() {
-        return selectedIndex;
+        return 0;
     }
 
     @Override
     public MenuOption getSelectedOption() {
-        return options.get(selectedIndex);
+        return null;
+    }
+
+    @Override
+    public Difficulty getSelectedDifficulty() {
+        return selectedDifficulty;
+    }
+
+    @Override
+    public void cycleDifficulty() {
+        switch (selectedDifficulty) {
+            case EASY:
+                selectedDifficulty = Difficulty.NORMAL;
+                break;
+            case NORMAL:
+                selectedDifficulty = Difficulty.HARD;
+                break;
+            case HARD:
+                selectedDifficulty = Difficulty.EASY;
+                break;
+        }
     }
 }
