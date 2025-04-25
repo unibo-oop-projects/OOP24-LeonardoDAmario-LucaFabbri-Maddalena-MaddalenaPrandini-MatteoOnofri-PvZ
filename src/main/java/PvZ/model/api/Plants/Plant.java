@@ -18,4 +18,6 @@ public interface Plant extends Entity {
      */
     void decreaseLife(int damage);
 
+    PlantType mapToEntityType();
+
 }
