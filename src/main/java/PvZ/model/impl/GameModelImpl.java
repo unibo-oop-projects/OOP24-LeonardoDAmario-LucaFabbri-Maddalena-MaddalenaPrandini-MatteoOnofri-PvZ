@@ -81,6 +81,16 @@ public class GameModelImpl implements GameModel {
                 .collect(Collectors.toSet());
     }
 
+    @Override
+    public int getSunCount() {
+        return entitiesManager.getSunCount();
+    }
+
+    @Override
+    public int getKillCount() {
+        return entitiesManager.getKillCount();
+    }
+
     private static EntityType getEntityType(Entity entity) {
         return switch (entity) {
             case Plant plant -> switch (plant.mapToEntityType()) {

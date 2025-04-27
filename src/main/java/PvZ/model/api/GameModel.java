@@ -15,4 +15,6 @@ public interface GameModel {
     void placePlant(PlantType type, Position position);
     void update(long deltaTime);
     Set<GameEntity> getGameEntities();
+    int getSunCount();
+    int getKillCount();
 }
