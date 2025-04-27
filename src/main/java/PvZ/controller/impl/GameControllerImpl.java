@@ -56,7 +56,7 @@ public class GameControllerImpl implements GameController, ViewListener{
                 long deltaTime = currentTime - previousTime;
 
                 model.update(deltaTime);
-                view.render(model);
+                view.render(model.getGameEntities(), model.getSunCount(), model.getKillCount());
 
                 previousTime = currentTime;
 
