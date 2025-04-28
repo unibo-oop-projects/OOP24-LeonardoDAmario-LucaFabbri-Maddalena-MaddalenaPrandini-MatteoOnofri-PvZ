@@ -1,7 +1,6 @@
 package PvZ.model.api;
 
 import PvZ.model.api.Plants.PlantType;
-import PvZ.utilities.EntityType;
 import PvZ.utilities.GameEntity;
 import PvZ.utilities.Position;
 
