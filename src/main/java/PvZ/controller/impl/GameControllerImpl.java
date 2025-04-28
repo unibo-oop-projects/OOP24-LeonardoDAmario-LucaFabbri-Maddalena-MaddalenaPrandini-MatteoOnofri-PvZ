@@ -44,8 +44,8 @@ public class GameControllerImpl implements GameController, ViewListener{
     }
 
     private class GameLoop extends Thread {
-        PlantType selectedPlantType;
-        Position selectedPosition;
+        PlantType selectedPlantType = null;
+        Position selectedPosition = null;
 
         @Override
         public void run() {
@@ -93,7 +93,7 @@ public class GameControllerImpl implements GameController, ViewListener{
                     default -> { }
                 }
             } catch (Exception e){
-                //TODO : handle the exception
+                e.printStackTrace();
             }
             if (selectedPlantType != null && selectedPosition != null) {
                 model.placePlant(selectedPlantType, selectedPosition);

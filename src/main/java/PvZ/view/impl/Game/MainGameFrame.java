@@ -1,4 +1,4 @@
-package PvZ.view.impl;
+package PvZ.view.impl.Game;
 
 import PvZ.model.api.Difficulty;
 import PvZ.view.impl.Menu.MenuView;
