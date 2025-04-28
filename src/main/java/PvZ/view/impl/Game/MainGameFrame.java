@@ -36,6 +36,7 @@ public class MainGameFrame extends JFrame {
 
     public void startGame(Difficulty difficulty) {
 
-        System.out.println("Avvio gioco con difficoltà: " + difficulty);
+
+        GamePanel game = new GamePanel();
     }
 }

@@ -40,6 +40,8 @@ public class GamePanel extends JFrame implements GameView, ActionListener {
         this.setResizable(false);
         this.setLocationRelativeTo(null);
 
+        this.setVisible(true);
+
     }
 
     @Override
