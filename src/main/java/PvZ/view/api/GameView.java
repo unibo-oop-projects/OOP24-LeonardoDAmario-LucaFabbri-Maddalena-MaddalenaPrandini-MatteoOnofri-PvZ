@@ -1,6 +1,9 @@
 package PvZ.view.api;
 
-import PvZ.model.api.GameModel;
+import PvZ.utilities.GameEntity;
+
+
+import java.util.Set;;
 
 public interface GameView {
     void show();
@@ -9,5 +12,5 @@ public interface GameView {
 
     boolean isVisible();
 
-    void render(GameModel model);
+    void render(Set<GameEntity> entities, int suns, int kills);
 }

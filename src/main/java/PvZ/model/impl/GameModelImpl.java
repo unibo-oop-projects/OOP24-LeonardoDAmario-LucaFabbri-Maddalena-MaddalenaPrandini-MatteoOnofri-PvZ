@@ -1,17 +1,23 @@
 package PvZ.model.impl;
 import PvZ.model.api.*;
+import PvZ.model.api.Bullets.Bullet;
 import PvZ.model.api.Entities.EntitiesManager;
+import PvZ.model.api.Entities.Entity;
 import PvZ.model.api.Plants.PlantType;
 import PvZ.model.api.Plants.Plant;
 import PvZ.model.impl.Entitities.EntitiesManagerImpl;
 import PvZ.model.impl.Plants.PlantFactory;
+import PvZ.utilities.EntityType;
+import PvZ.utilities.GameEntity;
 import PvZ.utilities.Position;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class GameModelImpl implements GameModel {
     EntitiesManager entitiesManager;
     PlantFactory plantFactory;
+    Plant plant;
 
     private static final int ROWS = 5;
     private static final int COLS = 9;
@@ -66,6 +72,37 @@ public class GameModelImpl implements GameModel {
     @Override
     public void update(long deltaTime) {
         this.entitiesManager.getEntities().forEach(e->e.update(deltaTime, entitiesManager));
+    }
+
+    @Override
+    public Set<GameEntity> getGameEntities() {
+        return entitiesManager.getEntities().stream()
+                .map( e -> new GameEntity(getEntityType(e), e.getPosition()))
+                .collect(Collectors.toSet());
+    }
+
+    @Override
+    public int getSunCount() {
+        return entitiesManager.getSunCount();
+    }
+
+    @Override
+    public int getKillCount() {
+        return entitiesManager.getKillCount();
+    }
+
+    private static EntityType getEntityType(Entity entity) {
+        return switch (entity) {
+            case Plant plant -> switch (plant.mapToEntityType()) {
+                    case PEASHOOTER -> EntityType.PEASHOOTER;
+                    case SUNFLOWER -> EntityType.SUNFLOWER;
+                    case WALLNUT -> EntityType.WALLNUT;
+                    default -> throw new IllegalArgumentException();
+                };
+            case Zombie zombie -> EntityType.ZOMBIE;
+            case Bullet bullet -> EntityType.BULLET;
+            default -> throw new IllegalArgumentException();
+        };
     }
 
     @Override
