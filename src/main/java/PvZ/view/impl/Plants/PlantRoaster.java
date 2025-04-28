@@ -1,8 +1,6 @@
 package PvZ.view.impl.Plants;
 
 import PvZ.controller.api.ViewListener;
-import PvZ.view.api.GameView;
-
 import javax.swing.*;
 import java.awt.*;
 

@@ -1,15 +1,9 @@
 package PvZ.view.impl;
+
 import java.awt.BorderLayout;
-import java.awt.event.ActionListener;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Set;
-
 import javax.swing.*;
-
 import PvZ.controller.api.ViewListener;
-import PvZ.model.api.GameModel;
-import PvZ.model.api.Plants.PlantType;
 import PvZ.utilities.GameEntity;
 import PvZ.view.api.GameView;
 import PvZ.view.impl.Plants.Grid;

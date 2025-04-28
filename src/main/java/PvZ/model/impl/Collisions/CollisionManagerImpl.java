@@ -44,7 +44,7 @@ public class CollisionManagerImpl implements CollisionManager{
         };
     }
 
-    private void handleZombiePlantCollision(Zombie zombie, EntitiesManager entitiesManager) {
+    private boolean handleZombiePlantCollision(Zombie zombie, EntitiesManager entitiesManager) {
         Set<Plant> plantSet = entitiesManager.getEntities().stream()
             .filter(entity -> entity instanceof Plant)
             .map(entity -> (Plant) entity)
@@ -57,9 +57,10 @@ public class CollisionManagerImpl implements CollisionManager{
                 if(plant.getLife() <= 0) {
                     entitiesManager.removeEntity(plant);
                 }
-                return;
+                return true;
             }
         }
+        return false;
     }
     
 }

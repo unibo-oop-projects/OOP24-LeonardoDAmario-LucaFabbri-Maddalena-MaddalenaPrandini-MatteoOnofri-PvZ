@@ -1,8 +1,6 @@
 package PvZ.view.impl.Plants;
 
 import PvZ.controller.api.ViewListener;
-import PvZ.model.api.Plants.PlantType;
-import PvZ.model.impl.Cell;
 import PvZ.utilities.Position;
 
 import javax.swing.*;
