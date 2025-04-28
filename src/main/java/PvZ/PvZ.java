@@ -2,7 +2,7 @@ package PvZ;
 
 import PvZ.model.api.GameMenu.MenuModel;
 import PvZ.model.impl.GameMenu.MenuModelImpl;
-import PvZ.view.impl.MainGameFrame;
+import PvZ.view.impl.Game.MainGameFrame;
 import PvZ.view.impl.Menu.MenuView;
 import PvZ.controller.impl.Menu.MenuController;
 

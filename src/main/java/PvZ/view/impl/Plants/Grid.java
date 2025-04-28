@@ -5,27 +5,28 @@ import PvZ.utilities.Position;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionListener;
 
 public class Grid extends JPanel {
+
     private static final int ROWS = 5;
     private static final int COLUMNS = 9;
-    private final JButton[][] cells;
-    private int row, col;
+    private final CellButton[][] buttons = new CellButton[ROWS][COLUMNS];
 
-    public Grid(ViewListener listener) {
+    public Grid(ActionListener listener) {
         setLayout(new GridLayout(ROWS, COLUMNS));
-        cells = new JButton[ROWS][COLUMNS];
-
         for (int i = 0; i < ROWS; i++) {
             for (int j = 0; j < COLUMNS; j++) {
-                JButton cell = new JButton();
-                cell.setBackground(Color.LIGHT_GRAY);
-                row = i;
-                col = j;
-                cell.addActionListener(e -> listener.processInputGrid(new Position(row, col)));
-                cells[i][j] = cell;
-                this.add(cell);
+                CellButton button = new CellButton();
+                button.setActionCommand(i + "," + j);
+                button.addActionListener(listener);
+                buttons[i][j] = button;
+                add(button);
             }
         }
+    }
+
+    public CellButton[][] getButtons() {
+        return buttons;
     }
 }
