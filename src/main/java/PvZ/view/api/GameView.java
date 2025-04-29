@@ -14,5 +14,5 @@ public interface GameView {
     boolean isVisible();
 
     void render(Set<GameEntity> entities, int suns, int kills);
-
+    void setViewListener(ViewListener listener);
 }

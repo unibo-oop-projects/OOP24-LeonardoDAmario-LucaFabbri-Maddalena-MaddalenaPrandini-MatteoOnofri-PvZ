@@ -17,14 +17,14 @@ public class GameViewImpl extends JFrame implements GameView, ActionListener {
     private final GridPanel grid;
     private final PlantRoaster roaster;
     private final CountersPanel countersPanel;
-
     private ViewListener viewListener;
+
 
     public GameViewImpl(){
         super("Plants vs Zombie - OOP24");
 
         this.grid = new GridPanel(this);
-        this.roaster = new PlantRoaster(viewListener);
+        this.roaster = new PlantRoaster();
         this.countersPanel = new CountersPanel();
 
         JPanel mainPanel = new JPanel(new BorderLayout());
@@ -41,7 +41,6 @@ public class GameViewImpl extends JFrame implements GameView, ActionListener {
         this.setResizable(false);
         this.setLocationRelativeTo(null);
         this.setVisible(true);
-
     }
 
     @Override
@@ -54,21 +53,26 @@ public class GameViewImpl extends JFrame implements GameView, ActionListener {
         SwingUtilities.invokeLater(() -> this.setVisible(false));
     }
 
+
     @Override
     public void render(Set<GameEntity> entities, int suns, int kills) {
-        grid.setEntities(entities);
-
         for (GameEntity entity : entities) {
             if (entity.type() == EntityType.PEASHOOTER ||
                     entity.type() == EntityType.SUNFLOWER ||
                     entity.type() == EntityType.WALLNUT) {
 
-                Position pos = entity.position();
-                int row = (int)pos.x();
-                int col = (int)pos.y();
-                Component comp = grid.getComponentAt(col * grid.CELL_SIZE + 1, row * grid.CELL_SIZE + 1);
-                if (comp instanceof CellButton button) {
-                    button.setEnabled(false);
+                int row = (int) entity.position().x();
+                int col = (int) entity.position().y();
+
+                Color color = switch (entity.type()) {
+                    case PEASHOOTER -> Color.GREEN;
+                    case SUNFLOWER -> Color.YELLOW;
+                    case WALLNUT -> new Color(139, 69, 19);
+                    default -> null;
+                };
+
+                if (color != null) {
+                    grid.colorCell(row, col, color);
                 }
             }
         }
@@ -77,9 +81,16 @@ public class GameViewImpl extends JFrame implements GameView, ActionListener {
         countersPanel.setKillCount(kills);
     }
 
+    @Override
+    public void setViewListener(ViewListener listener) {
+        this.viewListener = listener;
+        this.roaster.setViewListener(listener);
+    }
+
 
     @Override
     public void actionPerformed(ActionEvent e) {
+
 
     }
 }
