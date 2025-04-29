@@ -1,5 +1,6 @@
 package PvZ.view.api;
 
+import PvZ.controller.api.ViewListener;
 import PvZ.utilities.GameEntity;
 
 
@@ -13,4 +14,5 @@ public interface GameView {
     boolean isVisible();
 
     void render(Set<GameEntity> entities, int suns, int kills);
+
 }

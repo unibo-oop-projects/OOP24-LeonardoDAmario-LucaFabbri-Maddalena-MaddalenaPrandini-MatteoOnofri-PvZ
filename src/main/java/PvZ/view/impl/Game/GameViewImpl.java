@@ -1,28 +1,29 @@
 package PvZ.view.impl.Game;
 
-import java.awt.BorderLayout;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Set;
 import javax.swing.*;
 import PvZ.controller.api.ViewListener;
+import PvZ.utilities.EntityType;
 import PvZ.utilities.GameEntity;
 import PvZ.utilities.Position;
 import PvZ.view.api.GameView;
-import PvZ.view.impl.Plants.Grid;
-import PvZ.view.impl.Plants.PlantRoaster;
+import PvZ.view.impl.Game.grid.CellButton;
+import PvZ.view.impl.Game.grid.GridPanel;
 
-public class GamePanel extends JFrame implements GameView, ActionListener {
-    private final Grid grid;
+public class GameViewImpl extends JFrame implements GameView, ActionListener {
+    private final GridPanel grid;
     private final PlantRoaster roaster;
     private final CountersPanel countersPanel;
 
     private ViewListener viewListener;
 
-    public GamePanel(){
+    public GameViewImpl(){
         super("Plants vs Zombie - OOP24");
 
-        this.grid = new Grid(this);
+        this.grid = new GridPanel(this);
         this.roaster = new PlantRoaster(viewListener);
         this.countersPanel = new CountersPanel();
 
@@ -39,6 +40,7 @@ public class GamePanel extends JFrame implements GameView, ActionListener {
         this.pack();
         this.setResizable(false);
         this.setLocationRelativeTo(null);
+        this.setVisible(true);
 
     }
 
@@ -49,26 +51,32 @@ public class GamePanel extends JFrame implements GameView, ActionListener {
 
     @Override
     public void close() {
-        SwingUtilities.invokeLater(() -> this.setVisible(true));
+        SwingUtilities.invokeLater(() -> this.setVisible(false));
     }
 
     @Override
     public void render(Set<GameEntity> entities, int suns, int kills) {
-        resetGrid();
-        entities.stream().forEach(entity -> {
-            /**/
-        });
-        countersPanel.setKillCount(kills);
-        countersPanel.setSunCount(suns);
-    }
+        grid.setEntities(entities);
 
-    private void resetGrid() {
-        for (var row: grid.getButtons()){
-            for (var cell: row){
-                cell.setEntity(null);
+        for (GameEntity entity : entities) {
+            if (entity.type() == EntityType.PEASHOOTER ||
+                    entity.type() == EntityType.SUNFLOWER ||
+                    entity.type() == EntityType.WALLNUT) {
+
+                Position pos = entity.position();
+                int row = (int)pos.x();
+                int col = (int)pos.y();
+                Component comp = grid.getComponentAt(col * grid.CELL_SIZE + 1, row * grid.CELL_SIZE + 1);
+                if (comp instanceof CellButton button) {
+                    button.setEnabled(false);
+                }
             }
         }
+
+        countersPanel.setSunCount(suns);
+        countersPanel.setKillCount(kills);
     }
+
 
     @Override
     public void actionPerformed(ActionEvent e) {
