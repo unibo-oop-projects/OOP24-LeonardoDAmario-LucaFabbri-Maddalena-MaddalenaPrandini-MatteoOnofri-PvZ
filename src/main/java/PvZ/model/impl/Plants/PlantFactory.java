@@ -51,16 +51,18 @@ public final class PlantFactory {
             }
 
             private final static int SUN_VALUE = 25;
-            private final static double GENERATED_SUN = 2.5;
+            private static final long SUN_GENERATION_INTERVAL = 7000; // ogni 7 secondi
+            private long lastSunTime = 0;
 
             private double elapsedTime;
 
             @Override
             public void update(long deltaTime, EntitiesManager entitiesManager) {
-                elapsedTime = elapsedTime + deltaTime;
-                if(elapsedTime >= GENERATED_SUN && getLife() > 0){
-                    entitiesManager.addSun(SUN_VALUE);
-                    elapsedTime = 0;
+                lastSunTime += deltaTime;
+                if (lastSunTime >= SUN_GENERATION_INTERVAL) {
+                    entitiesManager.addSun(SUN_VALUE); // o quanto vuoi
+                    lastSunTime = 0;
+                    System.out.println("[SUNFLOWER] Generated 25 sun");
                 }
             }
 

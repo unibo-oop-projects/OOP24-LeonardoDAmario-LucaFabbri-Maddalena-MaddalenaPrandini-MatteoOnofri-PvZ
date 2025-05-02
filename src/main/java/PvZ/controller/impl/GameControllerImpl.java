@@ -10,11 +10,11 @@ import PvZ.model.api.Plants.PlantType;
 import PvZ.utilities.Position;
 import PvZ.view.api.GameView;
 
-public class GameControllerImpl implements GameController, ViewListener{
+public class GameControllerImpl implements GameController, ViewListener {
 
     interface Event {}
-
     record InputRoaster(UserInputRoaster inputRoaster) implements Event {}
+    record PlacePlant(PlantType type, Position position) implements Event {}
     record InputGrid(Position position) implements Event {}
 
     private static final int FPS = 60;
@@ -25,6 +25,9 @@ public class GameControllerImpl implements GameController, ViewListener{
     private final LinkedBlockingQueue<Event> queue = new LinkedBlockingQueue<>();
     private boolean running;
 
+    private Position pendingPosition = null;
+    private PlantType selectedPlantType = null;
+
     public GameControllerImpl(final GameModel model, final GameView view) {
         this.model = model;
         this.view = view;
@@ -34,6 +37,11 @@ public class GameControllerImpl implements GameController, ViewListener{
     public void startGame() {
         this.running = true;
         view.show();
+        try {
+            Thread.sleep(300); // attesa per rendere la finestra visibile
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
         new GameLoop().start();
     }
 
@@ -44,11 +52,9 @@ public class GameControllerImpl implements GameController, ViewListener{
     }
 
     private class GameLoop extends Thread {
-        PlantType selectedPlantType = null;
-        Position selectedPosition = null;
-
         @Override
         public void run() {
+            System.out.println("[GAMELOOP] Starting main loop");
             long previousTime = System.currentTimeMillis();
 
             while (running && view.isVisible()) {
@@ -61,7 +67,7 @@ public class GameControllerImpl implements GameController, ViewListener{
                 previousTime = currentTime;
 
                 waitForNextFrame(currentTime);
-
+                System.out.println("[GAMELOOP] Running frame");
                 handleInput();
             }
         }
@@ -77,28 +83,38 @@ public class GameControllerImpl implements GameController, ViewListener{
             }
         }
 
-        private void handleInput(){
-            try{
-                switch (queue.poll(1, TimeUnit.MILLISECONDS)) {
-                    case InputRoaster(var inputRoaster) -> {
-                        selectedPlantType = switch (inputRoaster) {
-                            case PEASHOOTER -> PlantType.PEASHOOTER;
-                            case SUNFLOWER -> PlantType.SUNFLOWER;
-                            case WALLNUT -> PlantType.WALLNUT;
-                        };
+        private void handleInput() {
+            System.out.println("[CONTROLLER] Polling input...");
+            try {
+                Event event;
+                while ((event = queue.poll(1, TimeUnit.MILLISECONDS)) != null) {
+                    switch (event) {
+                        case InputRoaster(var inputRoaster) -> {
+                            selectedPlantType = switch (inputRoaster) {
+                                case PEASHOOTER -> PlantType.PEASHOOTER;
+                                case SUNFLOWER -> PlantType.SUNFLOWER;
+                                case WALLNUT   -> PlantType.WALLNUT;
+                            };
+                            System.out.println("[CONTROLLER] Selected plant type: " + selectedPlantType);
+                        }
+                        case InputGrid(var pos) -> {
+                            pendingPosition = pos;
+                            System.out.println("[CONTROLLER] Selected position: " + pendingPosition);
+                        }
+                        case PlacePlant(var type, var pos) -> {
+                            System.out.println("[CONTROLLER] Received PlacePlant: " + type + " at " + pos);
+                            model.placePlant(type, pos);
+                        }
+                        default -> {}
                     }
-                    case InputGrid(var positionInput) -> {
-                        selectedPosition = new Position(positionInput.x(), positionInput.y());
-                    }
-                    default -> { }
                 }
-            } catch (Exception e){
+                if (selectedPlantType != null && pendingPosition != null) {
+                    queue.add(new PlacePlant(selectedPlantType, pendingPosition));
+                    selectedPlantType = null;
+                    pendingPosition = null;
+                }
+            } catch (Exception e) {
                 e.printStackTrace();
-            }
-            if (selectedPlantType != null && selectedPosition != null) {
-                model.placePlant(selectedPlantType, selectedPosition);
-                selectedPlantType = null;
-                selectedPosition = null;
             }
         }
     }
