@@ -31,6 +31,7 @@ public class GameControllerImpl implements GameController, ViewListener {
     public GameControllerImpl(final GameModel model, final GameView view) {
         this.model = model;
         this.view = view;
+        this.view.setViewListener(this);
     }
 
     @Override
