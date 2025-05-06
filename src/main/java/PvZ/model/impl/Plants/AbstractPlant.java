@@ -1,15 +1,16 @@
 package PvZ.model.impl.Plants;
 
-import PvZ.model.api.EntitiesManager;
-import PvZ.model.api.Plant;
-import PvZ.model.impl.AbstractEntity;
+import PvZ.model.api.Entities.EntitiesManager;
+import PvZ.model.api.Plants.Plant;
+import PvZ.model.impl.Collisions.HitBoxFactory.HitBoxType;
+import PvZ.model.impl.Entitities.AbstractEntity;
 import PvZ.utilities.Position;
 
 public abstract class AbstractPlant extends AbstractEntity implements Plant{
     private int damage;
 
     public AbstractPlant(Position position) {
-        super(position);
+        super(position, HitBoxType.PLANT);
     }
 
     @Override
@@ -22,7 +23,7 @@ public abstract class AbstractPlant extends AbstractEntity implements Plant{
 
     @Override
     public final void decreaseLife(int damage){
-        this.damage= this.damage + damage;
+        this.damage = this.damage + damage;
     }
 
     protected abstract int getMaxLife();

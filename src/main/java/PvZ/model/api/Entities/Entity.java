@@ -1,5 +1,6 @@
-package PvZ.model.api;
+package PvZ.model.api.Entities;
 
+import PvZ.model.api.Collisions.HitBox;
 import PvZ.utilities.*;
 
 public interface Entity {
@@ -9,4 +10,5 @@ public interface Entity {
 
     //updating plants
     void update(long deltaTime, EntitiesManager entitiesManager);
+    HitBox getHitBox();
 }

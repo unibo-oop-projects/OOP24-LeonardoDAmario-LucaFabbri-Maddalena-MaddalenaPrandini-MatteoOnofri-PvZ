@@ -1,7 +1,9 @@
-package PvZ.model.api;
+package PvZ.model.api.Plants;
+
+import PvZ.model.api.Entities.Entity;
 
 /**
- * Interface for the base plant.
+ * Interface for the base plant
  */
 public interface Plant extends Entity {
     /** 
@@ -15,5 +17,7 @@ public interface Plant extends Entity {
      * @param damage {@code int} the damage to be inflicted.
      */
     void decreaseLife(int damage);
+
+    PlantType mapToEntityType();
 
 }

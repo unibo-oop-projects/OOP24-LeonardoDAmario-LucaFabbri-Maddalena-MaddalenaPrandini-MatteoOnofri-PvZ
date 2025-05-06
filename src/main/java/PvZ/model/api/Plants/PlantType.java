@@ -1,4 +1,4 @@
-package PvZ.model.api;
+package PvZ.model.api.Plants;
 
 /**
  * Enum representing different types of plants in the game.

@@ -1,7 +1,7 @@
 package PvZ.model.impl;
 
-import PvZ.model.api.Plant;
 import PvZ.model.api.Zombie;
+import PvZ.model.api.Plants.Plant;
 
 public class Cell {
 

@@ -1,4 +1,4 @@
-package PvZ.model.api;
+package PvZ.model.api.Entities;
 
 import java.util.Set;
 

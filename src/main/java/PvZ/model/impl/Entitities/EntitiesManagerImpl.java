@@ -1,10 +1,10 @@
-package PvZ.model.impl;
+package PvZ.model.impl.Entitities;
 
 import java.util.HashSet;
 import java.util.Set;
 
-import PvZ.model.api.EntitiesManager;
-import PvZ.model.api.Entity;
+import PvZ.model.api.Entities.EntitiesManager;
+import PvZ.model.api.Entities.Entity;
 
 public class EntitiesManagerImpl implements EntitiesManager{
     
@@ -22,6 +22,7 @@ public class EntitiesManagerImpl implements EntitiesManager{
 
     @Override
     public void addEntity(Entity entity) {
+        System.out.println("[ENTITY MANAGER] Added: " + entity.getClass().getSimpleName());
         this.entities.add(entity);
     }
 
@@ -32,6 +33,7 @@ public class EntitiesManagerImpl implements EntitiesManager{
 
     @Override
     public Set<Entity> getEntities() {
+        System.out.println("[ENTITY MANAGER] Returning: " + entities.size() + " entities");
         return Set.copyOf(this.entities);
     }
 
