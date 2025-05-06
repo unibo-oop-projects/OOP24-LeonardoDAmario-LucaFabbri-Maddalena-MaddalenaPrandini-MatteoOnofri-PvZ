@@ -22,28 +22,14 @@ public class GameModelImpl implements GameModel {
     private static final int ROWS = 5;
     private static final int COLS = 9;
 
-    private final List<List<Cell>> grid;
-
     private GameStatus status;
 
-    private long lastSunTime;
-    private long lastZombieSpawnTime;
 
     public GameModelImpl() {
         this.entitiesManager = new EntitiesManagerImpl();
         this.plantFactory = new PlantFactory();
-
-        this.grid = new ArrayList<>();
-        for (int i = 0; i < ROWS; i++) {
-            List<Cell> row = new ArrayList<>();
-            for (int j = 0; j < COLS; j++) {
-                row.add(new Cell());
-            }
-            grid.add(row);
-        }
         this.status = GameStatus.IN_PROGRESS;
-        this.lastSunTime = System.currentTimeMillis();
-        this.lastZombieSpawnTime = System.currentTimeMillis();
+
     }
 
     @Override

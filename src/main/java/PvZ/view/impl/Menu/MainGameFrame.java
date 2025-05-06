@@ -1,7 +1,13 @@
-package PvZ.view.impl.Game;
+package PvZ.view.impl.Menu;
 
+import PvZ.controller.api.GameController;
+import PvZ.controller.api.ViewListener;
+import PvZ.controller.impl.GameControllerImpl;
 import PvZ.model.api.Difficulty;
-import PvZ.view.impl.Menu.MenuView;
+import PvZ.model.api.GameModel;
+import PvZ.model.impl.GameModelImpl;
+import PvZ.view.api.GameView;
+import PvZ.view.impl.Game.GameViewImpl;
 
 import javax.swing.*;
 import java.awt.*;
@@ -35,8 +41,16 @@ public class MainGameFrame extends JFrame {
     }
 
     public void startGame(Difficulty difficulty) {
+        System.out.println("[SISTEMA]: Avvio gioco con difficoltà: " + difficulty);
 
-        System.out.println("Avvio gioco con difficoltà: " + difficulty);
-        GameViewImpl gameView = new GameViewImpl();
+        GameModel model = new GameModelImpl();
+        GameView view = new GameViewImpl();
+        GameController controller = new GameControllerImpl(model, view);
+        view.setViewListener((ViewListener) controller);
+
+
+        this.setVisible(false);
+        controller.startGame();
     }
+
 }
