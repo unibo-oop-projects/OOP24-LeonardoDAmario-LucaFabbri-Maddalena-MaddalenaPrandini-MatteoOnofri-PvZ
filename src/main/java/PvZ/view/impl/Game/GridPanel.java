@@ -1,5 +1,8 @@
 package PvZ.view.impl.Game;
 
+import PvZ.model.api.Plants.Plant;
+import PvZ.model.api.Plants.PlantType;
+import PvZ.utilities.EntityType;
 import PvZ.utilities.GameEntity;
 import PvZ.utilities.Position;
 
@@ -8,6 +11,7 @@ import java.awt.*;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.function.BiConsumer;
+import java.util.stream.Collectors;
 
 public class GridPanel extends JPanel {
 
@@ -18,7 +22,6 @@ public class GridPanel extends JPanel {
     private final JButton[][] cells = new JButton[ROWS][COLS];
     private final BiConsumer<Integer, Integer> cellClickHandler;
     private boolean hasSelection = false;
-    private Set<GameEntity> entities = new HashSet<>();
 
     public GridPanel(BiConsumer<Integer, Integer> cellClickHandler, int leftMargin) {
         this.cellClickHandler = cellClickHandler;
@@ -57,7 +60,8 @@ public class GridPanel extends JPanel {
     }
 
     public void updateEntities(Set<GameEntity> entities) {
-        this.entities = new HashSet<>(entities);
+        entities = new HashSet<>(entities.stream().filter(entity -> entity.type() == EntityType.PEASHOOTER
+            || entity.type() == EntityType.SUNFLOWER || entity.type() == EntityType.WALLNUT ).collect(Collectors.toSet()));
         boolean[][] occupied = new boolean[ROWS][COLS];
         for (GameEntity e : entities) {
             Position p = e.position();

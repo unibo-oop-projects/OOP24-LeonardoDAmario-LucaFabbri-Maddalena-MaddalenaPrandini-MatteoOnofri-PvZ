@@ -54,7 +54,6 @@ public final class PlantFactory {
             private static final long SUN_GENERATION_INTERVAL = 7000; // ogni 7 secondi
             private long lastSunTime = 0;
 
-            private double elapsedTime;
 
             @Override
             public void update(long deltaTime, EntitiesManager entitiesManager) {
