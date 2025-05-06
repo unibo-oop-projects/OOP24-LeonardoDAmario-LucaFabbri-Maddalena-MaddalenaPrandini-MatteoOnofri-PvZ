@@ -7,7 +7,7 @@ import PvZ.utilities.Position;
 import java.awt.*;
 import java.util.Set;
 
-public class GameRender {
+public class GridRender {
     public static void drawGrid(Graphics g, int rows, int cols, int cellSize) {
         g.setColor(Color.LIGHT_GRAY);
         for (int i = 0; i <= rows; i++) {
