@@ -71,7 +71,9 @@ public class GameModelImpl implements GameModel {
 
     @Override
     public void update(long deltaTime) {
+        this.entitiesManager.spawnZombie(deltaTime);
         this.entitiesManager.getEntities().forEach(e->e.update(deltaTime, entitiesManager));
+        
     }
 
     @Override
