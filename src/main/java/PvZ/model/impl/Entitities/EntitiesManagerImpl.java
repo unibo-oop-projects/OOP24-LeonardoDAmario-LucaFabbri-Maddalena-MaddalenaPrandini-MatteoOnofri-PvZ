@@ -1,15 +1,20 @@
 package PvZ.model.impl.Entitities;
 
 import java.util.HashSet;
+import java.util.Random;
 import java.util.Set;
 
 import PvZ.model.api.Entities.EntitiesManager;
 import PvZ.model.api.Entities.Entity;
+import PvZ.model.impl.zombies.ZombieFactory;
+import PvZ.model.impl.zombies.ZombieImpl;
+import PvZ.utilities.Position;
 
 public class EntitiesManagerImpl implements EntitiesManager{
     
     private static final int DEFAULT_SUNS = 50;
     private static final int DEFAULT_KILLS = 0;
+    private long accumulatedTime = 0;
 
     Set<Entity> entities = new HashSet<>();
     private int sunCount;
@@ -25,6 +30,7 @@ public class EntitiesManagerImpl implements EntitiesManager{
         System.out.println("[ENTITY MANAGER] Added: " + entity.getClass().getSimpleName());
         this.entities.add(entity);
     }
+
 
     @Override
     public void removeEntity(Entity entity) {
@@ -64,6 +70,18 @@ public class EntitiesManagerImpl implements EntitiesManager{
     @Override
     public int getSunCount() {
         return sunCount;
+    }
+
+    @Override
+    public void spawnZombie(long deltaTime) {
+        this.accumulatedTime += deltaTime;
+        if (accumulatedTime >= 5000) {
+            this.accumulatedTime = 0;
+            Position spawnPosition = new Position(9, new Random().nextInt(5)); 
+            ZombieImpl zombie = new ZombieImpl(spawnPosition, 100, 1, null);  //strategy to be updated
+            this.addEntity(zombie);
+            System.out.println("[ENTITY MANAGER] zombie spawned at position: " + spawnPosition);
+        }
     }
 
 }

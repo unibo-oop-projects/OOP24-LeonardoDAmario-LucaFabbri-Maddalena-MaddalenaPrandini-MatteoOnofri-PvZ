@@ -9,6 +9,7 @@ public interface EntitiesManager {
     public void addSun(int amount);
     public boolean spendSun(int amount);
     public void addKill();
+    public void spawnZombie(long deltaTime);
     int getKillCount();
     int getSunCount();
 }

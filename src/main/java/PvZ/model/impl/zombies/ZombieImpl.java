@@ -3,6 +3,9 @@ package PvZ.model.impl.zombies;
 //import PvZ.model.api.Entities.Entity;
 import PvZ.model.impl.Collisions.HitBoxFactory.HitBoxType;
 import PvZ.model.impl.Entitities.AbstractEntity;
+
+import java.math.BigDecimal;
+
 import PvZ.model.api.Zombie;
 import PvZ.model.api.ZombieActionStrategy;
 import PvZ.model.api.Collisions.HitBox;
@@ -15,7 +18,6 @@ public class ZombieImpl extends AbstractEntity implements Zombie {
     private int speed;
     private boolean alive;
     private ZombieActionStrategy strategy;
-    //private Position position;
 
     public ZombieImpl(final Position position, final int health, final int speed, final ZombieActionStrategy strategy) {
         super(position, HitBoxType.ZOMBIE);
@@ -28,13 +30,20 @@ public class ZombieImpl extends AbstractEntity implements Zombie {
 
     @Override
     public void update(long deltaTime, EntitiesManager entitiesManager) {
-        if (strategy != null) strategy.zombieAction(this);
-        move();
+        if (strategy != null) {
+            strategy.zombieAction(this);
+            move(deltaTime);
+        }
+        move(deltaTime);           //to be updated with strategy
     }
 
-    @Override
-    public void move() {
-        System.out.println("Zombie is moving at speed: " + speed);
+    
+    public void move(long deltaTime) {
+    
+        final double move = this.speed * (1 / 100.0); 
+        final double newX = this.getPosition().x() - move; 
+        this.setPosition(new Position(newX, this.getPosition().y())); 
+        this.getHitBox().update(this.getPosition()); 
     }
 
     @Override

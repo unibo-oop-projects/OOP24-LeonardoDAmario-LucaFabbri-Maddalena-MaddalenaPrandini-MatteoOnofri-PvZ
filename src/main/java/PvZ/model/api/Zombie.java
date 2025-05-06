@@ -22,7 +22,7 @@ public interface Zombie extends Entity {
 
     Position getPosition();
 
-    void move();
+    void move(long deltaTime);
 
     void forceKill();
 }
