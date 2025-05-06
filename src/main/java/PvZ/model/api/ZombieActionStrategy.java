@@ -1,6 +1,6 @@
 package PvZ.model.api;
 
-import PvZ.model.zombies.ZombieImpl;
+import PvZ.model.impl.zombies.ZombieImpl;
 
 public interface ZombieActionStrategy {
 
