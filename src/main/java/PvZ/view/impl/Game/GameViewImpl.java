@@ -19,7 +19,7 @@ public class GameViewImpl implements GameView {
     private static final int LEFT_MARGIN = CELL_SIZE;
 
     private final JFrame frame;
-    private final GamePanel panel;
+    private final GridPanel panel;
     private final GameToolBar roaster;
 
     private ViewListener listener;
@@ -28,7 +28,7 @@ public class GameViewImpl implements GameView {
 
     public GameViewImpl() {
         frame = new JFrame("Plants vs Zombies - Java Edition");
-        panel = new GamePanel(this::handleCellClick, LEFT_MARGIN);
+        panel = new GridPanel(this::handleCellClick, LEFT_MARGIN);
         roaster = new GameToolBar(this::handlePlantSelection);
 
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

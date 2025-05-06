@@ -9,7 +9,7 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.function.BiConsumer;
 
-public class GamePanel extends JPanel {
+public class GridPanel extends JPanel {
 
     private static final int ROWS = 5;
     private static final int COLS = 9;
@@ -20,7 +20,7 @@ public class GamePanel extends JPanel {
     private boolean hasSelection = false;
     private Set<GameEntity> entities = new HashSet<>();
 
-    public GamePanel(BiConsumer<Integer, Integer> cellClickHandler, int leftMargin) {
+    public GridPanel(BiConsumer<Integer, Integer> cellClickHandler, int leftMargin) {
         this.cellClickHandler = cellClickHandler;
         this.leftMargin = leftMargin;
         setPreferredSize(new Dimension(leftMargin + COLS * CELL_SIZE, ROWS * CELL_SIZE));
@@ -51,8 +51,8 @@ public class GamePanel extends JPanel {
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g.create();
         g2.translate(leftMargin, 0);
-        GameRender.drawGrid(g2, ROWS, COLS, CELL_SIZE);
-        GameRender.drawEntities(g2, entities, CELL_SIZE);
+        GridRender.drawGrid(g2, ROWS, COLS, CELL_SIZE);
+        GridRender.drawEntities(g2, entities, CELL_SIZE);
         g2.dispose();
     }
 
