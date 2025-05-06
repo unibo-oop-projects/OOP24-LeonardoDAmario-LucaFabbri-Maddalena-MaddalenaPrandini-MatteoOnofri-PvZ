@@ -1,9 +1,10 @@
 package PvZ.model.zombies;
 
-import PvZ.model.api.Entity;
+import PvZ.model.api.Entities.Entity;
 import PvZ.model.api.ZombieActionStrategy;
+import PvZ.model.api.Collisions.HitBox;
 import PvZ.utilities.Position;
-import PvZ.model.api.EntitiesManager;
+import PvZ.model.api.Entities.EntitiesManager;
 
 public class ZombieImpl implements Entity {
     private int health;
@@ -63,5 +64,11 @@ public class ZombieImpl implements Entity {
 
     public int getSpeed() {
         return speed;
+    }
+
+    @Override
+    public HitBox getHitBox() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getHitBox'");
     }
 }
