@@ -22,6 +22,7 @@ public class EntitiesManagerImpl implements EntitiesManager{
 
     @Override
     public void addEntity(Entity entity) {
+        System.out.println("[ENTITY MANAGER] Added: " + entity.getClass().getSimpleName());
         this.entities.add(entity);
     }
 
@@ -32,6 +33,7 @@ public class EntitiesManagerImpl implements EntitiesManager{
 
     @Override
     public Set<Entity> getEntities() {
+        System.out.println("[ENTITY MANAGER] Returning: " + entities.size() + " entities");
         return Set.copyOf(this.entities);
     }
 

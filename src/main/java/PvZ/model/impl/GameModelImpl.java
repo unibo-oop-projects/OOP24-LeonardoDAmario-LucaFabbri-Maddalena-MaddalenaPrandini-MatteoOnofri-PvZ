@@ -107,6 +107,7 @@ public class GameModelImpl implements GameModel {
 
     @Override
     public void placePlant(PlantType type, Position position) {
+        System.out.println("[MODEL] Placing " + type + " at " + position);
         Plant plant = switch (type) {
             case PEASHOOTER -> plantFactory.createPeashooter(position);
             case SUNFLOWER -> plantFactory.createSunflower(position);
