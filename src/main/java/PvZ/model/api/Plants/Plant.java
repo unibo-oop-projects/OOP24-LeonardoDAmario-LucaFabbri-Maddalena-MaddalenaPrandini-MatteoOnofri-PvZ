@@ -1,5 +1,6 @@
 package PvZ.model.api.Plants;
 
+import PvZ.model.api.Entities.EntitiesManager;
 import PvZ.model.api.Entities.Entity;
 
 /**
@@ -17,6 +18,8 @@ public interface Plant extends Entity {
      * @param damage {@code int} the damage to be inflicted.
      */
     void decreaseLife(int damage);
+
+    void decreaseSuns(EntitiesManager entitiesManager);
 
     PlantType mapToEntityType();
 
