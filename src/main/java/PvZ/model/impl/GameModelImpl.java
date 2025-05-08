@@ -103,7 +103,8 @@ public class GameModelImpl implements GameModel {
             default -> throw new IllegalArgumentException("Invalid plant type: " + type);
         };
 
-        if(plant!=null){
+
+        if(plant!=null && entitiesManager.decreaseSun(type.getPrice())){
             entitiesManager.addEntity(plant);
         }
 

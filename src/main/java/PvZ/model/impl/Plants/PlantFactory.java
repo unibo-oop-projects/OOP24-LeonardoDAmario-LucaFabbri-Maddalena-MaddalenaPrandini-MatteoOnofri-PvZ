@@ -15,10 +15,6 @@ public final class PlantFactory {
     public Plant createPeashooter(Position position) {
         Objects.requireNonNull(position, "Position cannot be null");
         return new AbstractPlant(position){
-            @Override
-            public void decreaseSuns(EntitiesManager entitiesManager) {
-                entitiesManager.decreaseSun(PlantType.PEASHOOTER.getPrice());
-            }
 
             @Override
             public PlantType mapToEntityType() {
@@ -50,10 +46,6 @@ public final class PlantFactory {
     public Plant createSunflower(Position position) {
         Objects.requireNonNull(position, "Position cannot be null");
         return new AbstractPlant(position){
-            @Override
-            public void decreaseSuns(EntitiesManager entitiesManager) {
-                entitiesManager.decreaseSun(PlantType.SUNFLOWER.getPrice());
-            }
 
             @Override
             public PlantType mapToEntityType() {
@@ -85,11 +77,6 @@ public final class PlantFactory {
     public Plant createWallnut(Position position) {
         Objects.requireNonNull(position, "Position cannot be null");
         return new AbstractPlant(position){
-
-            @Override
-            public void decreaseSuns(EntitiesManager entitiesManager) {
-                entitiesManager.decreaseSun(PlantType.WALLNUT.getPrice());
-            }
 
             @Override
             public PlantType mapToEntityType() {

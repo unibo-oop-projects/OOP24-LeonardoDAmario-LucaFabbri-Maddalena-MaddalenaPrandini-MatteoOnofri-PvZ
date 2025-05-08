@@ -19,8 +19,6 @@ public interface Plant extends Entity {
      */
     void decreaseLife(int damage);
 
-    void decreaseSuns(EntitiesManager entitiesManager);
-
     PlantType mapToEntityType();
 
 }
