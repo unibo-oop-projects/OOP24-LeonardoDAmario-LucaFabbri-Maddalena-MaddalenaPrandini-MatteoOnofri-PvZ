@@ -10,6 +10,8 @@ import PvZ.model.api.Plants.PlantType;
 import PvZ.utilities.Position;
 import PvZ.view.api.GameView;
 
+import javax.swing.*;
+
 public class GameControllerImpl implements GameController, ViewListener {
 
     interface Event {}
@@ -38,13 +40,14 @@ public class GameControllerImpl implements GameController, ViewListener {
     public void startGame() {
         this.running = true;
         view.show();
-        try {
-            Thread.sleep(300); // attesa per rendere la finestra visibile
-        } catch (InterruptedException e) {
-            Thread.currentThread().interrupt();
-        }
-        new GameLoop().start();
+
+        SwingUtilities.invokeLater(() ->
+                SwingUtilities.invokeLater(() ->
+                        new GameLoop().start()
+                )
+        );
     }
+
 
     @Override
     public void stopGame() {
