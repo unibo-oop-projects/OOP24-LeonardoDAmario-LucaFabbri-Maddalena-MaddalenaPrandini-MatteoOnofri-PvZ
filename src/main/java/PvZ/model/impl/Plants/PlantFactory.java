@@ -69,7 +69,7 @@ public final class PlantFactory {
             public void update(long deltaTime, EntitiesManager entitiesManager) {
                 lastSunTime += deltaTime;
                 if (lastSunTime >= SUN_GENERATION_INTERVAL) {
-                    entitiesManager.addSun(SUN_VALUE); // o quanto vuoi
+                    entitiesManager.addSun(SUN_VALUE);
                     lastSunTime = 0;
                     System.out.println("[SUNFLOWER] Generated 25 sun");
                 }
