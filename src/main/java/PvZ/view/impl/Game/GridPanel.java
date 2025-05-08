@@ -22,6 +22,7 @@ public class GridPanel extends JPanel {
     private final JButton[][] cells = new JButton[ROWS][COLS];
     private final BiConsumer<Integer, Integer> cellClickHandler;
     private boolean hasSelection = false;
+    Set<GameEntity> entities = new HashSet<>();
 
     public GridPanel(BiConsumer<Integer, Integer> cellClickHandler, int leftMargin) {
         this.cellClickHandler = cellClickHandler;
