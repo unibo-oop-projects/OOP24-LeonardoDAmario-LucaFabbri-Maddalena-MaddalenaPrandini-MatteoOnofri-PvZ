@@ -94,6 +94,7 @@ public class GameViewImpl implements GameView {
                 drawPanel.repaint();
             }).start() ;
         });
+        listener.processInputView(true);
     }
 
     @Override

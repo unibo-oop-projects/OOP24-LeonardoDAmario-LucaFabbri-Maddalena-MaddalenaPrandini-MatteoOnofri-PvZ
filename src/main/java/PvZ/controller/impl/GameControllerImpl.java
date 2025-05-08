@@ -15,6 +15,7 @@ import javax.swing.*;
 public class GameControllerImpl implements GameController, ViewListener {
 
     interface Event {}
+    record InputView (boolean isVisible) implements  Event{}
     record InputRoaster(UserInputRoaster inputRoaster) implements Event {}
     record InputGrid(Position position) implements Event {}
 
@@ -28,6 +29,7 @@ public class GameControllerImpl implements GameController, ViewListener {
 
     private Position pendingPosition = null;
     private PlantType selectedPlantType = null;
+    private boolean viewVisibility = false;
 
     public GameControllerImpl(final GameModel model, final GameView view) {
         this.model = model;
@@ -60,18 +62,21 @@ public class GameControllerImpl implements GameController, ViewListener {
             System.out.println("[GAMELOOP] Starting main loop");
             long previousTime = System.currentTimeMillis();
 
-            while (running && view.isVisible()) {
+            while (running) {
                 long currentTime = System.currentTimeMillis();
                 long deltaTime = currentTime - previousTime;
 
-                model.update(deltaTime);
-                view.render(model.getGameEntities(), model.getSunCount(), model.getKillCount());
+                if(viewVisibility) {
+                    model.update(deltaTime);
+                    view.render(model.getGameEntities(), model.getSunCount(), model.getKillCount());
 
-                previousTime = currentTime;
+                    previousTime = currentTime;
 
-                waitForNextFrame(currentTime);
-                System.out.println("[GAMELOOP] Running frame");
-                handleInput();
+                    waitForNextFrame(currentTime);
+                    System.out.println("[GAMELOOP] Running frame");
+                    handleInput();
+                }
+
             }
         }
 
@@ -104,6 +109,9 @@ public class GameControllerImpl implements GameController, ViewListener {
                             pendingPosition = pos;
                             System.out.println("[CONTROLLER] Selected position: " + pendingPosition);
                         }
+                        case InputView(var inputView) -> {
+                            viewVisibility = inputView;
+                        }
                         default -> {}
                     }
                     createPlant();
@@ -115,7 +123,7 @@ public class GameControllerImpl implements GameController, ViewListener {
     }
 
     private void createPlant() {
-        if (selectedPlantType != null && pendingPosition != null && model.getSunCount() > 0) {
+        if (selectedPlantType != null && pendingPosition != null) {
             model.placePlant(selectedPlantType, pendingPosition);
             selectedPlantType = null;
             pendingPosition = null;
@@ -125,6 +133,11 @@ public class GameControllerImpl implements GameController, ViewListener {
     @Override
     public void processInputRoaster(UserInputRoaster input) {
         queue.add(new InputRoaster(input));
+    }
+
+    @Override
+    public void processInputView(boolean isVisible) {
+        queue.add(new InputView(isVisible));
     }
 
     @Override
