@@ -59,15 +59,20 @@ public class GamePanel extends JPanel {
     }
 
     public void updateEntities(Set<GameEntity> entities) {
-        entities = new HashSet<>(entities.stream().filter(entity -> entity.type() == EntityType.PEASHOOTER 
-            || entity.type() == EntityType.SUNFLOWER || entity.type() == EntityType.WALLNUT ).collect(Collectors.toSet()));
+        entities = new HashSet<>(entities.stream()
+            .filter(entity -> entity.type() == EntityType.PEASHOOTER 
+                || entity.type() == EntityType.SUNFLOWER 
+                || entity.type() == EntityType.WALLNUT)
+            .collect(Collectors.toSet()));
+    
         boolean[][] occupied = new boolean[ROWS][COLS];
         for (GameEntity e : entities) {
             Position p = e.position();
-            if (p.x() >= 0 && p.x() < ROWS && p.y() >= 0 && p.y() < COLS) {
-                occupied[(int)p.x()][(int)p.y()] = true;
+            if (p.y() >= 0 && p.y() < ROWS && p.x() >= 0 && p.x() < COLS) {
+                occupied[(int)p.y()][(int)p.x()] = true;
             }
         }
+    
         for (int r = 0; r < ROWS; r++) {
             for (int c = 0; c < COLS; c++) {
                 JButton btn = cells[r][c];
