@@ -1,6 +1,7 @@
 package PvZ.model.impl.Collisions;
 
 import java.math.BigDecimal;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -15,17 +16,17 @@ import PvZ.model.api.Plants.Plant;
 public class CollisionManagerImpl implements CollisionManager{
 
     @Override
-    public boolean handleCollision(Entity entity, EntitiesManager entitiesManager) {
+    public Optional<Entity> handleCollision(Entity entity, EntitiesManager entitiesManager) {
         if(entity instanceof Bullet) {
-            return this.handleBulletZombieCollision((Bullet) entity,entitiesManager);
+            return this.handleBulletZombieCollision((Bullet) entity,entitiesManager).map(zombie -> zombie);
         }
         else if(entity instanceof Zombie) {
-            return this.handleZombiePlantCollision((Zombie) entity, entitiesManager);
+            return this.handleZombiePlantCollision((Zombie) entity, entitiesManager).map(plant -> plant);
         }
-        return false;
+        return Optional.empty();
     }
 
-    private boolean handleBulletZombieCollision(Bullet bullet, EntitiesManager entitiesManager) {
+    private Optional<Zombie> handleBulletZombieCollision(Bullet bullet, EntitiesManager entitiesManager) {
         Set<Zombie> zombieSet = entitiesManager.getEntities().stream()
             .filter(entity -> entity instanceof Zombie)
             .filter(zombie -> BigDecimal.valueOf(zombie.getPosition().y())
@@ -34,19 +35,13 @@ public class CollisionManagerImpl implements CollisionManager{
             .collect(Collectors.toSet());
         for (Zombie zombie : zombieSet) {
             if(bullet.getHitBox().isColliding(zombie.getHitBox())) {
-                zombie.decreaseLife(bullet.getDamage());
-                if(!zombie.isAlive()) {
-                    entitiesManager.removeEntity(zombie);
-                    entitiesManager.addKill();
-                }
-                entitiesManager.removeEntity(bullet);
-                return true;
+                return Optional.of(zombie);
             }
         };
-        return true;
+        return Optional.empty();
     }
 
-    private boolean handleZombiePlantCollision(Zombie zombie, EntitiesManager entitiesManager) {
+    private Optional<Plant> handleZombiePlantCollision(Zombie zombie, EntitiesManager entitiesManager) {
         Set<Plant> plantSet = entitiesManager.getEntities().stream()
             .filter(entity -> entity instanceof Plant)
             .map(entity -> (Plant) entity)
@@ -55,15 +50,10 @@ public class CollisionManagerImpl implements CollisionManager{
             .collect(Collectors.toSet());
         for (Plant plant : plantSet) {
             if(zombie.getHitBox().isColliding(plant.getHitBox())) {
-                plant.decreaseLife(zombie.getDamage());
-                if(plant.getLife() <= 0) {
-                    entitiesManager.removeEntity(plant);
-                }
-                System.out.println("Zombie" + zombie.getPosition() + " collided with plant" + plant.getPosition());
-                return true;
+                return Optional.of(plant);
             }
         }
-        return false;
+        return Optional.empty();
     }
     
 }
