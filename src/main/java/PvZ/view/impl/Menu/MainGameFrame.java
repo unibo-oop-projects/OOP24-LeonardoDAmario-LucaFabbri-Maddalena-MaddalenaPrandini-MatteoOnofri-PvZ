@@ -1,5 +1,6 @@
 package PvZ.view.impl.Menu;
 
+import PvZ.PvZ;
 import PvZ.controller.api.GameController;
 import PvZ.controller.api.ViewListener;
 import PvZ.controller.impl.GameControllerImpl;
@@ -53,4 +54,8 @@ public class MainGameFrame extends JFrame {
         controller.startGame();
     }
 
+    public void returnToMenu() {
+        this.dispose();
+        PvZ.startGame();
+    }
 }

@@ -17,6 +17,10 @@ import javax.swing.*;
 
 public class PvZ {
     public static void main(String[] args) {
+        startGame();
+    }
+
+    public static void startGame() {
         SwingUtilities.invokeLater(() -> {
             MainGameFrame mainGameFrame = new MainGameFrame();
             MenuView menuView = new MenuView();
