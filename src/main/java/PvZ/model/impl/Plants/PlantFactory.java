@@ -2,10 +2,16 @@ package PvZ.model.impl.Plants;
 import PvZ.model.api.Entities.EntitiesManager;
 import PvZ.model.api.Plants.PlantType;
 import PvZ.model.impl.Bullets.BulletImpl;
+import PvZ.model.impl.Collisions.CollisionManagerImpl;
 import PvZ.model.api.Plants.Plant;
 import PvZ.utilities.Position;
+
+import java.nio.file.OpenOption;
 import java.util.Objects;
+import java.util.Optional;
+
 import PvZ.model.api.Zombie;
+import PvZ.model.api.Collisions.CollisionManager;
 
 /**
  * Factory class for creating plants.
@@ -76,6 +82,8 @@ public final class PlantFactory {
         Objects.requireNonNull(position, "Position cannot be null");
         return new AbstractPlant(position){
 
+            private final CollisionManager collisionManager = new CollisionManagerImpl();
+
             @Override
             public PlantType mapToEntityType() {
                 return PlantType.WALLNUT;
@@ -83,14 +91,11 @@ public final class PlantFactory {
 
             @Override
             public void update(long deltaTime, EntitiesManager entitiesManager) {
-                entitiesManager.getEntities().stream()
-                        .filter(e -> e instanceof Zombie)
-                        .filter(z -> z.getHitBox().isColliding(this.getHitBox()))
-                        .findAny()
-                        .ifPresent(z->{
-                            entitiesManager.removeEntity(z);
-                            entitiesManager.removeEntity(this);
-                        });
+                final Optional<Zombie> zombie = collisionManager.handleCollision(this, entitiesManager).map(entity -> (Zombie) entity);
+                if(zombie.isPresent()) {
+                    entitiesManager.removeEntity(zombie.get());
+                    entitiesManager.removeEntity(this);
+                }
             }
 
             @Override

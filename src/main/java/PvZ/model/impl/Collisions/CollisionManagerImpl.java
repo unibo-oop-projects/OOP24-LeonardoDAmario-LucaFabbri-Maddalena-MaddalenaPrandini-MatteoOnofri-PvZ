@@ -12,6 +12,7 @@ import PvZ.model.api.Collisions.CollisionManager;
 import PvZ.model.api.Entities.EntitiesManager;
 import PvZ.model.api.Entities.Entity;
 import PvZ.model.api.Plants.Plant;
+import PvZ.model.api.Plants.PlantType;
 
 public class CollisionManagerImpl implements CollisionManager{
 
@@ -23,6 +24,27 @@ public class CollisionManagerImpl implements CollisionManager{
         else if(entity instanceof Zombie) {
             return this.handleZombiePlantCollision((Zombie) entity, entitiesManager).map(plant -> plant);
         }
+        else if(entity instanceof Plant) {
+            Plant plant = (Plant) entity;
+            if(plant.mapToEntityType() == PlantType.WALLNUT) {
+                return this.handleWallNutZombieCollision((Plant) entity, entitiesManager).map(zombie -> zombie);
+            }
+        }
+        return Optional.empty();
+    }
+
+    private Optional<Zombie> handleWallNutZombieCollision(Plant wallNut, EntitiesManager entitiesManager) {
+        Set<Zombie> zombieSet = entitiesManager.getEntities().stream()
+            .filter(entity -> entity instanceof Zombie)
+            .filter(zombie -> BigDecimal.valueOf(zombie.getPosition().y())
+                   .compareTo(BigDecimal.valueOf(wallNut.getPosition().y())) == 0)
+            .map(entity -> (Zombie) entity)
+            .collect(Collectors.toSet());
+        for (Zombie zombie : zombieSet) {
+            if(wallNut.getHitBox().isColliding(zombie.getHitBox())) {
+                return Optional.of(zombie);
+            }
+        };
         return Optional.empty();
     }
 
