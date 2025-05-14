@@ -21,7 +21,7 @@ public final class PlantFactory {
                 return PlantType.PEASHOOTER;
             }
 
-            private final static double FIRE_RATE = 1.5;
+            private final static double FIRE_RATE = 2000;
 
             private double elapsedTime;
 
@@ -29,7 +29,7 @@ public final class PlantFactory {
             public void update(long deltaTime, EntitiesManager entitiesManager) {
                 elapsedTime = elapsedTime + deltaTime;
                 if(elapsedTime >= FIRE_RATE && getLife() > 0){
-                    entitiesManager.addEntity(new BulletImpl(position));
+                    entitiesManager.addEntity(new BulletImpl(new Position(this.getPosition().x() +  3 * this.getHitBox().getWidth(), this.getPosition().y())));
                     elapsedTime = 0;
                 }
             }

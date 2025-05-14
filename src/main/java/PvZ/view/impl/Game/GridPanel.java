@@ -13,7 +13,7 @@ import java.util.Set;
 import java.util.function.BiConsumer;
 import java.util.stream.Collectors;
 
-public class GridPanel extends JPanel {
+public class GamePanel extends JPanel {
 
     private static final int ROWS = 5;
     private static final int COLS = 9;
@@ -22,9 +22,8 @@ public class GridPanel extends JPanel {
     private final JButton[][] cells = new JButton[ROWS][COLS];
     private final BiConsumer<Integer, Integer> cellClickHandler;
     private boolean hasSelection = false;
-    Set<GameEntity> entities = new HashSet<>();
 
-    public GridPanel(BiConsumer<Integer, Integer> cellClickHandler, int leftMargin) {
+    public GamePanel(BiConsumer<Integer, Integer> cellClickHandler, int leftMargin) {
         this.cellClickHandler = cellClickHandler;
         this.leftMargin = leftMargin;
         setPreferredSize(new Dimension(leftMargin + COLS * CELL_SIZE, ROWS * CELL_SIZE));
@@ -55,21 +54,25 @@ public class GridPanel extends JPanel {
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g.create();
         g2.translate(leftMargin, 0);
-        GridRender.drawGrid(g2, ROWS, COLS, CELL_SIZE);
-        GridRender.drawEntities(g2, entities, CELL_SIZE);
+        GameRender.drawGrid(g2, ROWS, COLS, CELL_SIZE);
         g2.dispose();
     }
 
     public void updateEntities(Set<GameEntity> entities) {
-        entities = new HashSet<>(entities.stream().filter(entity -> entity.type() == EntityType.PEASHOOTER
-            || entity.type() == EntityType.SUNFLOWER || entity.type() == EntityType.WALLNUT ).collect(Collectors.toSet()));
+        entities = new HashSet<>(entities.stream()
+            .filter(entity -> entity.type() == EntityType.PEASHOOTER 
+                || entity.type() == EntityType.SUNFLOWER 
+                || entity.type() == EntityType.WALLNUT)
+            .collect(Collectors.toSet()));
+    
         boolean[][] occupied = new boolean[ROWS][COLS];
         for (GameEntity e : entities) {
             Position p = e.position();
-            if (p.x() >= 0 && p.x() < ROWS && p.y() >= 0 && p.y() < COLS) {
-                occupied[(int)p.x()][(int)p.y()] = true;
+            if (p.y() >= 0 && p.y() < ROWS && p.x() >= 0 && p.x() < COLS) {
+                occupied[(int)p.y()][(int)p.x()] = true;
             }
         }
+    
         for (int r = 0; r < ROWS; r++) {
             for (int c = 0; c < COLS; c++) {
                 JButton btn = cells[r][c];

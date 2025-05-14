@@ -15,9 +15,9 @@ public class BulletImpl extends AbstractEntity implements Bullet {
     private long elapsedTime = 0;
     private CollisionManager collisionManager;
 
-    private static final double SPEED = 0.1;
+    private static final double SPEED = 0.03;
     private static final int DAMAGE = 25;
-    private static final long UPDATE_RATE = 500;
+    private static final long UPDATE_RATE = 300;
 
     public BulletImpl(final Position pos) {
         super(pos, HitBoxType.BULLET);
@@ -39,6 +39,7 @@ public class BulletImpl extends AbstractEntity implements Bullet {
             this.setPosition(this.move(deltaTime));
             this.getHitBox().update(this.getPosition());
             this.collisionManager.handleCollision(this, entitiesManager);
+            System.out.println(this.getPosition());
         }
     }
     

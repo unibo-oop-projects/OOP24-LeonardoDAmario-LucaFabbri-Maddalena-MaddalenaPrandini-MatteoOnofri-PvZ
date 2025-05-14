@@ -9,8 +9,8 @@ public final class HitBoxFactory {
 
     public enum HitBoxType {
 
-        PLANT(1.0, 1.0),
-        ZOMBIE(1.5, 1.0),
+        PLANT(0.2, 0.5),
+        ZOMBIE(1.0, 1.0),
         BULLET(0.5, 0.5);
 
         private final double width;

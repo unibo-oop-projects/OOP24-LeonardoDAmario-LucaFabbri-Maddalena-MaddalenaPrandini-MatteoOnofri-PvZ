@@ -1,13 +1,13 @@
 package PvZ.model.impl.zombies;
 
-//import PvZ.model.api.Entities.Entity;
+import PvZ.model.impl.Collisions.CollisionManagerImpl;
 import PvZ.model.impl.Collisions.HitBoxFactory.HitBoxType;
 import PvZ.model.impl.Entitities.AbstractEntity;
 
-import java.math.BigDecimal;
 
 import PvZ.model.api.Zombie;
 import PvZ.model.api.ZombieActionStrategy;
+import PvZ.model.api.Collisions.CollisionManager;
 import PvZ.model.api.Collisions.HitBox;
 import PvZ.utilities.Position;
 import PvZ.model.api.Entities.EntitiesManager;
@@ -18,6 +18,7 @@ public class ZombieImpl extends AbstractEntity implements Zombie {
     private int speed;
     private boolean alive;
     private ZombieActionStrategy strategy;
+    private CollisionManager collisionManager;
 
     public ZombieImpl(final Position position, final int health, final int speed, final ZombieActionStrategy strategy) {
         super(position, HitBoxType.ZOMBIE);
@@ -25,6 +26,8 @@ public class ZombieImpl extends AbstractEntity implements Zombie {
         this.speed = speed;
         this.strategy = strategy;
         this.alive = true;
+        this.collisionManager = new CollisionManagerImpl();
+
     }
 
 
@@ -34,12 +37,13 @@ public class ZombieImpl extends AbstractEntity implements Zombie {
             strategy.zombieAction(this);
             move(deltaTime);
         }
-        move(deltaTime);           //to be updated with strategy
+        if(!collisionManager.handleCollision(this, entitiesManager)) {
+            move(deltaTime);           //to be updated with strategy
+        }
     }
 
     
     public void move(long deltaTime) {
-    
         final double move = this.speed * (1 / 100.0); 
         final double newX = this.getPosition().x() - move; 
         this.setPosition(new Position(newX, this.getPosition().y())); 
@@ -89,6 +93,6 @@ public class ZombieImpl extends AbstractEntity implements Zombie {
 
     @Override
     public int getDamage() {
-        return 20; //to be modified in strategy
+        return 100; //to be modified in strategy
     }
 }

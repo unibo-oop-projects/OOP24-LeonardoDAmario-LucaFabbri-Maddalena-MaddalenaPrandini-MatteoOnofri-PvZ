@@ -142,6 +142,6 @@ public class GameControllerImpl implements GameController, ViewListener {
 
     @Override
     public void processInputGrid(Position position) {
-        queue.add(new InputGrid(position));
+        queue.add(new InputGrid(position)); 
     }
 }

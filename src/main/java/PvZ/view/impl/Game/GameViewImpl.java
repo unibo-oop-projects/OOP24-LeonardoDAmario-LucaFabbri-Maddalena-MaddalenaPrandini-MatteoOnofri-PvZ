@@ -8,6 +8,8 @@ import PvZ.utilities.Position;
 import PvZ.view.api.GameView;
 
 import javax.swing.*;
+import javax.swing.border.Border;
+
 import java.awt.*;
 import java.util.HashSet;
 import java.util.Set;
@@ -36,8 +38,8 @@ public class GameViewImpl implements GameView {
         panel = new GridPanel(this::handleCellClick, LEFT_MARGIN);
         roaster = new GameToolBar(this::handlePlantSelection);
 
-        int width = LEFT_MARGIN + 9 * 80; // 9 colonne * cell size
-        int height = 5 * 80; // 5 righe * cell size
+        int width = LEFT_MARGIN + COLS * CELL_SIZE; // 9 colonne * cell size
+        int height = ROWS * CELL_SIZE; // 5 righe * cell size
 
         layeredPanel.setPreferredSize(new Dimension(width, height));
 
@@ -46,9 +48,8 @@ public class GameViewImpl implements GameView {
         layeredPanel.add(panel, Integer.valueOf(0));
 
         // Posiziona il DrawPanel sopra
-        drawPanel.setBounds(0, 0, width, height);
+        drawPanel.setBounds(LEFT_MARGIN, 0, width - LEFT_MARGIN, height);
         layeredPanel.add(drawPanel, Integer.valueOf(1));
-
 
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(LEFT_MARGIN + COLS * CELL_SIZE + 200, ROWS * CELL_SIZE + 100);
@@ -78,7 +79,7 @@ public class GameViewImpl implements GameView {
 
     private void handleCellClick(int row, int col) {
         if (selectedPlant != null && listener != null) {
-            listener.processInputGrid(new Position(row, col));
+            listener.processInputGrid(new Position(col, row));
             selectedPlant = null;
             panel.setSelectedPlant(null);
             panel.updateEntities(lastEntities);
