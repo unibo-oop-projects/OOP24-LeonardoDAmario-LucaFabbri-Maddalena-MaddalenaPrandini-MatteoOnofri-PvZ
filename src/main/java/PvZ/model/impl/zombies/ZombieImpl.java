@@ -4,6 +4,7 @@ import PvZ.model.impl.Collisions.CollisionManagerImpl;
 import PvZ.model.impl.Collisions.HitBoxFactory.HitBoxType;
 import PvZ.model.impl.Entitities.AbstractEntity;
 
+import java.util.Optional;
 
 import PvZ.model.api.Zombie;
 import PvZ.model.api.ZombieActionStrategy;
@@ -11,6 +12,7 @@ import PvZ.model.api.Collisions.CollisionManager;
 import PvZ.model.api.Collisions.HitBox;
 import PvZ.utilities.Position;
 import PvZ.model.api.Entities.EntitiesManager;
+import PvZ.model.api.Plants.Plant;
 
 public class ZombieImpl extends AbstractEntity implements Zombie {
 
@@ -19,6 +21,8 @@ public class ZombieImpl extends AbstractEntity implements Zombie {
     private boolean alive;
     private ZombieActionStrategy strategy;
     private CollisionManager collisionManager;
+    private static final long ATTACK_RATE = 4000;
+    private int lastAttackTime = 0;
 
     public ZombieImpl(final Position position, final int health, final int speed, final ZombieActionStrategy strategy) {
         super(position, HitBoxType.ZOMBIE);
@@ -27,9 +31,7 @@ public class ZombieImpl extends AbstractEntity implements Zombie {
         this.strategy = strategy;
         this.alive = true;
         this.collisionManager = new CollisionManagerImpl();
-
     }
-
 
     @Override
     public void update(long deltaTime, EntitiesManager entitiesManager) {
@@ -37,8 +39,18 @@ public class ZombieImpl extends AbstractEntity implements Zombie {
             strategy.zombieAction(this);
             move(deltaTime);
         }
-        if(!collisionManager.handleCollision(this, entitiesManager)) {
-            move(deltaTime);           //to be updated with strategy
+        lastAttackTime += deltaTime;
+        Optional<Plant> plant = collisionManager.handleCollision(this, entitiesManager).map(entity -> (Plant) entity);
+        if(plant.isPresent()) {
+            if(lastAttackTime >= ATTACK_RATE) {
+                plant.get().decreaseLife(this.getDamage());
+                if(plant.get().getLife() <= 0) {
+                    entitiesManager.removeEntity(plant.get());
+                }
+            }
+        }
+        else {
+            this.move(deltaTime);
         }
     }
 
@@ -93,6 +105,6 @@ public class ZombieImpl extends AbstractEntity implements Zombie {
 
     @Override
     public int getDamage() {
-        return 100; //to be modified in strategy
+        return 20; //to be modified in strategy
     }
 }

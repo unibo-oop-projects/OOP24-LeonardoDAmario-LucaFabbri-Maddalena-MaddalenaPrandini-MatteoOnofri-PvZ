@@ -1,8 +1,10 @@
 package PvZ.model.impl.Bullets;
 
 import java.math.BigDecimal;
+import java.util.Optional;
 
 import PvZ.utilities.Position;
+import PvZ.model.api.Zombie;
 import PvZ.model.api.Bullets.Bullet;
 import PvZ.model.api.Collisions.CollisionManager;
 import PvZ.model.api.Entities.EntitiesManager;
@@ -38,8 +40,19 @@ public class BulletImpl extends AbstractEntity implements Bullet {
         if(this.canUpdate(deltaTime)) {            
             this.setPosition(this.move(deltaTime));
             this.getHitBox().update(this.getPosition());
-            this.collisionManager.handleCollision(this, entitiesManager);
-            System.out.println(this.getPosition());
+            Optional<Zombie> zombie = this.collisionManager.handleCollision(this, entitiesManager).map(entity -> (Zombie) entity);
+            if(zombie.isPresent()) {
+                this.attackZombie(zombie.get(), entitiesManager);
+                entitiesManager.removeEntity(this);
+            }
+        }   
+    }
+
+    private void attackZombie(final Zombie zombie, EntitiesManager entitiesManager) {
+        zombie.takeDamage(this.getDamage());
+        if(!zombie.isAlive()) {
+            entitiesManager.removeEntity(zombie);
+            entitiesManager.addKill();
         }
     }
     
