@@ -13,7 +13,7 @@ import java.util.Set;
 import java.util.function.BiConsumer;
 import java.util.stream.Collectors;
 
-public class GamePanel extends JPanel {
+public class GridPanel extends JPanel {
 
     private static final int ROWS = 5;
     private static final int COLS = 9;
@@ -23,7 +23,7 @@ public class GamePanel extends JPanel {
     private final BiConsumer<Integer, Integer> cellClickHandler;
     private boolean hasSelection = false;
 
-    public GamePanel(BiConsumer<Integer, Integer> cellClickHandler, int leftMargin) {
+    public GridPanel(BiConsumer<Integer, Integer> cellClickHandler, int leftMargin) {
         this.cellClickHandler = cellClickHandler;
         this.leftMargin = leftMargin;
         setPreferredSize(new Dimension(leftMargin + COLS * CELL_SIZE, ROWS * CELL_SIZE));
@@ -49,12 +49,23 @@ public class GamePanel extends JPanel {
         }
     }
 
+    //disegna la griglia
+    private void drawGrid(Graphics g, int rows, int cols, int cellSize) {
+        g.setColor(Color.LIGHT_GRAY);
+        for (int i = 0; i <= rows; i++) {
+            g.drawLine(0, i * cellSize, cols * cellSize, i * cellSize);
+        }
+        for (int i = 0; i <= cols; i++) {
+            g.drawLine(i * cellSize, 0, i * cellSize, rows * cellSize);
+        }
+    }
+
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g.create();
         g2.translate(leftMargin, 0);
-        GameRender.drawGrid(g2, ROWS, COLS, CELL_SIZE);
+        drawGrid(g2, ROWS, COLS, CELL_SIZE);
         g2.dispose();
     }
 
@@ -78,7 +89,6 @@ public class GamePanel extends JPanel {
                 JButton btn = cells[r][c];
                 if (occupied[r][c]) {
                     btn.setEnabled(false);
-                    btn.setText("X");
                 } else {
                     btn.setEnabled(hasSelection);
                     btn.setText("");
