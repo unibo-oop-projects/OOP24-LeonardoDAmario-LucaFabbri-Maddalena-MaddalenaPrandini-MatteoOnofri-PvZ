@@ -31,6 +31,7 @@ public class ZombieImpl extends AbstractEntity implements Zombie {
         this.strategy = strategy;
         this.alive = true;
         this.collisionManager = new CollisionManagerImpl();
+        this.lastAttackTime = ATTACK_RATE;
     }
 
     @Override
@@ -46,12 +47,12 @@ public class ZombieImpl extends AbstractEntity implements Zombie {
                 plant.get().decreaseLife(this.getDamage());
                 lastAttackTime = 0;
                 if(plant.get().getLife() <= 0) {
+                    lastAttackTime = ATTACK_RATE;
                     entitiesManager.removeEntity(plant.get());
                 }
             }
         }
         else {
-            lastAttackTime = ATTACK_RATE;
             this.move(deltaTime);
         }
     }
