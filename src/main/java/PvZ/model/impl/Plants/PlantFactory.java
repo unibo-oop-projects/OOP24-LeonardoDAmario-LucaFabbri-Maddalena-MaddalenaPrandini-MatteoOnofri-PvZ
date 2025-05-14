@@ -27,7 +27,7 @@ public final class PlantFactory {
                 return PlantType.PEASHOOTER;
             }
 
-            private final static double FIRE_RATE = 2000;
+            private final static double FIRE_RATE = 1000;
 
             private double elapsedTime;
 
@@ -59,7 +59,7 @@ public final class PlantFactory {
             }
 
             private final static int SUN_VALUE = 25;
-            private static final long SUN_GENERATION_INTERVAL = 7000; // ogni 7 secondi
+            private static final long SUN_GENERATION_INTERVAL = 4000; // ogni 7 secondi
             private long lastSunTime = 0;
 
 

@@ -15,9 +15,9 @@ import PvZ.utilities.GameEntity;
 
 public class DrawPanel extends JPanel {
 
-    private static final int CELL_SIZE = 80; // o la tua vera cella
-    private static final int MARGIN_X = 0; // aggiorna se hai margini
-    private static final int MARGIN_Y = 0;  // aggiorna se hai margini
+    private static final int CELL_SIZE = 80; //dimensione 80*80 pixel
+    private static final int MARGIN_X = 20; //margine dal bordo sinistro
+    private static final int MARGIN_Y = 20;  // margine dal bordo superiore
 
     private Set<GameEntity> entities = Set.of();
     private final EnumMap<PlantType, Color> plantcolors = new EnumMap<>(PlantType.class);
@@ -54,17 +54,17 @@ public class DrawPanel extends JPanel {
                     };
                     Color c = plantcolors.getOrDefault(plant, Color.GREEN);
                     g2.setColor(c);
-                    g2.fillRect(pixelX, pixelY, CELL_SIZE, CELL_SIZE);
+                    g2.fillRect(pixelX, pixelY, CELL_SIZE/2, CELL_SIZE/2);
                 }
                 case ZOMBIE -> {
                     g2.setColor(Color.RED);
-                    g2.fillRect(pixelX, pixelY, CELL_SIZE, CELL_SIZE);
+                    g2.fillRect(pixelX-MARGIN_X, pixelY-MARGIN_Y, CELL_SIZE/2, CELL_SIZE);
                 }
                 case BULLET ->{
                     g2.setColor(Color.BLUE);
                     int bulletSize = 20;
                     int offsetY = (CELL_SIZE-bulletSize)/2;
-                    g2.fillOval(pixelX, pixelY+offsetY, bulletSize, bulletSize);
+                    g2.fillOval(pixelX-MARGIN_X, pixelY+offsetY-MARGIN_Y, bulletSize, bulletSize);
                 }
                 default -> {}
             }
