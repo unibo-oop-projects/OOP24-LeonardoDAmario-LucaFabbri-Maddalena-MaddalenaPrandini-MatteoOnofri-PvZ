@@ -15,7 +15,6 @@ import javax.swing.*;
 public class GameControllerImpl implements GameController, ViewListener {
 
     interface Event {}
-    record InputView (boolean isVisible) implements  Event{}
     record InputRoaster(UserInputRoaster inputRoaster) implements Event {}
     record InputGrid(Position position) implements Event {}
 
@@ -29,7 +28,6 @@ public class GameControllerImpl implements GameController, ViewListener {
 
     private Position pendingPosition = null;
     private PlantType selectedPlantType = null;
-    private boolean viewVisibility = false;
 
     public GameControllerImpl(final GameModel model, final GameView view) {
         this.model = model;
@@ -66,7 +64,6 @@ public class GameControllerImpl implements GameController, ViewListener {
                 long currentTime = System.currentTimeMillis();
                 long deltaTime = currentTime - previousTime;
 
-                if(viewVisibility) {
                     model.update(deltaTime);
                     view.render(model.getGameEntities(), model.getSunCount(), model.getKillCount());
 
@@ -75,8 +72,6 @@ public class GameControllerImpl implements GameController, ViewListener {
                     waitForNextFrame(currentTime);
                     System.out.println("[GAMELOOP] Running frame");
                     handleInput();
-                }
-
             }
         }
 
@@ -109,9 +104,6 @@ public class GameControllerImpl implements GameController, ViewListener {
                             pendingPosition = pos;
                             System.out.println("[CONTROLLER] Selected position: " + pendingPosition);
                         }
-                        case InputView(var inputView) -> {
-                            viewVisibility = inputView;
-                        }
                         default -> {}
                     }
                     createPlant();
@@ -133,11 +125,6 @@ public class GameControllerImpl implements GameController, ViewListener {
     @Override
     public void processInputRoaster(UserInputRoaster input) {
         queue.add(new InputRoaster(input));
-    }
-
-    @Override
-    public void processInputView(boolean isVisible) {
-        queue.add(new InputView(isVisible));
     }
 
     @Override

@@ -59,7 +59,7 @@ public final class PlantFactory {
             }
 
             private final static int SUN_VALUE = 25;
-            private static final long SUN_GENERATION_INTERVAL = 4000; // ogni 7 secondi
+            private static final long SUN_GENERATION_INTERVAL = 4000;
             private long lastSunTime = 0;
 
 
