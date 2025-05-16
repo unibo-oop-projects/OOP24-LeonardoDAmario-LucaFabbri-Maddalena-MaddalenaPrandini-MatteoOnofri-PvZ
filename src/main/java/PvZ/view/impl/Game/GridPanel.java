@@ -1,5 +1,6 @@
 package PvZ.view.impl.Game;
 
+import PvZ.controller.api.ViewListener;
 import PvZ.model.api.Plants.Plant;
 import PvZ.model.api.Plants.PlantType;
 import PvZ.utilities.EntityType;
@@ -8,7 +9,10 @@ import PvZ.utilities.Position;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.function.BiConsumer;
 import java.util.stream.Collectors;
@@ -18,87 +22,59 @@ public class GridPanel extends JPanel {
     private static final int ROWS = 5;
     private static final int COLS = 9;
     private static final int CELL_SIZE = 80;
-    private final int leftMargin;
-    private final JButton[][] cells = new JButton[ROWS][COLS];
-    private final BiConsumer<Integer, Integer> cellClickHandler;
-    private boolean hasSelection = false;
+    private static final int MARGIN_X = 0;
+    private static final int MARGIN_Y = 0;
 
-    public GridPanel(BiConsumer<Integer, Integer> cellClickHandler, int leftMargin) {
-        this.cellClickHandler = cellClickHandler;
-        this.leftMargin = leftMargin;
-        setPreferredSize(new Dimension(leftMargin + COLS * CELL_SIZE, ROWS * CELL_SIZE));
-        setLayout(null);
-        initGrid();
+    private ViewListener listener;
+
+    public GridPanel() {
+        this.setOpaque(false);
+        initMouseListener();
     }
 
-    private void initGrid() {
-        for (int r = 0; r < ROWS; r++) {
-            for (int c = 0; c < COLS; c++) {
-                JButton btn = new JButton();
-                btn.setEnabled(false);
-                btn.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
-                btn.setOpaque(true);
-                btn.setBackground(Color.WHITE);
-                final int row = r;
-                final int col = c;
-                btn.setBounds(leftMargin + c * CELL_SIZE, r * CELL_SIZE, CELL_SIZE, CELL_SIZE);
-                btn.addActionListener(e -> cellClickHandler.accept(row, col));
-                cells[r][c] = btn;
-                add(btn);
+    private void initMouseListener() {
+        this.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                int x = (e.getX() - MARGIN_X) / CELL_SIZE;
+                int y = (e.getY() - MARGIN_Y) / CELL_SIZE;
+
+                if (x >= 0 && x < COLS && y >= 0 && y < ROWS && listener != null) {
+                    listener.processInputGrid(new Position(x, y));
+                }
             }
-        }
+        });
     }
 
-    //disegna la griglia
-    private void drawGrid(Graphics g, int rows, int cols, int cellSize) {
-        g.setColor(Color.LIGHT_GRAY);
-        for (int i = 0; i <= rows; i++) {
-            g.drawLine(0, i * cellSize, cols * cellSize, i * cellSize);
-        }
-        for (int i = 0; i <= cols; i++) {
-            g.drawLine(i * cellSize, 0, i * cellSize, rows * cellSize);
-        }
+    public void setViewListener(ViewListener listener) {
+        this.listener = listener;
     }
 
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g.create();
-        g2.translate(leftMargin, 0);
-        drawGrid(g2, ROWS, COLS, CELL_SIZE);
+
+        g2.setColor(Color.BLACK);
+
+        int totalWidth = COLS * CELL_SIZE;
+        int totalHeight = ROWS * CELL_SIZE;
+
+        for (int x = 0; x <= COLS; x++) {
+            int xPos = MARGIN_X + x * CELL_SIZE;
+            g2.drawLine(xPos, MARGIN_Y, xPos, MARGIN_Y + totalHeight);
+        }
+
+        for (int y = 0; y <= ROWS; y++) {
+            int yPos = MARGIN_Y + y * CELL_SIZE;
+            g2.drawLine(MARGIN_X, yPos, MARGIN_X + totalWidth, yPos);
+        }
         g2.dispose();
     }
 
-    public void updateEntities(Set<GameEntity> entities) {
-        entities = new HashSet<>(entities.stream()
-            .filter(entity -> entity.type() == EntityType.PEASHOOTER 
-                || entity.type() == EntityType.SUNFLOWER 
-                || entity.type() == EntityType.WALLNUT)
-            .collect(Collectors.toSet()));
-    
-        boolean[][] occupied = new boolean[ROWS][COLS];
-        for (GameEntity e : entities) {
-            Position p = e.position();
-            if (p.y() >= 0 && p.y() < ROWS && p.x() >= 0 && p.x() < COLS) {
-                occupied[(int)p.y()][(int)p.x()] = true;
-            }
-        }
-    
-        for (int r = 0; r < ROWS; r++) {
-            for (int c = 0; c < COLS; c++) {
-                JButton btn = cells[r][c];
-                if (occupied[r][c]) {
-                    btn.setEnabled(false);
-                } else {
-                    btn.setEnabled(hasSelection);
-                    btn.setText("");
-                }
-            }
-        }
-        repaint();
+    @Override
+    public Dimension getPreferredSize() {
+        return new Dimension(MARGIN_X * 2 + COLS, MARGIN_Y * 2 + ROWS);
     }
 
-    public void setSelectedPlant(PvZ.model.api.Plants.PlantType type) {
-        hasSelection = (type != null);
-    }
 }

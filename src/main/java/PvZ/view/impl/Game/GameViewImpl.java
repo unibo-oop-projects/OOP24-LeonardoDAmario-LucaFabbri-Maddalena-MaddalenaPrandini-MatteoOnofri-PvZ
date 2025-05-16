@@ -1,115 +1,68 @@
-// GameViewImpl.java
 package PvZ.view.impl.Game;
 
 import PvZ.controller.api.ViewListener;
-import PvZ.model.api.Plants.PlantType;
 import PvZ.utilities.GameEntity;
-import PvZ.utilities.Position;
 import PvZ.view.api.GameView;
 
 import javax.swing.*;
-import javax.swing.border.Border;
 
 import java.awt.*;
-import java.util.HashSet;
 import java.util.Set;
 
 public class GameViewImpl implements GameView {
 
-    private static final int CELL_SIZE = 80;
-    private static final int COLS = 9;
-    private static final int ROWS = 5;
-    private static final int LEFT_MARGIN = CELL_SIZE;
+    private final JFrame frame = new JFrame("Plants vs Zombies");
+    private final GameToolBar toolBar = new GameToolBar();
+    private final DrawPanel drawPanel = new DrawPanel();
+    private final GridPanel gridPanel = new GridPanel();
 
-    private final JFrame frame;
-    private final GridPanel panel;
-    private final GameToolBar roaster;
-    private final DrawPanel drawPanel;
-    private final JLayeredPane layeredPanel;
+    private final JLayeredPane layeredPane = new JLayeredPane();
 
-    private ViewListener listener;
-    private PlantType selectedPlant;
-    private Set<GameEntity> lastEntities = new HashSet<>();
+    private static final int WIDTH = 720;
+    private static final int HEIGHT = 400;
 
     public GameViewImpl() {
-        layeredPanel = new JLayeredPane();
-        drawPanel = new DrawPanel();
-        frame = new JFrame("Plants vs Zombies - Java Edition");
-        panel = new GridPanel(this::handleCellClick, LEFT_MARGIN);
-        roaster = new GameToolBar(this::handlePlantSelection);
-
-        int width = LEFT_MARGIN + COLS * CELL_SIZE; // 9 colonne * cell size
-        int height = ROWS * CELL_SIZE; // 5 righe * cell size
-
-        layeredPanel.setPreferredSize(new Dimension(width, height));
-
-        // Posiziona il GamePanel sotto
-        panel.setBounds(0, 0, width, height);
-        layeredPanel.add(panel, Integer.valueOf(0));
-
-        // Posiziona il DrawPanel sopra
-        drawPanel.setBounds(LEFT_MARGIN, 0, width - LEFT_MARGIN, height);
-        layeredPanel.add(drawPanel, Integer.valueOf(1));
-
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(LEFT_MARGIN + COLS * CELL_SIZE + 200, ROWS * CELL_SIZE + 100);
         frame.setLayout(new BorderLayout());
 
-        JPanel leftPanel = new JPanel();
-        leftPanel.setLayout(new BoxLayout(leftPanel, BoxLayout.Y_AXIS));
-        leftPanel.add(roaster);
-        leftPanel.setPreferredSize(new Dimension(200, frame.getHeight()));
+        layeredPane.setPreferredSize(new Dimension(WIDTH, HEIGHT));
+        drawPanel.setBounds(0, 0, WIDTH, HEIGHT);
+        gridPanel.setBounds(0, 0, WIDTH +1, HEIGHT+1);
 
-        frame.add(leftPanel, BorderLayout.WEST);
-        frame.add(layeredPanel, BorderLayout.CENTER);
-    }
 
-    private void handlePlantSelection(PlantType type) {
-        if (listener != null) {
-            switch (type) {
-                case PEASHOOTER -> listener.processInputRoaster(ViewListener.UserInputRoaster.PEASHOOTER);
-                case SUNFLOWER  -> listener.processInputRoaster(ViewListener.UserInputRoaster.SUNFLOWER);
-                case WALLNUT    -> listener.processInputRoaster(ViewListener.UserInputRoaster.WALLNUT);
-            }
-        }
-        selectedPlant = type;
-        panel.setSelectedPlant(type);
-        panel.updateEntities(lastEntities);
-    }
+        layeredPane.add(gridPanel, JLayeredPane.DEFAULT_LAYER);
+        layeredPane.add(drawPanel, JLayeredPane.PALETTE_LAYER);
 
-    private void handleCellClick(int row, int col) {
-        if (selectedPlant != null && listener != null) {
-            listener.processInputGrid(new Position(col, row));
-            selectedPlant = null;
-            panel.setSelectedPlant(null);
-            panel.updateEntities(lastEntities);
-        }
+        frame.add(toolBar, BorderLayout.NORTH);
+        frame.add(layeredPane, BorderLayout.CENTER);
+        frame.setSize(800, 600);
+        frame.setLocationRelativeTo(null);
     }
 
     @Override
     public void show() {
-        SwingUtilities.invokeLater(() -> {
-            frame.setVisible(true);
-            new Timer(1000 / 60, e -> {
-                panel.repaint();
-                drawPanel.repaint();
-            }).start() ;
-        });
-        listener.processInputView(true);
+        SwingUtilities.invokeLater(() -> frame.setVisible(true));
+    }
+
+    @Override
+    public void close() {
+        frame.dispose();
+    }
+
+    @Override
+    public boolean isVisible() {
+        return false;
     }
 
     @Override
     public void render(Set<GameEntity> entities, int suns, int kills) {
-        System.out.println("[DEBUG] Suns: " + suns + " | Kills: " + kills);
-        roaster.statesUpdate(suns, kills);
-        lastEntities = new HashSet<>(entities);
-        panel.setSelectedPlant(selectedPlant);
-        panel.updateEntities(entities);
-        drawPanel.updateMovingEntities(entities);
+        drawPanel.updateMovingEntities(Set.copyOf(entities));
+        toolBar.updateStats(suns, kills);
     }
 
-    @Override public void update() {}
-    @Override public void close() { frame.dispose(); }
-    @Override public boolean isVisible() { return frame.isVisible(); }
-    @Override public void setViewListener(ViewListener listener) { this.listener = listener; }
+    @Override
+    public void setViewListener(ViewListener listener) {
+        toolBar.setViewListener(listener);
+        gridPanel.setViewListener(listener);
+    }
 }

@@ -1,29 +1,50 @@
 package PvZ.view.impl.Game;
 
-import PvZ.model.api.Plants.PlantType;
+import PvZ.controller.api.ViewListener;
+
 import javax.swing.*;
 import java.awt.*;
-import java.util.function.Consumer;
 
 public class GameToolBar extends JPanel {
 
-    private final JLabel sunLabel = new JLabel("Sun: 0");
-    private final JLabel killLabel = new JLabel("Kills: 0");
+    private final JButton peaButton = new JButton("Peashooter (50)");
+    private final JButton snflButton = new JButton("Sunflower (25)");
+    private final JButton wlButton = new JButton("Wall-nut (75)");
+    private final JLabel sunCounterLabel = new JLabel("☀ Sun: 0");
+    private final JLabel killCounterLabel = new JLabel("💀 Kills: 0");
+    private ViewListener listener;
 
-    public GameToolBar(Consumer<PlantType> onSelect) {
+    public GameToolBar() {
         setLayout(new FlowLayout(FlowLayout.LEFT));
-        JButton pea = new JButton("Peashooter");
-        JButton sun = new JButton("Sunflower");
-        JButton wall = new JButton("Wall-nut");
-        pea.addActionListener(e -> onSelect.accept(PlantType.PEASHOOTER));
-        sun.addActionListener(e -> onSelect.accept(PlantType.SUNFLOWER));
-        wall.addActionListener(e -> onSelect.accept(PlantType.WALLNUT));
-        add(pea); add(sun); add(wall);
-        add(sunLabel); add(killLabel);
+        setBackground(Color.LIGHT_GRAY);
+
+
+        add(peaButton);
+        add(snflButton);
+        add(wlButton);
+        add(Box.createHorizontalStrut(20));
+        add(sunCounterLabel);
+        add(killCounterLabel);
+
+        peaButton.addActionListener(e -> PlantSelection(ViewListener.UserInputRoaster.PEASHOOTER));
+        snflButton.addActionListener(e -> PlantSelection(ViewListener.UserInputRoaster.SUNFLOWER));
+        wlButton.addActionListener(e -> PlantSelection(ViewListener.UserInputRoaster.WALLNUT));
     }
 
-    public void statesUpdate(int sun, int kill) {
-        sunLabel.setText("Sun: " + sun);
-        killLabel.setText("Kills: " + kill);
+    public void setViewListener(ViewListener listener) {
+        this.listener = listener;
     }
+
+    private void PlantSelection(ViewListener.UserInputRoaster input) {
+        if (listener != null) {
+            listener.processInputRoaster(input);
+        }
+    }
+
+    public void updateStats(int sunCount, int killCount) {
+        sunCounterLabel.setText("☀ Sun: " + sunCount);
+        killCounterLabel.setText("💀 Kills: " + killCount);
+    }
+
+
 }

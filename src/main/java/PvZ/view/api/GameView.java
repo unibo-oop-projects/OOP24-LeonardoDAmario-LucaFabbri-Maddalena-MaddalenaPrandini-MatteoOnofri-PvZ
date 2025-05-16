@@ -8,7 +8,6 @@ import java.util.Set;;
 
 public interface GameView {
     void show();
-    void update();
     void close();
 
     boolean isVisible();
