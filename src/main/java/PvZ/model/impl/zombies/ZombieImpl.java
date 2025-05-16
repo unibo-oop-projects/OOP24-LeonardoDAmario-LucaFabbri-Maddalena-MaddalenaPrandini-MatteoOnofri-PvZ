@@ -21,8 +21,8 @@ public class ZombieImpl extends AbstractEntity implements Zombie {
     private boolean alive;
     private ZombieActionStrategy strategy;
     private CollisionManager collisionManager;
-    private static final long ATTACK_RATE = 4000;
-    private int lastAttackTime = 0;
+    private static final long ATTACK_RATE = 2000;
+    private long lastAttackTime = 0;
 
     public ZombieImpl(final Position position, final int health, final int speed, final ZombieActionStrategy strategy) {
         super(position, HitBoxType.ZOMBIE);
@@ -31,6 +31,7 @@ public class ZombieImpl extends AbstractEntity implements Zombie {
         this.strategy = strategy;
         this.alive = true;
         this.collisionManager = new CollisionManagerImpl();
+        this.lastAttackTime = ATTACK_RATE;
     }
 
     @Override
@@ -39,12 +40,14 @@ public class ZombieImpl extends AbstractEntity implements Zombie {
             strategy.zombieAction(this);
             move(deltaTime);
         }
-        lastAttackTime += deltaTime;
         Optional<Plant> plant = collisionManager.handleCollision(this, entitiesManager).map(entity -> (Plant) entity);
         if(plant.isPresent()) {
+            lastAttackTime += deltaTime;
             if(lastAttackTime >= ATTACK_RATE) {
                 plant.get().decreaseLife(this.getDamage());
+                lastAttackTime = 0;
                 if(plant.get().getLife() <= 0) {
+                    lastAttackTime = ATTACK_RATE;
                     entitiesManager.removeEntity(plant.get());
                 }
             }
