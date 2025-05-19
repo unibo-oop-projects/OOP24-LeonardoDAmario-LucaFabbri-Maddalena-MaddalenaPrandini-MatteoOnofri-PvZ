@@ -1,7 +1,7 @@
 package pvz.model.impl.Entitities;
 
 import pvz.model.api.Collisions.HitBox;
-import pvz.model.api.Entities.Entity;
+import pvz.model.api.entities.Entity;
 import pvz.model.impl.Collisions.HitBoxFactory;
 import pvz.model.impl.Collisions.HitBoxFactory.HitBoxType;
 import pvz.utilities.Position;

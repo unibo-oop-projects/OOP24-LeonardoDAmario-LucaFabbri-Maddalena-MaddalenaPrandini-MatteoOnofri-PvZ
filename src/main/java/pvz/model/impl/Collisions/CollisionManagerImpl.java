@@ -9,8 +9,8 @@ import java.util.stream.Collectors;
 import pvz.model.api.Zombie;
 import pvz.model.api.Bullets.Bullet;
 import pvz.model.api.Collisions.CollisionManager;
-import pvz.model.api.Entities.EntitiesManager;
-import pvz.model.api.Entities.Entity;
+import pvz.model.api.entities.EntitiesManager;
+import pvz.model.api.entities.Entity;
 import pvz.model.api.plants.Plant;
 import pvz.model.api.plants.PlantType;
 

@@ -1,6 +1,6 @@
 package pvz.model.api.Bullets;
 
-import pvz.model.api.Entities.Entity;
+import pvz.model.api.entities.Entity;
 
 public interface Bullet extends Entity{
 

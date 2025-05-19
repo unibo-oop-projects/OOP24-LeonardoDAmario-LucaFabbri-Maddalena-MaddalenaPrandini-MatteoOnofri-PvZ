@@ -1,4 +1,4 @@
-package pvz.model.api.Entities;
+package pvz.model.api.entities;
 
 import pvz.model.api.Collisions.HitBox;
 import pvz.utilities.*;

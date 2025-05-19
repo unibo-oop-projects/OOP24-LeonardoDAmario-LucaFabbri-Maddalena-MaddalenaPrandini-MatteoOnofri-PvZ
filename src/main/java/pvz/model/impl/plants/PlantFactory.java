@@ -1,5 +1,5 @@
 package pvz.model.impl.plants;
-import pvz.model.api.Entities.EntitiesManager;
+import pvz.model.api.entities.EntitiesManager;
 import pvz.model.api.plants.PlantType;
 import pvz.model.impl.Bullets.BulletImpl;
 import pvz.model.impl.Collisions.CollisionManagerImpl;

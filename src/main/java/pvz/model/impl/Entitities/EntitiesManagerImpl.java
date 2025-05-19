@@ -4,8 +4,8 @@ import java.util.HashSet;
 import java.util.Random;
 import java.util.Set;
 
-import pvz.model.api.Entities.EntitiesManager;
-import pvz.model.api.Entities.Entity;
+import pvz.model.api.entities.EntitiesManager;
+import pvz.model.api.entities.Entity;
 import pvz.model.impl.zombies.ZombieImpl;
 import pvz.utilities.Position;
 

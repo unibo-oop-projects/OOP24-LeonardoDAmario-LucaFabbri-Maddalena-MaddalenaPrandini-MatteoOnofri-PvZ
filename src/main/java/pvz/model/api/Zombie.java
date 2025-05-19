@@ -1,6 +1,6 @@
 package pvz.model.api;
 
-import pvz.model.api.Entities.Entity;
+import pvz.model.api.entities.Entity;
 
 import pvz.utilities.Position;
 

@@ -1,6 +1,6 @@
 package pvz.model.api.plants;
 
-import pvz.model.api.Entities.Entity;
+import pvz.model.api.entities.Entity;
 
 /**
  * Interface representing the base functionality of a plant in the game.
