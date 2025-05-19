@@ -1,7 +1,7 @@
-package PvZ.model.impl.plants;
+package PvZ.model.impl.Plants;
 
 import PvZ.model.api.Entities.EntitiesManager;
-import PvZ.model.api.plants.Plant;
+import PvZ.model.api.Plants.Plant;
 import PvZ.model.impl.Collisions.HitBoxFactory.HitBoxType;
 import PvZ.model.impl.Entitities.AbstractEntity;
 import PvZ.utilities.Position;

@@ -7,7 +7,7 @@ import java.util.EnumMap;
 import java.util.Set;
 import javax.swing.JPanel;
 
-import PvZ.model.api.plants.PlantType;
+import PvZ.model.api.Plants.PlantType;
 import PvZ.utilities.GameEntity;
 
 public class DrawPanel extends JPanel {

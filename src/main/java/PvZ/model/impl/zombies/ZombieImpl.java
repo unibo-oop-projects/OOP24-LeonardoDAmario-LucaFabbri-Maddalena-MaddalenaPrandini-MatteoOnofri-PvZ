@@ -12,7 +12,7 @@ import PvZ.model.api.Collisions.CollisionManager;
 import PvZ.model.api.Collisions.HitBox;
 import PvZ.utilities.Position;
 import PvZ.model.api.Entities.EntitiesManager;
-import PvZ.model.api.plants.Plant;
+import PvZ.model.api.Plants.Plant;
 
 public class ZombieImpl extends AbstractEntity implements Zombie {
 

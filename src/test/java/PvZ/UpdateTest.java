@@ -5,9 +5,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.Test;
 
 import PvZ.model.api.Entities.EntitiesManager;
-import PvZ.model.api.plants.Plant;
+import PvZ.model.api.Plants.Plant;
 import PvZ.model.impl.Entitities.EntitiesManagerImpl;
-import PvZ.model.impl.plants.PlantFactory;
+import PvZ.model.impl.Plants.PlantFactory;
 import PvZ.model.impl.zombies.ZombieImpl;
 import PvZ.utilities.Position;
 

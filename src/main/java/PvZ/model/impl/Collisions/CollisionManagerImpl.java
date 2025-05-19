@@ -11,8 +11,8 @@ import PvZ.model.api.Bullets.Bullet;
 import PvZ.model.api.Collisions.CollisionManager;
 import PvZ.model.api.Entities.EntitiesManager;
 import PvZ.model.api.Entities.Entity;
-import PvZ.model.api.plants.Plant;
-import PvZ.model.api.plants.PlantType;
+import PvZ.model.api.Plants.Plant;
+import PvZ.model.api.Plants.PlantType;
 
 public class CollisionManagerImpl implements CollisionManager{
 

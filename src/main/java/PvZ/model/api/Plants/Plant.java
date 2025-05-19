@@ -1,4 +1,4 @@
-package PvZ.model.api.plants;
+package PvZ.model.api.Plants;
 
 import PvZ.model.api.Entities.Entity;
 
