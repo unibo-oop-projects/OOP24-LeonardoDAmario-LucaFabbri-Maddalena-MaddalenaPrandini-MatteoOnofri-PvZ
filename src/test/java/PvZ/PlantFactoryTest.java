@@ -1,29 +1,98 @@
 package PvZ;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import PvZ.model.impl.Plants.PlantFactory;
 
-public class PlantFactoryTest {
+import PvZ.model.api.plants.Plant;
+import PvZ.model.api.plants.PlantType;
+import PvZ.model.impl.plants.PlantFactory;
+import PvZ.utilities.Position;
 
-    private final PlantFactory plantFactory;
+/**
+ * Unit tests for the {@link PlantFactory} class.
+ * Ensures that plants are correctly created and initialized.
+ */
+class PlantFactoryTest {
 
-    public PlantFactoryTest() {
-        this.plantFactory = new PlantFactory();
+    private PlantFactory factory;
+    private Position somePos;
+
+    /**
+     * Initializes the test environment before each test.
+     */
+    @BeforeEach
+    public void setUp() {
+        factory = new PlantFactory();
+        somePos = new Position(4, 2);
     }
 
+    /**
+     * Tests that the Peashooter is created with correct initial values.
+     */
     @Test
-    public void testNullPositionThrowsException() {
-        Exception exception1 = assertThrows(NullPointerException.class, ()-> plantFactory.createPeashooter(null));
-        assertEquals("Position cannot be null", exception1.getMessage());
+     void testCreatePeashooterBasics() {
+        final Plant p = factory.createPeashooter(somePos);
 
-        Exception exception2 = assertThrows(NullPointerException.class, ()-> plantFactory.createSunflower(null));
-        assertEquals("Position cannot be null", exception2.getMessage());
+        assertEquals(somePos, p.getPosition());
 
-        Exception exception3 = assertThrows(NullPointerException.class, ()-> plantFactory.createWallnut(null));
-        assertEquals("Position cannot be null", exception3.getMessage());
+        assertEquals(PlantType.PEASHOOTER, p.mapToEntityType());
+
+        assertEquals(PlantType.PEASHOOTER.getLife(), p.getLife());
     }
-    
+
+    /**
+     * Tests that the Sunflower is created with correct initial values.
+     */
+    @Test
+     void testCreateSunflowerBasics() {
+        final Plant p = factory.createSunflower(somePos);
+
+        assertEquals(somePos, p.getPosition());
+        assertEquals(PlantType.SUNFLOWER, p.mapToEntityType());
+        assertEquals(PlantType.SUNFLOWER.getLife(), p.getLife());
+    }
+
+    /**
+     * Tests that the Wallnut is created with correct initial values.
+     */
+    @Test
+     void testCreateWallnutBasics() {
+       final Plant p = factory.createWallnut(somePos);
+
+        assertEquals(somePos, p.getPosition());
+        assertEquals(PlantType.WALLNUT, p.mapToEntityType());
+        assertEquals(PlantType.WALLNUT.getLife(), p.getLife());
+    }
+
+    /**
+     * Tests that passing a null position throws a {@link NullPointerException}.
+     */
+    @Test
+     void testFactoryNullPositionThrows() {
+        assertThrows(NullPointerException.class, () -> factory.createPeashooter(null));
+        assertThrows(NullPointerException.class, () -> factory.createSunflower(null));
+        assertThrows(NullPointerException.class, () -> factory.createWallnut(null));
+    }
+
+    /**
+     * Tests that each call to the factory returns a distinct {@link Plant} instance.
+     */
+    @Test
+     void testDistinctInstances() {
+        final Plant p1 = factory.createPeashooter(somePos);
+        final Plant p2 = factory.createPeashooter(somePos);
+        assertNotSame(p1, p2);
+
+        final Plant s1 = factory.createSunflower(somePos);
+        final Plant s2 = factory.createSunflower(somePos);
+        assertNotSame(s1, s2);
+
+        final Plant w1 = factory.createWallnut(somePos);
+        final Plant w2 = factory.createWallnut(somePos);
+        assertNotSame(w1, w2);
+    }
 }
+
