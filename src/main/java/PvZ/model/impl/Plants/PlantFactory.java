@@ -97,6 +97,7 @@ public final class PlantFactory {
                 if(zombie.isPresent()) {
                     entitiesManager.removeEntity(zombie.get());
                     entitiesManager.removeEntity(this);
+                    entitiesManager.addKill();
                 }
             }
 
