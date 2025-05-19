@@ -1,21 +1,12 @@
 package PvZ.view.impl.Game;
 
 import PvZ.controller.api.ViewListener;
-import PvZ.model.api.Plants.Plant;
-import PvZ.model.api.Plants.PlantType;
-import PvZ.utilities.EntityType;
-import PvZ.utilities.GameEntity;
 import PvZ.utilities.Position;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-import java.util.function.BiConsumer;
-import java.util.stream.Collectors;
 
 public class GridPanel extends JPanel {
 

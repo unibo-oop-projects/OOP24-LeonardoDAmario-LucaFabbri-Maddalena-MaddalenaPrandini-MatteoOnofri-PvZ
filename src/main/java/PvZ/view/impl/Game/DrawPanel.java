@@ -4,13 +4,10 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.util.EnumMap;
-import java.util.HashSet;
 import java.util.Set;
-import java.util.stream.Collectors;
 import javax.swing.JPanel;
 
-import PvZ.model.api.Plants.PlantType;
-import PvZ.utilities.EntityType;
+import PvZ.model.api.plants.PlantType;
 import PvZ.utilities.GameEntity;
 
 public class DrawPanel extends JPanel {

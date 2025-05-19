@@ -6,7 +6,7 @@ import java.util.concurrent.TimeUnit;
 import PvZ.controller.api.GameController;
 import PvZ.controller.api.ViewListener;
 import PvZ.model.api.GameModel;
-import PvZ.model.api.Plants.PlantType;
+import PvZ.model.api.plants.PlantType;
 import PvZ.utilities.Position;
 import PvZ.view.api.GameView;
 
