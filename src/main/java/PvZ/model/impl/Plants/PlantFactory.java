@@ -21,12 +21,13 @@ public final class PlantFactory {
     public Plant createPeashooter(Position position) {
         Objects.requireNonNull(position, "Position cannot be null");
         return new AbstractPlant(position){
+
             @Override
             public PlantType mapToEntityType() {
                 return PlantType.PEASHOOTER;
             }
 
-            private final static double FIRE_RATE = 2000;
+            private final static double FIRE_RATE = 1000;
 
             private double elapsedTime;
 
@@ -51,13 +52,14 @@ public final class PlantFactory {
     public Plant createSunflower(Position position) {
         Objects.requireNonNull(position, "Position cannot be null");
         return new AbstractPlant(position){
+
             @Override
             public PlantType mapToEntityType() {
                 return PlantType.SUNFLOWER;
             }
 
             private final static int SUN_VALUE = 25;
-            private static final long SUN_GENERATION_INTERVAL = 7000; // ogni 7 secondi
+            private static final long SUN_GENERATION_INTERVAL = 4000;
             private long lastSunTime = 0;
 
 
@@ -65,7 +67,7 @@ public final class PlantFactory {
             public void update(long deltaTime, EntitiesManager entitiesManager) {
                 lastSunTime += deltaTime;
                 if (lastSunTime >= SUN_GENERATION_INTERVAL) {
-                    entitiesManager.addSun(SUN_VALUE); // o quanto vuoi
+                    entitiesManager.addSun(SUN_VALUE);
                     lastSunTime = 0;
                     System.out.println("[SUNFLOWER] Generated 25 sun");
                 }

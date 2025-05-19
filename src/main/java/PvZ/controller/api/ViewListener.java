@@ -9,7 +9,6 @@ public interface ViewListener {
     }
 
     void processInputRoaster(UserInputRoaster input);
-    
     void processInputGrid(Position position);
 
 }

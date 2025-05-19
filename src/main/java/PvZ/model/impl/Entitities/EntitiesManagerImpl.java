@@ -49,9 +49,9 @@ public class EntitiesManagerImpl implements EntitiesManager{
     }
 
     @Override
-    public boolean spendSun(int amount) {
-        if (this.sunCount >= amount) {
-            this.sunCount = this.sunCount-amount;
+    public boolean decreaseSun(int amount) {
+        if(this.sunCount >= amount){
+            this.sunCount = this.sunCount - amount;
             return true;
         }
         return false;

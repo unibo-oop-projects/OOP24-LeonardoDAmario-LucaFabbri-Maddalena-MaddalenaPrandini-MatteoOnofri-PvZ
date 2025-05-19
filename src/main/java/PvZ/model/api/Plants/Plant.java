@@ -1,5 +1,6 @@
 package PvZ.model.api.Plants;
 
+import PvZ.model.api.Entities.EntitiesManager;
 import PvZ.model.api.Entities.Entity;
 
 /**

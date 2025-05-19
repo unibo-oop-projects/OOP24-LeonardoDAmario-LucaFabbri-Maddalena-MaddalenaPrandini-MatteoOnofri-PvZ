@@ -16,7 +16,6 @@ public class GameControllerImpl implements GameController, ViewListener {
 
     interface Event {}
     record InputRoaster(UserInputRoaster inputRoaster) implements Event {}
-    record PlacePlant(PlantType type, Position position) implements Event {}
     record InputGrid(Position position) implements Event {}
 
     private static final int FPS = 60;
@@ -61,18 +60,18 @@ public class GameControllerImpl implements GameController, ViewListener {
             System.out.println("[GAMELOOP] Starting main loop");
             long previousTime = System.currentTimeMillis();
 
-            while (running && view.isVisible()) {
+            while (running) {
                 long currentTime = System.currentTimeMillis();
                 long deltaTime = currentTime - previousTime;
 
-                model.update(deltaTime);
-                view.render(model.getGameEntities(), model.getSunCount(), model.getKillCount());
+                    model.update(deltaTime);
+                    view.render(model.getGameEntities(), model.getSunCount(), model.getKillCount());
 
-                previousTime = currentTime;
+                    previousTime = currentTime;
 
-                waitForNextFrame(currentTime);
-                System.out.println("[GAMELOOP] Running frame");
-                handleInput();
+                    waitForNextFrame(currentTime);
+                    System.out.println("[GAMELOOP] Running frame");
+                    handleInput();
             }
         }
 
@@ -105,21 +104,21 @@ public class GameControllerImpl implements GameController, ViewListener {
                             pendingPosition = pos;
                             System.out.println("[CONTROLLER] Selected position: " + pendingPosition);
                         }
-                        case PlacePlant(var type, var pos) -> {
-                            System.out.println("[CONTROLLER] Received PlacePlant: " + type + " at " + pos);
-                            model.placePlant(type, pos);
-                        }
                         default -> {}
                     }
-                }
-                if (selectedPlantType != null && pendingPosition != null) {
-                    queue.add(new PlacePlant(selectedPlantType, pendingPosition));
-                    selectedPlantType = null;
-                    pendingPosition = null;
+                    createPlant();
                 }
             } catch (Exception e) {
                 e.printStackTrace();
             }
+        }
+    }
+
+    private void createPlant() {
+        if (selectedPlantType != null && pendingPosition != null) {
+            model.placePlant(selectedPlantType, pendingPosition);
+            selectedPlantType = null;
+            pendingPosition = null;
         }
     }
 

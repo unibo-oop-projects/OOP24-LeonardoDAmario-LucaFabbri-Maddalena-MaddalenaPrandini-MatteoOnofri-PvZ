@@ -7,7 +7,7 @@ public interface EntitiesManager {
     void removeEntity(Entity entity);
     Set<Entity> getEntities();
     public void addSun(int amount);
-    public boolean spendSun(int amount);
+    public boolean decreaseSun(int amount);
     public void addKill();
     public void spawnZombie(long deltaTime);
     int getKillCount();
