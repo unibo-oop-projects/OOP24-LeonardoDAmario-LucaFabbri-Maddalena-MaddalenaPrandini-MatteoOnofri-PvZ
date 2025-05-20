@@ -3,7 +3,7 @@ package pvz.model.impl.plants;
 import pvz.model.api.entities.EntitiesManager;
 import pvz.model.api.plants.Plant;
 import pvz.model.impl.Collisions.HitBoxFactory.HitBoxType;
-import pvz.model.impl.Entitities.AbstractEntity;
+import pvz.model.impl.entities.AbstractEntity;
 import pvz.utilities.Position;
 
 /**

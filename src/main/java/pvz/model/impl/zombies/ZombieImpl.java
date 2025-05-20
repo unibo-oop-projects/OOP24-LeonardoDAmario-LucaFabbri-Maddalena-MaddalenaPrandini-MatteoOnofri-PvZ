@@ -2,7 +2,7 @@ package pvz.model.impl.zombies;
 
 import pvz.model.impl.Collisions.CollisionManagerImpl;
 import pvz.model.impl.Collisions.HitBoxFactory.HitBoxType;
-import pvz.model.impl.Entitities.AbstractEntity;
+import pvz.model.impl.entities.AbstractEntity;
 
 import java.util.Optional;
 

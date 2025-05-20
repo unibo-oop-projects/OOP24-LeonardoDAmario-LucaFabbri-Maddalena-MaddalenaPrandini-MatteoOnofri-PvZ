@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 
 import pvz.model.api.entities.EntitiesManager;
 import pvz.model.api.plants.Plant;
-import pvz.model.impl.Entitities.EntitiesManagerImpl;
+import pvz.model.impl.entities.EntitiesManagerImpl;
 import pvz.model.impl.plants.PlantFactory;
 import pvz.model.impl.zombies.ZombieImpl;
 import pvz.utilities.Position;

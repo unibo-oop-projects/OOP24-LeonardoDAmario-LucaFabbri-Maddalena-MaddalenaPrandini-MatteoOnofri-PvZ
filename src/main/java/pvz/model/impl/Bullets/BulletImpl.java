@@ -10,7 +10,7 @@ import pvz.model.api.Collisions.CollisionManager;
 import pvz.model.api.entities.EntitiesManager;
 import pvz.model.impl.Collisions.CollisionManagerImpl;
 import pvz.model.impl.Collisions.HitBoxFactory.HitBoxType;
-import pvz.model.impl.Entitities.AbstractEntity;
+import pvz.model.impl.entities.AbstractEntity;
 
 public class BulletImpl extends AbstractEntity implements Bullet {
 
