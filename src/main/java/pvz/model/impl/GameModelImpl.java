@@ -15,7 +15,9 @@ import pvz.utilities.GameEntity;
 import pvz.utilities.Position;
 import java.util.Set;
 import java.util.stream.Collectors;
-//import pvz.view.impl.EndGame.EndGameView;
+import pvz.view.impl.EndGameMenu.EndGameView;
+
+import javax.swing.*;
 
 /**
  * Implementation of the {@link GameModel} interface that manages the core game logic
@@ -27,7 +29,7 @@ public class GameModelImpl implements GameModel {
 
     private GameStatus status;
     private final Difficulty difficulty;
-    //private final EndGameView endGameView;
+    //private final ;
 
     /**
      * Constructs a new instance of the game model with default state and managers.
@@ -68,8 +70,7 @@ public class GameModelImpl implements GameModel {
      */
     @Override
     public boolean isVictory() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'isVictory'");
+        return status == GameStatus.WON;
     }
 
     /**
@@ -99,8 +100,10 @@ public class GameModelImpl implements GameModel {
     });
     if (isGameOver()) {
         System.out.println("Game Over, you lost!");
-        //to be implemented
-        //this.endGameView.showEndGameView(this.status);
+        EndGameView endGameView = new EndGameView(isVictory());
+        JFrame frame = new JFrame("Game Over");
+        frame.add(endGameView);
+        frame.setVisible(true);
     }
     }
 
