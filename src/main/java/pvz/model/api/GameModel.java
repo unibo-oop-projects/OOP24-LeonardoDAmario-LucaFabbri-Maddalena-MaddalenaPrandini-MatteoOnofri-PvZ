@@ -14,10 +14,6 @@ import java.util.Set;
  */
 public interface GameModel {
 
-    /**
-     * Starts a new game. Initializes all necessary components and game state.
-     */
-    void startGame();
 
     /**
      * Checks if the game is over.

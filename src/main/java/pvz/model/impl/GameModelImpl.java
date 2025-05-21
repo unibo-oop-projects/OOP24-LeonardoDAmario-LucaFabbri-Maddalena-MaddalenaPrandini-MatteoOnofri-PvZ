@@ -41,22 +41,7 @@ public class GameModelImpl implements GameModel {
         this.status = GameStatus.IN_PROGRESS;
     }
 
-    /**
-     * Starts the game. (Currently not implemented.)
-     *
-     * @throws UnsupportedOperationException always.
-     */
-    @Override
-    public void startGame() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'startGame'");
-    }
 
-    /**
-     * Checks whether the game is over.
-     *
-     * @return {@code true} if the game has ended, {@code false} if still in progress.
-     */
     @Override
     public boolean isGameOver() {
             return status != GameStatus.IN_PROGRESS;
@@ -98,7 +83,7 @@ public class GameModelImpl implements GameModel {
             this.status = GameStatus.LOST;
         }
     });
-    if(getKillCount() == 1) {
+    if(getKillCount() == 20) {
         this.status = GameStatus.WON;
     }
     }
