@@ -1,4 +1,4 @@
-package PvZ.view.impl.EndGame;
+package pvz.view.impl.EndGame;
 
 import javax.swing.*;
 import java.awt.*;

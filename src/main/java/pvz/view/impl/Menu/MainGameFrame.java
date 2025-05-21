@@ -8,15 +8,7 @@ import pvz.model.api.GameModel;
 import pvz.model.impl.GameModelImpl;
 import pvz.view.api.GameView;
 import pvz.view.impl.Game.GameViewImpl;
-import PvZ.PvZ;
-import PvZ.controller.api.GameController;
-import PvZ.controller.api.ViewListener;
-import PvZ.controller.impl.GameControllerImpl;
-import PvZ.model.api.Difficulty;
-import PvZ.model.api.GameModel;
-import PvZ.model.impl.GameModelImpl;
-import PvZ.view.api.GameView;
-import PvZ.view.impl.Game.GameViewImpl;
+import pvz.PvZ;
 
 import javax.swing.*;
 import java.awt.*;

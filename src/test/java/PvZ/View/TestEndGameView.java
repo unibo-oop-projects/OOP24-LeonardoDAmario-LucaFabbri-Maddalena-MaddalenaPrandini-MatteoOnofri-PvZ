@@ -1,6 +1,6 @@
-package PvZ.View;
+package pvz.View;
 
-import PvZ.view.impl.EndGame.EndGameView;
+import pvz.view.impl.EndGame.EndGameView;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
