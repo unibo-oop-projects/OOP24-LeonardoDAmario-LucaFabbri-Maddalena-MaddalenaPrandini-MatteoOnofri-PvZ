@@ -44,7 +44,7 @@ public class MainGameFrame extends JFrame {
     public void startGame(Difficulty difficulty) {
         System.out.println("[SISTEMA]: Avvio gioco con difficoltà: " + difficulty);
 
-        GameModel model = new GameModelImpl();
+        GameModel model = new GameModelImpl(difficulty);
         GameView view = new GameViewImpl();
         GameController controller = new GameControllerImpl(model, view);
         view.setViewListener((ViewListener) controller);
