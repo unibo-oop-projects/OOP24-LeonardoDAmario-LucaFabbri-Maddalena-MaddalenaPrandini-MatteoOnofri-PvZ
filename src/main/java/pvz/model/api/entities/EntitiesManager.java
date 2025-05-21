@@ -2,6 +2,10 @@ package pvz.model.api.entities;
 
 import java.util.Set;
 
+import org.apache.commons.lang3.builder.Diff;
+
+import pvz.model.api.Difficulty;
+
 /**
  * Interface for managing entities in the game.
  * <p>
@@ -57,7 +61,7 @@ public interface EntitiesManager {
      *
      * @param deltaTime the time elapsed since the last update in milliseconds.
      */
-    void spawnZombie(long deltaTime);
+    void spawnZombie(long deltaTime, Difficulty difficulty);
 
     /**
      * Returns the total number of zombies killed.

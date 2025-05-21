@@ -1,5 +1,6 @@
 package pvz.model.impl;
 import pvz.model.api.Bullets.Bullet;
+import pvz.model.api.Difficulty;
 import pvz.model.api.GameModel;
 import pvz.model.api.GameStatus;
 import pvz.model.api.Zombie;
@@ -12,9 +13,9 @@ import pvz.model.impl.plants.PlantFactory;
 import pvz.utilities.EntityType;
 import pvz.utilities.GameEntity;
 import pvz.utilities.Position;
-
 import java.util.Set;
 import java.util.stream.Collectors;
+//import pvz.view.impl.EndGame.EndGameView;
 
 /**
  * Implementation of the {@link GameModel} interface that manages the core game logic
@@ -24,13 +25,16 @@ public class GameModelImpl implements GameModel {
     private final EntitiesManager entitiesManager;
     private final PlantFactory plantFactory;
 
-    private final GameStatus status;
+    private GameStatus status;
+    private final Difficulty difficulty;
+    //private final EndGameView endGameView;
 
     /**
      * Constructs a new instance of the game model with default state and managers.
      */
-    public GameModelImpl() {
-        this.entitiesManager = new EntitiesManagerImpl();
+    public GameModelImpl(Difficulty difficulty) {
+        this.difficulty = difficulty;
+        this.entitiesManager = new EntitiesManagerImpl(difficulty);
         this.plantFactory = new PlantFactory();
         this.status = GameStatus.IN_PROGRESS;
     }
@@ -86,9 +90,20 @@ public class GameModelImpl implements GameModel {
      */
     @Override
     public void update(final long deltaTime) {
-        this.entitiesManager.spawnZombie(deltaTime);
-        this.entitiesManager.getEntities().forEach(e -> e.update(deltaTime, entitiesManager));
+    this.entitiesManager.spawnZombie(deltaTime, difficulty);
+    this.entitiesManager.getEntities().forEach(e -> {
+        e.update(deltaTime, entitiesManager);
+        if (e instanceof Zombie && e.getPosition().x() <= 0) {
+            this.status = GameStatus.LOST;
+        }
+    });
+    if (isGameOver()) {
+        System.out.println("Game Over, you lost!");
+        //to be implemented
+        //this.endGameView.showEndGameView(this.status);
     }
+    }
+
 
     /**
      * Retrieves a set of all game entities currently present on the field,
