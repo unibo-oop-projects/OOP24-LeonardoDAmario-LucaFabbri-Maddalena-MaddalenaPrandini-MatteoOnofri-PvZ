@@ -9,6 +9,7 @@ import pvz.model.api.GameModel;
 import pvz.model.api.plants.PlantType;
 import pvz.utilities.Position;
 import pvz.view.api.GameView;
+import pvz.view.impl.EndGameMenu.EndGameView;
 
 import javax.swing.*;
 
@@ -72,6 +73,12 @@ public class GameControllerImpl implements GameController, ViewListener {
                     waitForNextFrame(currentTime);
                     System.out.println("[GAMELOOP] Running frame");
                     handleInput();
+
+                    if (model.isGameOver()) {
+                        stopGame();
+                        System.out.println("Game Over, you lost!");
+                        EndGameView endGameView = new EndGameView(model.isVictory());
+                    }
             }
         }
 

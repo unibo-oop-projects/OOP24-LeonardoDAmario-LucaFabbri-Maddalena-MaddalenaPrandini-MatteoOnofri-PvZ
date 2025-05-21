@@ -98,13 +98,6 @@ public class GameModelImpl implements GameModel {
             this.status = GameStatus.LOST;
         }
     });
-    if (isGameOver()) {
-        System.out.println("Game Over, you lost!");
-        EndGameView endGameView = new EndGameView(isVictory());
-        JFrame frame = new JFrame("Game Over");
-        frame.add(endGameView);
-        frame.setVisible(true);
-    }
     }
 
 

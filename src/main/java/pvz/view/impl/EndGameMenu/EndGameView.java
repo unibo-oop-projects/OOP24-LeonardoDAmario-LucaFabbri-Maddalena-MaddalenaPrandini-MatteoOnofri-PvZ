@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 
 public class EndGameView extends JPanel {
+    public final JFrame frame = new JFrame();
     public final JButton backToMenuButton = new JButton("Torna al menu");
     public final JButton exitButton = new JButton("Esci");
 
@@ -19,5 +20,10 @@ public class EndGameView extends JPanel {
         buttonPanel.add(backToMenuButton);
         buttonPanel.add(exitButton);
         add(buttonPanel, BorderLayout.SOUTH);
+
+        JFrame frame = new JFrame();
+        frame.add(this);
+        frame.pack();
+        frame.setVisible(true);
     }
 }
