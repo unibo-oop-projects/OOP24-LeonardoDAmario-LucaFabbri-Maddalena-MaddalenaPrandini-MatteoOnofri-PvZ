@@ -98,6 +98,9 @@ public class GameModelImpl implements GameModel {
             this.status = GameStatus.LOST;
         }
     });
+    if(getKillCount() == 1) {
+        this.status = GameStatus.WON;
+    }
     }
 
 
