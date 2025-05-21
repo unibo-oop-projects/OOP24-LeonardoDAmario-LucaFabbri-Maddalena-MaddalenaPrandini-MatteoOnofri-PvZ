@@ -1,7 +1,7 @@
-package PvZ.controller.impl.EndGame;
+package pvz.controller.impl.EndGame;
 
-import PvZ.view.impl.Menu.MainGameFrame;
-import PvZ.view.impl.EndGame.EndGameView;
+import pvz.view.impl.Menu.MainGameFrame;
+import pvz.view.impl.EndGame.EndGameView;
 
 import java.awt.event.ActionEvent;
 
