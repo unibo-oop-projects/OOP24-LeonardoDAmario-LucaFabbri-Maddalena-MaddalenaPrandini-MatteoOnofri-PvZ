@@ -1,9 +1,12 @@
-package pvz.view.impl.EndGame;
+package pvz.view.impl.EndGameMenu;
+
+import pvz.PvZ;
 
 import javax.swing.*;
 import java.awt.*;
 
 public class EndGameView extends JPanel {
+    public final JFrame frame = new JFrame();
     public final JButton backToMenuButton = new JButton("Torna al menu");
     public final JButton exitButton = new JButton("Esci");
 
@@ -19,5 +22,16 @@ public class EndGameView extends JPanel {
         buttonPanel.add(backToMenuButton);
         buttonPanel.add(exitButton);
         add(buttonPanel, BorderLayout.SOUTH);
+
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        exitButton.addActionListener(e -> System.exit(0));
+        backToMenuButton.addActionListener(e -> {
+                    frame.dispose();
+                    PvZ.startGame();
+                }
+        );
+        frame.add(this);
+        frame.pack();
+        frame.setVisible(true);
     }
 }

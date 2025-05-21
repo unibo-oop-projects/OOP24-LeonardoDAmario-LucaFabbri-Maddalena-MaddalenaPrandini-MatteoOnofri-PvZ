@@ -1,5 +1,6 @@
 package pvz.view.impl.Menu;
 
+import pvz.PvZ;
 import pvz.controller.api.GameController;
 import pvz.controller.api.ViewListener;
 import pvz.controller.impl.GameControllerImpl;
@@ -8,7 +9,6 @@ import pvz.model.api.GameModel;
 import pvz.model.impl.GameModelImpl;
 import pvz.view.api.GameView;
 import pvz.view.impl.Game.GameViewImpl;
-import pvz.PvZ;
 
 import javax.swing.*;
 import java.awt.*;
@@ -44,7 +44,7 @@ public class MainGameFrame extends JFrame {
     public void startGame(Difficulty difficulty) {
         System.out.println("[SISTEMA]: Avvio gioco con difficoltà: " + difficulty);
 
-        GameModel model = new GameModelImpl();
+        GameModel model = new GameModelImpl(difficulty);
         GameView view = new GameViewImpl();
         GameController controller = new GameControllerImpl(model, view);
         view.setViewListener((ViewListener) controller);
