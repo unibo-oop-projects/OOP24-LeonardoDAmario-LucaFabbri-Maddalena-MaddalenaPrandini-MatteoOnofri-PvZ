@@ -7,14 +7,13 @@ import pvz.view.impl.Menu.MenuView;
 
 public class MenuController {
 
-    private final MenuModel model;
     private final MenuView view;
     private final MainGameFrame mainFrame;
 
     private Difficulty currentDifficulty = Difficulty.NORMAL;
 
-    public MenuController(MenuModel model, MenuView view, MainGameFrame mainFrame) {
-        this.model = model;
+    public MenuController( MenuView view, MainGameFrame mainFrame) {
+
         this.view = view;
         this.mainFrame = mainFrame;
 

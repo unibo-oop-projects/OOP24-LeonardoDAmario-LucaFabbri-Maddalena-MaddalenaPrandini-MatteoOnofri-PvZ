@@ -8,7 +8,6 @@ import pvz.controller.impl.Menu.MenuController;
 import pvz.model.api.Difficulty;
 import pvz.model.api.GameMenu.MenuModel;
 import pvz.model.api.GameModel;
-import pvz.model.impl.GameMenu.MenuModelImpl;
 import pvz.model.impl.GameModelImpl;
 import pvz.view.impl.EndGameMenu.EndGameView;
 import pvz.view.impl.Menu.MenuView;
@@ -71,8 +70,7 @@ public class MainGameFrame extends JFrame {
 
     public void initMenu() {
         MenuView menuView = new MenuView();
-        MenuModel menuModel = new MenuModelImpl();
-        MenuController menuController = new MenuController(menuModel, menuView, this);
+        MenuController menuController = new MenuController( menuView, this);
 
         this.addMenuView(menuView);
     }
