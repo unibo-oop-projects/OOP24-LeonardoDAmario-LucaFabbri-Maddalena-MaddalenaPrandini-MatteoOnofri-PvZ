@@ -14,14 +14,28 @@ import pvz.model.impl.plants.PlantFactory;
 import pvz.model.impl.zombies.ZombieImpl;
 import pvz.utilities.Position;
 import java.util.Optional;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class CollisionsTest {
+/**
+ * Test class for CollisionManagerImpl collision detection logic.
+ */
+public final class CollisionsTest {
+
+    private static final double X = 100.0;
+    private static final double Y1 = 50.0;
+    private static final double Y2 = 60.0;
+    private static final int ZOMBIE_LIFE = 100;
+    private static final int ZOMBIE_DAMAGE = 10;
 
     private CollisionManagerImpl collisionManager;
     private EntitiesManager entitiesManager;
     private PlantFactory plantFactory;
 
+    /**
+     * Sets up the test environment before each test.
+     */
     @BeforeEach
     void setUp() {
         collisionManager = new CollisionManagerImpl();
@@ -31,8 +45,8 @@ public class CollisionsTest {
 
     @Test
     void testBulletZombieCollision() {
-        Bullet bullet = new BulletImpl(new Position(100, 50));
-        Zombie zombie = new ZombieImpl(new Position(100, 50), 100, 10);
+        Bullet bullet = new BulletImpl(new Position(X, Y1));
+        Zombie zombie = new ZombieImpl(new Position(X, Y1), ZOMBIE_LIFE, ZOMBIE_DAMAGE);
         entitiesManager.addEntity(bullet);
         entitiesManager.addEntity(zombie);
         Optional<?> result = collisionManager.handleCollision(bullet, entitiesManager);
@@ -42,8 +56,8 @@ public class CollisionsTest {
 
     @Test
     void testBulletZombieNoCollisionDifferentY() {
-        Bullet bullet = new BulletImpl(new Position(100, 50));
-        Zombie zombie = new ZombieImpl(new Position(100, 60), 100, 10);
+        Bullet bullet = new BulletImpl(new Position(X, Y1));
+        Zombie zombie = new ZombieImpl(new Position(X, Y2), ZOMBIE_LIFE, ZOMBIE_DAMAGE);
         entitiesManager.addEntity(bullet);
         entitiesManager.addEntity(zombie);
         Optional<?> result = collisionManager.handleCollision(bullet, entitiesManager);
@@ -52,15 +66,15 @@ public class CollisionsTest {
 
     @Test
     void testBulletZombieNoEntities() {
-        Bullet bullet = new BulletImpl(new Position(100, 50));
+        Bullet bullet = new BulletImpl(new Position(X, Y1));
         Optional<?> result = collisionManager.handleCollision(bullet, entitiesManager);
         assertFalse(result.isPresent(), "Non dovrebbe esserci collisione senza entità");
     }
 
     @Test
     void testZombiePlantCollision() {
-        Zombie zombie = new ZombieImpl(new Position(100, 50), 100, 10);
-        Plant plant = plantFactory.createPeashooter(new Position(100, 50));
+        Zombie zombie = new ZombieImpl(new Position(X, Y1), ZOMBIE_LIFE, ZOMBIE_DAMAGE);
+        Plant plant = plantFactory.createPeashooter(new Position(X, Y1));
         entitiesManager.addEntity(zombie);
         entitiesManager.addEntity(plant);
         Optional<?> result = collisionManager.handleCollision(zombie, entitiesManager);
@@ -70,8 +84,8 @@ public class CollisionsTest {
 
     @Test
     void testZombiePlantNoCollisionDifferentY() {
-        Zombie zombie = new ZombieImpl(new Position(100, 50), 100, 10);
-        Plant plant = plantFactory.createPeashooter(new Position(100, 60));
+        Zombie zombie = new ZombieImpl(new Position(X, Y1), ZOMBIE_LIFE, ZOMBIE_DAMAGE);
+        Plant plant = plantFactory.createPeashooter(new Position(X, Y2));
         entitiesManager.addEntity(zombie);
         entitiesManager.addEntity(plant);
         Optional<?> result = collisionManager.handleCollision(zombie, entitiesManager);
@@ -80,15 +94,15 @@ public class CollisionsTest {
 
     @Test
     void testZombiePlantNoEntities() {
-        Zombie zombie = new ZombieImpl(new Position(100, 50), 100, 10);
+        Zombie zombie = new ZombieImpl(new Position(X, Y1), ZOMBIE_LIFE, ZOMBIE_DAMAGE);
         Optional<?> result = collisionManager.handleCollision(zombie, entitiesManager);
         assertFalse(result.isPresent(), "Non dovrebbe esserci collisione senza entità");
     }
 
     @Test
     void testWallnutZombieCollision() {
-        Plant wallnut = plantFactory.createWallnut(new Position(100, 50));
-        Zombie zombie = new ZombieImpl(new Position(100, 50), 100, 10);
+        Plant wallnut = plantFactory.createWallnut(new Position(X, Y1));
+        Zombie zombie = new ZombieImpl(new Position(X, Y1), ZOMBIE_LIFE, ZOMBIE_DAMAGE);
         entitiesManager.addEntity(wallnut);
         entitiesManager.addEntity(zombie);
         Optional<?> result = collisionManager.handleCollision(wallnut, entitiesManager);
@@ -98,8 +112,8 @@ public class CollisionsTest {
 
     @Test
     void testWallnutZombieNoCollisionDifferentY() {
-        Plant wallnut = plantFactory.createWallnut(new Position(100, 50));
-        Zombie zombie = new ZombieImpl(new Position(100, 60), 100, 10);
+        Plant wallnut = plantFactory.createWallnut(new Position(X, Y1));
+        Zombie zombie = new ZombieImpl(new Position(X, Y2), ZOMBIE_LIFE, ZOMBIE_DAMAGE);
         entitiesManager.addEntity(wallnut);
         entitiesManager.addEntity(zombie);
         Optional<?> result = collisionManager.handleCollision(wallnut, entitiesManager);
@@ -108,7 +122,7 @@ public class CollisionsTest {
 
     @Test
     void testWallnutZombieNoEntities() {
-        Plant wallnut = plantFactory.createWallnut(new Position(100, 50));
+        Plant wallnut = plantFactory.createWallnut(new Position(X, Y1));
         Optional<?> result = collisionManager.handleCollision(wallnut, entitiesManager);
         assertFalse(result.isPresent(), "Non dovrebbe esserci collisione senza entità");
     }

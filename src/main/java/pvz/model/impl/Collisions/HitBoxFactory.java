@@ -3,28 +3,62 @@ package pvz.model.impl.Collisions;
 import pvz.model.api.Collisions.HitBox;
 import pvz.utilities.Position;
 
+/**
+ * Factory class for creating {@link HitBox} instances for different entity types.
+ */
 public final class HitBoxFactory {
 
-    private HitBoxFactory() {}
+    /**
+     * Private constructor to prevent instantiation.
+     */
+    private HitBoxFactory() { }
 
+    /**
+     * Enum representing the types of hitboxes and their widths.
+     */
     public enum HitBoxType {
 
+        /**
+         * Hitbox for plants.
+         */
         PLANT(0.2),
+        /**
+         * Hitbox for zombies.
+         */
         ZOMBIE(1.0),
+        /**
+         * Hitbox for bullets.
+         */
         BULLET(0.5);
 
         private final double width;
 
-        HitBoxType(double width) {
+        /**
+         * Constructs a HitBoxType with the specified width.
+         *
+         * @param width the width of the hitbox type
+         */
+        HitBoxType(final double width) {
             this.width = width;
         }
 
+        /**
+         * Gets the width of the hitbox type.
+         *
+         * @return the width
+         */
         public double getWidth() {
             return width;
         }
-
     }
 
+    /**
+     * Creates a {@link HitBox} for the given position and type.
+     *
+     * @param pos  the position of the hitbox
+     * @param type the type of hitbox
+     * @return a new HitBox instance
+     */
     public static HitBox createHitBox(final Position pos, final HitBoxType type) {
         return new HitBox() {
 
@@ -50,7 +84,6 @@ public final class HitBoxFactory {
             public double getWidth() {
                 return width;
             }
-            
         };
     }
 }
