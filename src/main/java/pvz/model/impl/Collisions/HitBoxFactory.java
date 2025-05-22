@@ -9,34 +9,27 @@ public final class HitBoxFactory {
 
     public enum HitBoxType {
 
-        PLANT(0.2, 0.5),
-        ZOMBIE(1.0, 1.0),
-        BULLET(0.5, 0.5);
+        PLANT(0.2),
+        ZOMBIE(1.0),
+        BULLET(0.5);
 
         private final double width;
-        private final double height;
 
-        HitBoxType(double width, double height) {
+        HitBoxType(double width) {
             this.width = width;
-            this.height = height;
         }
 
         public double getWidth() {
             return width;
         }
 
-        public double getHeight() {
-            return height;
-        }
     }
 
     public static HitBox createHitBox(final Position pos, final HitBoxType type) {
         return new HitBox() {
 
             private double centerX = pos.x();
-            private double centerY = pos.y();
             private final double width = type.getWidth();
-            private final double height = type.getHeight();
 
             @Override
             public boolean isColliding(final HitBox hitbox) {
@@ -46,7 +39,6 @@ public final class HitBoxFactory {
             @Override
             public void update(final Position pos) {
                 this.centerX = pos.x();
-                this.centerY = pos.y();
             }
 
             @Override
@@ -55,18 +47,8 @@ public final class HitBoxFactory {
             }
 
             @Override
-            public double getY() {
-                return centerY;
-            }
-
-            @Override
             public double getWidth() {
                 return width;
-            }
-
-            @Override
-            public double getHeight() {
-                return height;
             }
             
         };
