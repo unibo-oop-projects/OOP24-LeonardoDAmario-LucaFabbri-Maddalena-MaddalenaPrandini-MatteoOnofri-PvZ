@@ -27,6 +27,8 @@ public class GameViewImpl extends JPanel implements GameView {
         drawPanel.setBounds(0, 0, WIDTH, HEIGHT);
         gridPanel.setBounds(0, 0, WIDTH + 1, HEIGHT + 1);
 
+
+
         layeredPane.add(gridPanel, JLayeredPane.DEFAULT_LAYER);
         layeredPane.add(drawPanel, JLayeredPane.PALETTE_LAYER);
 
@@ -52,7 +54,6 @@ public class GameViewImpl extends JPanel implements GameView {
         drawPanel.updateMovingEntities(Set.copyOf(entities));
         toolBar.updateStats(suns, kills);
 
-        // 🔁 forza repaint
         SwingUtilities.invokeLater(() -> {
             drawPanel.repaint();
             gridPanel.repaint();
@@ -68,4 +69,8 @@ public class GameViewImpl extends JPanel implements GameView {
         toolBar.setViewListener(listener);
         gridPanel.setViewListener(listener);
     }
+
+
+
+
 }

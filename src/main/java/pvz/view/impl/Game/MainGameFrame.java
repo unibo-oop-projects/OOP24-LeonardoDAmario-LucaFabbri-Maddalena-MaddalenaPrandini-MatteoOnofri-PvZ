@@ -15,6 +15,7 @@ import pvz.view.impl.Menu.MenuView;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.*;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -23,10 +24,13 @@ public class MainGameFrame extends JFrame {
     private final CardLayout cardLayout;
     private final JPanel mainPanel;
     private final Map<String, JPanel> views = new HashMap<>();
+    private final double aspectRatio = 800.0 / 600.0;
 
     public static final String MENU = "Menu";
     public static final String GAME = "Game";
     public static final String END = "End";
+
+
 
 
     public MainGameFrame() {
@@ -38,7 +42,26 @@ public class MainGameFrame extends JFrame {
         cardLayout = new CardLayout();
         mainPanel = new JPanel(cardLayout);
         this.setContentPane(mainPanel);
+
+        this.addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentResized(ComponentEvent e) {
+                resizeDiagonally();
+            }
+        });
     }
+
+    private void resizeDiagonally() {
+        final Dimension size = getSize();
+        final int newWidth = size.width;
+        final int newHeight = (int) (newWidth / aspectRatio);
+
+        // evita loop infiniti
+        if (Math.abs(newHeight - size.height) > 1) {
+            setSize(newWidth, newHeight);
+        }
+    }
+
 
     public static void launchGame() {
         MainGameFrame frame = new MainGameFrame();
