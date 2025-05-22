@@ -34,6 +34,8 @@ public class MenuController {
             view.updateDifficultyLabel(currentDifficulty);
         });
 
+        view.getTutorialButton().addActionListener(e -> mainFrame.showTutorialView());
+
         view.getExitButton().addActionListener(e -> System.exit(0));
     }
 }

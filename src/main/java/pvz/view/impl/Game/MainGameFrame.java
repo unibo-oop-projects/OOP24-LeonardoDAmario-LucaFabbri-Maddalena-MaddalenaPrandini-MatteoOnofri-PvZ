@@ -11,6 +11,7 @@ import pvz.model.api.GameModel;
 import pvz.model.impl.GameModelImpl;
 import pvz.view.impl.EndGameMenu.EndGameView;
 import pvz.view.impl.Menu.MenuView;
+import pvz.view.impl.Menu.TutorialView;
 
 import javax.swing.*;
 import java.awt.*;
@@ -28,7 +29,7 @@ public class MainGameFrame extends JFrame {
     public static final String MENU = "Menu";
     public static final String GAME = "Game";
     public static final String END = "End";
-
+    public static final String TUTORIAL = "Tutorial";
 
 
 
@@ -83,15 +84,13 @@ public class MainGameFrame extends JFrame {
         cardLayout.show(mainPanel, MENU);
     }
 
-    public void showGameView(JPanel gameView) {
-        if (!views.containsKey(GAME)) {
-            views.put(GAME, gameView);
-            mainPanel.add(gameView, GAME);
-        }
-        cardLayout.show(mainPanel, GAME);
+    public void showTutorialView() {
+        TutorialView tutorialView = new TutorialView(this);
+        views.put(TUTORIAL, tutorialView);
+        mainPanel.add(tutorialView, TUTORIAL);
+        cardLayout.show(mainPanel, TUTORIAL);
         mainPanel.revalidate();
         mainPanel.repaint();
-        System.out.println("[DEBUG] Mostrata GameView");
     }
 
     public void showEndGameView(boolean isVictory) {
