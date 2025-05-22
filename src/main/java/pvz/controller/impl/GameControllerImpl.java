@@ -9,7 +9,7 @@ import pvz.model.api.GameModel;
 import pvz.model.api.plants.PlantType;
 import pvz.utilities.Position;
 import pvz.view.api.GameView;
-import pvz.view.impl.EndGameMenu.EndGameView;
+import pvz.view.impl.Game.MainGameFrame;
 
 import javax.swing.*;
 
@@ -24,16 +24,18 @@ public class GameControllerImpl implements GameController, ViewListener {
 
     private final GameModel model;
     private final GameView view;
+    private final MainGameFrame mainFrame;
     private final LinkedBlockingQueue<Event> queue = new LinkedBlockingQueue<>();
     private boolean running;
 
     private Position pendingPosition = null;
     private PlantType selectedPlantType = null;
 
-    public GameControllerImpl(final GameModel model, final GameView view) {
+    public GameControllerImpl(final GameModel model, final GameView view, final MainGameFrame mainFrame) {
         this.model = model;
         this.view = view;
         this.view.setViewListener(this);
+        this.mainFrame = mainFrame;
     }
 
     @Override
@@ -76,8 +78,9 @@ public class GameControllerImpl implements GameController, ViewListener {
 
                     if (model.isGameOver()) {
                         stopGame();
-                        System.out.println("Game Over, you lost!");
-                        EndGameView endGameView = new EndGameView(model.isVictory());
+                        System.out.println("Game Over");
+                        mainFrame.showEndGameView(model.isVictory());
+
                     }
             }
         }

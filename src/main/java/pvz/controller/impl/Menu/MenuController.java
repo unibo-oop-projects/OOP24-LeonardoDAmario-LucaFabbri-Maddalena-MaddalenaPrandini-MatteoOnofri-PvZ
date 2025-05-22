@@ -1,8 +1,9 @@
 package pvz.controller.impl.Menu;
 
+import pvz.model.api.Difficulty;
 import pvz.model.api.GameMenu.MenuModel;
+import pvz.view.impl.Game.MainGameFrame;
 import pvz.view.impl.Menu.MenuView;
-import pvz.view.impl.Menu.MainGameFrame;
 
 public class MenuController {
 
@@ -10,19 +11,30 @@ public class MenuController {
     private final MenuView view;
     private final MainGameFrame mainFrame;
 
+    private Difficulty currentDifficulty = Difficulty.NORMAL;
+
     public MenuController(MenuModel model, MenuView view, MainGameFrame mainFrame) {
         this.model = model;
         this.view = view;
         this.mainFrame = mainFrame;
-        initController();
+
+        initListeners();
     }
 
-    private void initController() {
-        view.getPlayButton().addActionListener(e -> mainFrame.startGame(model.getSelectedDifficulty()));
-        view.getDifficultyButton().addActionListener(e -> {
-            model.cycleDifficulty();
-            view.updateDifficultyLabel(model.getSelectedDifficulty());
+    private void initListeners() {
+        view.getPlayButton().addActionListener(e -> {
+            mainFrame.startGame(currentDifficulty);
         });
+
+        view.getDifficultyButton().addActionListener(e -> {
+            currentDifficulty = switch (currentDifficulty) {
+                case NORMAL -> Difficulty.HARD;
+                case HARD -> Difficulty.EASY;
+                case EASY -> Difficulty.NORMAL;
+            };
+            view.updateDifficultyLabel(currentDifficulty);
+        });
+
         view.getExitButton().addActionListener(e -> System.exit(0));
     }
 }

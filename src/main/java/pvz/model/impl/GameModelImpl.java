@@ -29,7 +29,7 @@ public class GameModelImpl implements GameModel {
 
     private GameStatus status;
     private final Difficulty difficulty;
-    //private final ;
+
 
     /**
      * Constructs a new instance of the game model with default state and managers.
