@@ -17,7 +17,7 @@ public class BulletImpl extends AbstractEntity implements Bullet {
     private long elapsedTime = 0;
     private CollisionManager collisionManager;
 
-    private static final double SPEED = 0.03;
+    private static final double SPEED = 0.003;
     private static final int DAMAGE = 25;
     private static final long UPDATE_RATE = 300;
 
@@ -27,12 +27,13 @@ public class BulletImpl extends AbstractEntity implements Bullet {
     }
 
     private boolean canUpdate(final long deltaTime) {
-        this.elapsedTime = this.elapsedTime + deltaTime;
+        /*this.elapsedTime = this.elapsedTime + deltaTime;
         if(this.elapsedTime >= UPDATE_RATE) {
             this.elapsedTime = 0;
             return true;
         }
-        return false;
+        return false;*/
+        return true;
     }
 
     @Override

@@ -7,7 +7,6 @@ import pvz.model.impl.entities.AbstractEntity;
 import java.util.Optional;
 
 import pvz.model.api.Zombie;
-import pvz.model.api.ZombieActionStrategy;
 import pvz.model.api.Collisions.CollisionManager;
 import pvz.model.api.Collisions.HitBox;
 import pvz.utilities.Position;
@@ -19,16 +18,14 @@ public class ZombieImpl extends AbstractEntity implements Zombie {
     private int health;
     private int speed;
     private boolean alive;
-    private ZombieActionStrategy strategy;
     private CollisionManager collisionManager;
     private static final long ATTACK_RATE = 2000;
     private long lastAttackTime = 0;
 
-    public ZombieImpl(final Position position, final int health, final int speed, final ZombieActionStrategy strategy) {
+    public ZombieImpl(final Position position, final int health, final int speed) {
         super(position, HitBoxType.ZOMBIE);
         this.health = health;
         this.speed = speed;
-        this.strategy = strategy;
         this.alive = true;
         this.collisionManager = new CollisionManagerImpl();
         this.lastAttackTime = ATTACK_RATE;
@@ -36,10 +33,7 @@ public class ZombieImpl extends AbstractEntity implements Zombie {
 
     @Override
     public void update(long deltaTime, EntitiesManager entitiesManager) {
-        if (strategy != null) {
-            strategy.zombieAction(this);
-            move(deltaTime);
-        }
+
         Optional<Plant> plant = collisionManager.handleCollision(this, entitiesManager).map(entity -> (Plant) entity);
         if(plant.isPresent()) {
             lastAttackTime += deltaTime;
@@ -108,6 +102,6 @@ public class ZombieImpl extends AbstractEntity implements Zombie {
 
     @Override
     public int getDamage() {
-        return 20; //to be modified in strategy
+        return 20; //damage value to be adjusted
     }
 }

@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.Test;
 
+import pvz.model.api.Difficulty;
 import pvz.model.api.entities.EntitiesManager;
 import pvz.model.api.plants.Plant;
 import pvz.model.impl.entities.EntitiesManagerImpl;
@@ -23,7 +24,7 @@ class UpdateTest {
 
      UpdateTest() {
         this.plantFactory = new PlantFactory();
-        this.entitiesManager = new EntitiesManagerImpl();
+        this.entitiesManager = new EntitiesManagerImpl(Difficulty.EASY);
     }
 
     /**
@@ -81,7 +82,7 @@ class UpdateTest {
         wallnut.update(1L, entitiesManager);
         assertEquals(1, entitiesManager.getEntities().size());
 
-        final ZombieImpl zombie = new ZombieImpl(pos, 50, 1, null);
+        final ZombieImpl zombie = new ZombieImpl(pos, 50, 1);
         entitiesManager.addEntity(zombie);
 
         assertEquals(2, entitiesManager.getEntities().size());

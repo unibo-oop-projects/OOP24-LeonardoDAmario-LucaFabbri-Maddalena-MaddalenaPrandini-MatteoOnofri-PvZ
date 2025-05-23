@@ -4,9 +4,12 @@ import java.util.HashSet;
 import java.util.Random;
 import java.util.Set;
 
+
+import pvz.model.api.Difficulty;
+import pvz.model.api.Zombie;
 import pvz.model.api.entities.EntitiesManager;
 import pvz.model.api.entities.Entity;
-import pvz.model.impl.zombies.ZombieImpl;
+import pvz.model.impl.zombies.ZombieFactory;
 import pvz.utilities.Position;
 
 /**
@@ -25,13 +28,15 @@ public class EntitiesManagerImpl implements EntitiesManager {
 
     private final Set<Entity> entities = new HashSet<>();
     private final Random random = new Random();
+    private final Difficulty difficulty;
     private int sunCount;
     private int killCount;
 
     /**
      * Constructs a new EntitiesManager with default sun and kill counts.
      */
-    public EntitiesManagerImpl() {
+    public EntitiesManagerImpl(Difficulty difficulty) {
+        this.difficulty = difficulty;
         this.sunCount = DEFAULT_SUNS;
         this.killCount = DEFAULT_KILLS;
     }
@@ -126,14 +131,37 @@ public class EntitiesManagerImpl implements EntitiesManager {
      * @param deltaTime the time elapsed since the last update (in milliseconds).
      */
     @Override
-    public void spawnZombie(final long deltaTime) {
+    public void spawnZombie(final long deltaTime, Difficulty difficulty) {
         this.accumulatedTime += deltaTime;
         if (accumulatedTime >= SPAWN_RATE) {
             this.accumulatedTime = 0;
+            String zombieType = getRandomZombieType(difficulty);
             final Position spawnPosition = new Position(SPAWN_POSITION_X, random.nextInt(BOUNDS));
-            final ZombieImpl zombie = new ZombieImpl(spawnPosition, 100, 1, null);  //strategy to be updated
+            final Zombie zombie = ZombieFactory.createZombie(zombieType, spawnPosition);
             this.addEntity(zombie);
         }
     }
+
+    private String getRandomZombieType(Difficulty difficulty) {
+    int randomValue = random.nextInt(100);
+
+    return switch (difficulty) {
+        case EASY -> {
+            if (randomValue < 70) yield "basic"; 
+            else if (randomValue < 90) yield "fast"; 
+            else yield "strong"; 
+        }
+        case NORMAL -> {
+            if (randomValue < 50) yield "basic"; 
+            else if (randomValue < 80) yield "fast"; 
+            else yield "strong"; 
+        }
+        case HARD -> {
+            if (randomValue < 30) yield "fast"; 
+            else if (randomValue < 60) yield "strong"; 
+            else yield "beast"; 
+        }
+    };
+}
 
 }
