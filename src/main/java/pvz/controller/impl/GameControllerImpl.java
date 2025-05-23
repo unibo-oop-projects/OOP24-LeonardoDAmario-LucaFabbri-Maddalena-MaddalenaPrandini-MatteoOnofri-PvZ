@@ -1,5 +1,6 @@
 package pvz.controller.impl;
 
+import java.util.Set;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.TimeUnit;
 
@@ -7,6 +8,7 @@ import pvz.controller.api.GameController;
 import pvz.controller.api.ViewListener;
 import pvz.model.api.GameModel;
 import pvz.model.api.plants.PlantType;
+import pvz.utilities.GameEntity;
 import pvz.utilities.Position;
 import pvz.view.api.GameView;
 import pvz.view.impl.Game.MainGameFrame;
@@ -111,24 +113,17 @@ public class GameControllerImpl implements GameController, ViewListener {
                             System.out.println("[CONTROLLER] Selected plant type: " + selectedPlantType);
                         }
                         case InputGrid(var pos) -> {
-                            pendingPosition = pos;
-                            System.out.println("[CONTROLLER] Selected position: " + pendingPosition);
+                            if(selectedPlantType != null && !isCellOccupied(pos)){
+                                model.placePlant(selectedPlantType, pos);
+                            }
+                            selectedPlantType = null;
                         }
                         default -> {}
                     }
-                    createPlant();
                 }
             } catch (Exception e) {
                 e.printStackTrace();
             }
-        }
-    }
-
-    private void createPlant() {
-        if (selectedPlantType != null && pendingPosition != null) {
-            model.placePlant(selectedPlantType, pendingPosition);
-            selectedPlantType = null;
-            pendingPosition = null;
         }
     }
 
@@ -140,5 +135,15 @@ public class GameControllerImpl implements GameController, ViewListener {
     @Override
     public void processInputGrid(Position position) {
         queue.add(new InputGrid(position)); 
+    }
+
+    private boolean isCellOccupied(final Position position) {
+        Set<GameEntity> entities = model.getGameEntities();
+        return entities.stream().anyMatch(e -> e.position().equals(position)
+        && switch (e.type()){
+            case PEASHOOTER, SUNFLOWER, WALLNUT -> true;
+            case ZOMBIE, BULLET -> false;
+        }
+        );
     }
 }
