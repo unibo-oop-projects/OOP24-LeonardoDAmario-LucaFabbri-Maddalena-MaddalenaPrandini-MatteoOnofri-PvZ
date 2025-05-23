@@ -15,9 +15,7 @@ import pvz.utilities.GameEntity;
 import pvz.utilities.Position;
 import java.util.Set;
 import java.util.stream.Collectors;
-import pvz.view.impl.EndGameMenu.EndGameView;
 
-import javax.swing.*;
 
 /**
  * Implementation of the {@link GameModel} interface that manages the core game logic
