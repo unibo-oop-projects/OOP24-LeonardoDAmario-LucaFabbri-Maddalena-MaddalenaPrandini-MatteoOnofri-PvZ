@@ -6,7 +6,6 @@ import pvz.controller.impl.EndGame.EndGameController;
 import pvz.controller.impl.GameControllerImpl;
 import pvz.controller.impl.Menu.MenuController;
 import pvz.model.api.Difficulty;
-import pvz.model.api.GameMenu.MenuModel;
 import pvz.model.api.GameModel;
 import pvz.model.impl.GameModelImpl;
 import pvz.view.impl.EndGameMenu.EndGameView;

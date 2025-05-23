@@ -1,7 +1,6 @@
 package pvz.controller.impl.Menu;
 
 import pvz.model.api.Difficulty;
-import pvz.model.api.GameMenu.MenuModel;
 import pvz.view.impl.Game.MainGameFrame;
 import pvz.view.impl.Menu.MenuView;
 
