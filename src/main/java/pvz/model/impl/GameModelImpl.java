@@ -15,9 +15,7 @@ import pvz.utilities.GameEntity;
 import pvz.utilities.Position;
 import java.util.Set;
 import java.util.stream.Collectors;
-import pvz.view.impl.EndGameMenu.EndGameView;
 
-import javax.swing.*;
 
 /**
  * Implementation of the {@link GameModel} interface that manages the core game logic
@@ -29,7 +27,7 @@ public class GameModelImpl implements GameModel {
 
     private GameStatus status;
     private final Difficulty difficulty;
-    //private final ;
+
 
     /**
      * Constructs a new instance of the game model with default state and managers.
@@ -41,22 +39,7 @@ public class GameModelImpl implements GameModel {
         this.status = GameStatus.IN_PROGRESS;
     }
 
-    /**
-     * Starts the game. (Currently not implemented.)
-     *
-     * @throws UnsupportedOperationException always.
-     */
-    @Override
-    public void startGame() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'startGame'");
-    }
 
-    /**
-     * Checks whether the game is over.
-     *
-     * @return {@code true} if the game has ended, {@code false} if still in progress.
-     */
     @Override
     public boolean isGameOver() {
             return status != GameStatus.IN_PROGRESS;
@@ -98,7 +81,7 @@ public class GameModelImpl implements GameModel {
             this.status = GameStatus.LOST;
         }
     });
-    if(getKillCount() == 1) {
+    if(getKillCount() == 20) {
         this.status = GameStatus.WON;
     }
     }

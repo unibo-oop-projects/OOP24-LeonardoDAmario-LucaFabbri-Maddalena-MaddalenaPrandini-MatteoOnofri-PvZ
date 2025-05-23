@@ -102,6 +102,6 @@ public class ZombieImpl extends AbstractEntity implements Zombie {
 
     @Override
     public int getDamage() {
-        return 20; //damage value to be adjusted
+        return 35; 
     }
 }

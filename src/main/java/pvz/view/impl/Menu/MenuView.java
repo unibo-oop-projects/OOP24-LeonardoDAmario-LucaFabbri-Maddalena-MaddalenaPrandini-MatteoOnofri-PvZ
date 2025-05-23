@@ -9,6 +9,7 @@ public class MenuView extends JPanel {
 
     private final JButton playButton;
     private final JButton difficultyButton;
+    private final JButton tutorialButton;
     private final JButton exitButton;
     private final JLabel difficultyLabel;
 
@@ -28,10 +29,12 @@ public class MenuView extends JPanel {
         buttonPanel.setLayout(new GridLayout(3, 1, 10, 10));
         playButton = new JButton("Gioca");
         difficultyButton = new JButton("Seleziona Difficoltà");
+        tutorialButton = new JButton("Tutorial");
         exitButton = new JButton("Esci");
 
         buttonPanel.add(playButton);
         buttonPanel.add(difficultyButton);
+        buttonPanel.add(tutorialButton);
         buttonPanel.add(exitButton);
 
         this.add(buttonPanel, BorderLayout.CENTER);
@@ -49,6 +52,7 @@ public class MenuView extends JPanel {
 
         playButton.setFont(new Font("Arial", Font.PLAIN, 20));
         difficultyButton.setFont(new Font("Arial", Font.PLAIN, 20));
+        tutorialButton.setFont(new Font("Arial", Font.PLAIN, 20));
         exitButton.setFont(new Font("Arial", Font.PLAIN, 20));
 
     }
@@ -65,7 +69,13 @@ public class MenuView extends JPanel {
         return difficultyButton;
     }
 
+    public JButton getTutorialButton() {
+        return tutorialButton;
+    }
+
     public JButton getExitButton() {
         return exitButton;
     }
+
+
 }

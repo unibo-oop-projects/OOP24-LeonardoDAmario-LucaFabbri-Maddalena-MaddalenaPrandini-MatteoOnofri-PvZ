@@ -1,29 +1,11 @@
 package pvz;
 
-import pvz.model.api.GameMenu.MenuModel;
-import pvz.model.impl.GameMenu.MenuModelImpl;
-import pvz.view.impl.Menu.MainGameFrame;
-import pvz.view.impl.Menu.MenuView;
-import pvz.controller.impl.Menu.MenuController;
+import pvz.view.impl.Game.MainGameFrame;
 
 import javax.swing.*;
 
 public class PvZ {
     public static void main(String[] args) {
-        startGame();
-    }
-
-    public static void startGame() {
-        SwingUtilities.invokeLater(() -> {
-            MainGameFrame mainGameFrame = new MainGameFrame();
-            MenuView menuView = new MenuView();
-            MenuModel menuModel = new MenuModelImpl();
-            MenuController menuController = new MenuController(menuModel, menuView, mainGameFrame);
-
-            mainGameFrame.add(menuView);
-            mainGameFrame.setVisible(true);
-        });
+        SwingUtilities.invokeLater(MainGameFrame::launchGame);
     }
 }
-
-
