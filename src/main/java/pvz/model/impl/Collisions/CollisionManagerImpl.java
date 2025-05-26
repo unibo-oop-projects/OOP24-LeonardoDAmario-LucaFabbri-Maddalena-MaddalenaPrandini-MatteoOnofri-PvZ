@@ -36,7 +36,7 @@ public final class CollisionManagerImpl implements CollisionManager {
         } else if (entity instanceof Zombie) {
             return this.handleZombiePlantCollision((Zombie) entity, entitiesManager).map(plant -> plant);
         } else if (entity instanceof Plant) {
-            Plant plant = (Plant) entity;
+            final Plant plant = (Plant) entity;
             if (plant.mapToEntityType() == PlantType.WALLNUT) {
                 return this.handleWallNutZombieCollision(plant, entitiesManager).map(zombie -> zombie);
             }
@@ -45,13 +45,13 @@ public final class CollisionManagerImpl implements CollisionManager {
     }
 
     private Optional<Zombie> handleWallNutZombieCollision(final Plant wallNut, final EntitiesManager entitiesManager) {
-        Set<Zombie> zombieSet = entitiesManager.getEntities().stream()
+        final Set<Zombie> zombieSet = entitiesManager.getEntities().stream()
             .filter(entity -> entity instanceof Zombie)
             .filter(zombie -> BigDecimal.valueOf(zombie.getPosition().y())
                    .compareTo(BigDecimal.valueOf(wallNut.getPosition().y())) == 0)
             .map(entity -> (Zombie) entity)
             .collect(Collectors.toSet());
-        for (Zombie zombie : zombieSet) {
+        for (final Zombie zombie : zombieSet) {
             if (wallNut.getHitBox().isColliding(zombie.getHitBox())) {
                 return Optional.of(zombie);
             }
@@ -60,13 +60,13 @@ public final class CollisionManagerImpl implements CollisionManager {
     }
 
     private Optional<Zombie> handleBulletZombieCollision(final Bullet bullet, final EntitiesManager entitiesManager) {
-        Set<Zombie> zombieSet = entitiesManager.getEntities().stream()
+        final Set<Zombie> zombieSet = entitiesManager.getEntities().stream()
             .filter(entity -> entity instanceof Zombie)
             .filter(zombie -> BigDecimal.valueOf(zombie.getPosition().y())
                    .compareTo(BigDecimal.valueOf(bullet.getPosition().y())) == 0)
             .map(entity -> (Zombie) entity)
             .collect(Collectors.toSet());
-        for (Zombie zombie : zombieSet) {
+        for (final Zombie zombie : zombieSet) {
             if (bullet.getHitBox().isColliding(zombie.getHitBox())) {
                 return Optional.of(zombie);
             }
@@ -75,13 +75,13 @@ public final class CollisionManagerImpl implements CollisionManager {
     }
 
     private Optional<Plant> handleZombiePlantCollision(final Zombie zombie, final EntitiesManager entitiesManager) {
-        Set<Plant> plantSet = entitiesManager.getEntities().stream()
+        final Set<Plant> plantSet = entitiesManager.getEntities().stream()
             .filter(entity -> entity instanceof Plant)
             .map(entity -> (Plant) entity)
             .filter(plant -> BigDecimal.valueOf(plant.getPosition().y())
                     .compareTo(BigDecimal.valueOf(zombie.getPosition().y())) == 0)
             .collect(Collectors.toSet());
-        for (Plant plant : plantSet) {
+        for (final Plant plant : plantSet) {
             if (zombie.getHitBox().isColliding(plant.getHitBox())) {
                 return Optional.of(plant);
             }
