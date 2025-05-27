@@ -11,21 +11,36 @@ import java.util.Set;
 public class GameViewImpl extends JPanel implements GameView {
 
     private final GameToolBar toolBar = new GameToolBar();
-    private final DrawPanel drawPanel = new DrawPanel();
-    private final GridPanel gridPanel = new GridPanel();
+    private final DrawPanel drawPanel;
+    private final GridPanel gridPanel;
     private final JLayeredPane layeredPane = new JLayeredPane();
 
     private ViewListener listener;
 
-    private static final int WIDTH = 720;
-    private static final int HEIGHT = 400;
 
-    public GameViewImpl() {
-        this.setLayout(new BorderLayout());
+    public GameViewImpl(int width, int height) {
+        double scaling;
+        switch (width) {
+            case 640 -> scaling = 0.8;         // 640×480 (VGA)
+            case 800 -> scaling = 1.0;         // 800×600 (SVGA)
+            case 1024 -> scaling = 1.28;       // 1024×768 (XGA)
+            case 1152 -> scaling = 1.44;       // 1152×864 (SXGA-)
+            case 1600 -> scaling = 2.0;        // 1600×1200 (UXGA)
+            case 2048 -> scaling = 2.56;       // 2048×1536 (QXGA)
+            default -> scaling = 1.5;
+        }
 
-        layeredPane.setPreferredSize(new Dimension(WIDTH, HEIGHT));
-        drawPanel.setBounds(0, 0, WIDTH, HEIGHT);
-        gridPanel.setBounds(0, 0, WIDTH + 1, HEIGHT + 1);
+
+
+
+
+        this.drawPanel = new DrawPanel(scaling);
+        this.gridPanel = new GridPanel(scaling);
+        layeredPane.setLayout(new OverlayLayout(layeredPane));
+
+        layeredPane.setPreferredSize(new Dimension(width, height));
+        drawPanel.setBounds(0, 0, width, height);
+        gridPanel.setBounds(0, 0, width + 1, height + 1);
 
 
 

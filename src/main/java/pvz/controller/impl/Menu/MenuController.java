@@ -3,6 +3,7 @@ package pvz.controller.impl.Menu;
 import pvz.model.api.Difficulty;
 import pvz.view.impl.Game.MainGameFrame;
 import pvz.view.impl.Menu.MenuView;
+import pvz.view.api.Resolution;
 
 public class MenuController {
 
@@ -36,5 +37,11 @@ public class MenuController {
         view.getTutorialButton().addActionListener(e -> mainFrame.showTutorialView());
 
         view.getExitButton().addActionListener(e -> System.exit(0));
+
+        view.addResolutionListener(e -> {
+            Resolution sel = view.getSelectedResolution();
+            mainFrame.setSize(sel.getWidth(), sel.getHeight());
+        });
+
     }
 }

@@ -23,7 +23,6 @@ public class MainGameFrame extends JFrame {
     private final CardLayout cardLayout;
     private final JPanel mainPanel;
     private final Map<String, JPanel> views = new HashMap<>();
-    private final double aspectRatio = 800.0 / 600.0;
 
     public static final String MENU = "Menu";
     public static final String GAME = "Game";
@@ -37,29 +36,14 @@ public class MainGameFrame extends JFrame {
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setSize(800, 600);
         this.setLocationRelativeTo(null);
+        this.setResizable(false);
 
         cardLayout = new CardLayout();
         mainPanel = new JPanel(cardLayout);
         this.setContentPane(mainPanel);
 
-        this.addComponentListener(new ComponentAdapter() {
-            @Override
-            public void componentResized(ComponentEvent e) {
-                resizeDiagonally();
-            }
-        });
     }
 
-    private void resizeDiagonally() {
-        final Dimension size = getSize();
-        final int newWidth = size.width;
-        final int newHeight = (int) (newWidth / aspectRatio);
-
-        // evita loop infiniti
-        if (Math.abs(newHeight - size.height) > 1) {
-            setSize(newWidth, newHeight);
-        }
-    }
 
 
     public static void launchGame() {
@@ -112,7 +96,7 @@ public class MainGameFrame extends JFrame {
         }
 
         GameModel model = new GameModelImpl(difficulty);
-        GameViewImpl view = new GameViewImpl();
+        GameViewImpl view = new GameViewImpl(this.getSize().width, this.getSize().height);
         GameController controller = new GameControllerImpl(model, view, this);
         view.setViewListener((ViewListener) controller);
 
