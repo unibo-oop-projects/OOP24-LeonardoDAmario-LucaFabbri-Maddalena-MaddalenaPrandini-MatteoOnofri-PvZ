@@ -20,6 +20,7 @@ public class GameViewImpl extends JPanel implements GameView {
 
     public GameViewImpl(int width, int height) {
         double scaling;
+        //Formula: scaling = 0.8 * (width / 640.0)
         switch (width) {
             case 640 -> scaling = 0.8;         // 640×480 (VGA)
             case 800 -> scaling = 1.0;         // 800×600 (SVGA)
