@@ -142,7 +142,7 @@ public class GameControllerImpl implements GameController, ViewListener {
         return entities.stream().anyMatch(e -> e.position().equals(position)
         && switch (e.type()){
             case PEASHOOTER, SUNFLOWER, WALLNUT -> true;
-            case ZOMBIE, BULLET -> false;
+                    case ZOMBIE, BULLET, LAWNMOWER -> false;
         }
         );
     }

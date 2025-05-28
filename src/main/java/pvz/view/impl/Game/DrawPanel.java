@@ -65,6 +65,13 @@ public class DrawPanel extends JPanel {
                     int offsetY = (cell_size-bulletSize)/2;
                     g2.fillOval(pixelX-MARGIN_X, pixelY+offsetY-MARGIN_Y, bulletSize, bulletSize);
                 }
+                case LAWNMOWER -> {
+                    g2.setColor(Color.YELLOW);
+                    int mowerHeight = cell_size/6;
+                    int offset = (cell_size-mowerHeight);
+                    g2.fillRect(pixelX-MARGIN_X, (int) (e.position().y() * cell_size) + offset + (int)e.position().y(), cell_size, mowerHeight);
+                }
+
                 default -> {}
             }
         }

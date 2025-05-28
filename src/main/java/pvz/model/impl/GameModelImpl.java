@@ -6,9 +6,12 @@ import pvz.model.api.GameStatus;
 import pvz.model.api.Zombie;
 import pvz.model.api.entities.EntitiesManager;
 import pvz.model.api.entities.Entity;
+import pvz.model.api.lawnmower.LawnMower;
 import pvz.model.api.plants.Plant;
 import pvz.model.api.plants.PlantType;
+import pvz.model.impl.Collisions.HitBoxFactory;
 import pvz.model.impl.entities.EntitiesManagerImpl;
+import pvz.model.impl.lawnmower.LawnMowerImp;
 import pvz.model.impl.plants.PlantFactory;
 import pvz.utilities.EntityType;
 import pvz.utilities.GameEntity;
@@ -24,6 +27,7 @@ import java.util.stream.Collectors;
 public class GameModelImpl implements GameModel {
     private final EntitiesManager entitiesManager;
     private final PlantFactory plantFactory;
+    private final boolean[] mowerUsed;
 
     private GameStatus status;
     private final Difficulty difficulty;
@@ -36,6 +40,7 @@ public class GameModelImpl implements GameModel {
         this.difficulty = difficulty;
         this.entitiesManager = new EntitiesManagerImpl(difficulty);
         this.plantFactory = new PlantFactory();
+        this.mowerUsed = new boolean[5];
         this.status = GameStatus.IN_PROGRESS;
     }
 
@@ -77,8 +82,16 @@ public class GameModelImpl implements GameModel {
     this.entitiesManager.spawnZombie(deltaTime, difficulty);
     this.entitiesManager.getEntities().forEach(e -> {
         e.update(deltaTime, entitiesManager);
-        if (e instanceof Zombie && e.getPosition().x() <= 0) {
-            this.status = GameStatus.LOST;
+        int currentrow = (int) e.getPosition().y();
+        if (e instanceof Zombie && e.getPosition().x() <= 0 ) {
+            if (mowerUsed[currentrow]){
+                this.status = GameStatus.LOST;
+            }else {
+                LawnMower lawnMower = new LawnMowerImp(new Position(0, currentrow), HitBoxFactory.HitBoxType.ZOMBIE);
+                entitiesManager.addEntity(lawnMower);
+                lawnMower.update(deltaTime, entitiesManager);
+                mowerUsed[currentrow] = true;
+            }
         }
     });
     if(getKillCount() == 20) {
@@ -158,6 +171,7 @@ public class GameModelImpl implements GameModel {
             };
             case Zombie zombie -> EntityType.ZOMBIE;
             case Bullet bullet -> EntityType.BULLET;
+            case LawnMower lawnMower -> EntityType.LAWNMOWER;
             default -> throw new IllegalArgumentException();
         };
     }
