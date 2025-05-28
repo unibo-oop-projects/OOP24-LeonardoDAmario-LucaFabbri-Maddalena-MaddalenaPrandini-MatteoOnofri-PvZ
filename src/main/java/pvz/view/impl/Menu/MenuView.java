@@ -103,5 +103,7 @@ public class MenuView extends JPanel {
         return (Resolution) this.resolutionCombo.getSelectedItem();
     }
 
-
+    public void setSelectedResolution(Resolution resolution) {
+        this.resolutionCombo.setSelectedItem(resolution);
+    }
 }

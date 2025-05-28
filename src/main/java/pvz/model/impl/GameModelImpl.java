@@ -27,6 +27,7 @@ import java.util.stream.Collectors;
 public class GameModelImpl implements GameModel {
     private final EntitiesManager entitiesManager;
     private final PlantFactory plantFactory;
+    private int killToWin;
     private final boolean[] mowerUsed;
 
     private GameStatus status;
@@ -42,6 +43,12 @@ public class GameModelImpl implements GameModel {
         this.plantFactory = new PlantFactory();
         this.mowerUsed = new boolean[5];
         this.status = GameStatus.IN_PROGRESS;
+        switch (difficulty) {
+            case EASY -> {killToWin = 20; break;}
+            case NORMAL -> {killToWin = 35; break;}
+            case HARD -> {killToWin = 45; break;}
+            default -> {killToWin = 20; break;}
+        }
     }
 
 
@@ -94,7 +101,7 @@ public class GameModelImpl implements GameModel {
             }
         }
     });
-    if(getKillCount() == 20) {
+    if(getKillCount() == killToWin) {
         this.status = GameStatus.WON;
     }
     }

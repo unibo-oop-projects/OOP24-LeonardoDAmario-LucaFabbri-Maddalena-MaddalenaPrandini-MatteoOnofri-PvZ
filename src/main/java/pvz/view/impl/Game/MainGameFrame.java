@@ -8,6 +8,7 @@ import pvz.controller.impl.Menu.MenuController;
 import pvz.model.api.Difficulty;
 import pvz.model.api.GameModel;
 import pvz.model.impl.GameModelImpl;
+import pvz.view.api.Resolution;
 import pvz.view.impl.EndGameMenu.EndGameView;
 import pvz.view.impl.Menu.MenuView;
 import pvz.view.impl.Menu.TutorialView;
@@ -17,11 +18,13 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 public class MainGameFrame extends JFrame {
 
     private final CardLayout cardLayout;
     private final JPanel mainPanel;
+    Resolution resolution = Resolution.R800x600;
     private final Map<String, JPanel> views = new HashMap<>();
 
     public static final String MENU = "Menu";
@@ -42,6 +45,26 @@ public class MainGameFrame extends JFrame {
         mainPanel = new JPanel(cardLayout);
         this.setContentPane(mainPanel);
 
+    }
+
+    public void setResolution(Resolution resolution) {
+        Resolution previousResolution = this.resolution;
+        this.resolution = resolution;
+
+        this.setSize(resolution.getWidth(), resolution.getHeight());
+
+        int choice = JOptionPane.showConfirmDialog(
+                this,
+                "Vuoi mantenere la nuova risoluzione?",
+                "Conferma risoluzione",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.QUESTION_MESSAGE);
+        if (choice == JOptionPane.NO_OPTION) {
+            this.setSize(previousResolution.getWidth(), previousResolution.getHeight());
+            if (views.get(MENU) instanceof MenuView menuView) {
+                menuView.setSelectedResolution(previousResolution);
+            }
+        }
     }
 
 

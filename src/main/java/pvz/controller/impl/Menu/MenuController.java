@@ -40,7 +40,7 @@ public class MenuController {
 
         view.addResolutionListener(e -> {
             Resolution sel = view.getSelectedResolution();
-            mainFrame.setSize(sel.getWidth(), sel.getHeight());
+            mainFrame.setResolution(sel);
         });
 
     }
