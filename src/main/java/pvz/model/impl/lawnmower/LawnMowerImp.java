@@ -23,7 +23,7 @@ public class LawnMowerImp extends AbstractEntity implements LawnMower {
      * @param position   the initial position of the entity; must not be {@code null}.
      * @param hitBoxType the type of hitbox to associate with this entity.
      */
-    private final int speed = 3;        // velocità di scorrimento
+    private final int speed = 4;        // velocità di scorrimento
     private CollisionManager collisionManager;
 
     public LawnMowerImp(Position position, HitBoxFactory.HitBoxType hitBoxType) {
