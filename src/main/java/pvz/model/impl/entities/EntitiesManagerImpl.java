@@ -21,7 +21,7 @@ import pvz.utilities.Position;
 public class EntitiesManagerImpl implements EntitiesManager {
     private static final int DEFAULT_SUNS = 50;
     private static final int DEFAULT_KILLS = 0;
-    private static final int SPAWN_POSITION_X = 9;
+    private static final int SPAWN_POSITION_X = 10;
     private static final int BOUNDS = 5;
     private static final int SPAWN_RATE = 5000;
     private long accumulatedTime;

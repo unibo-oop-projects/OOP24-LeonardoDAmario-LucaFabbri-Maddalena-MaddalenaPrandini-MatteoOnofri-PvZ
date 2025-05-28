@@ -9,9 +9,6 @@ import pvz.model.impl.Collisions.CollisionManagerImpl;
 import pvz.model.impl.Collisions.HitBoxFactory;
 import pvz.model.impl.entities.AbstractEntity;
 import pvz.utilities.Position;
-
-import javax.swing.*;
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
