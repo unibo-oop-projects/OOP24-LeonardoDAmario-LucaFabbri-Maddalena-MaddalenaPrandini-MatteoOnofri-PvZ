@@ -38,6 +38,9 @@ public class BulletImpl extends AbstractEntity implements Bullet {
 
     @Override
     public void update(long deltaTime, EntitiesManager entitiesManager) {
+        if (this.getPosition().x() >= 10){
+            entitiesManager.removeEntity(this);
+        }
         if(this.canUpdate(deltaTime)) {            
             this.setPosition(this.move(deltaTime));
             this.getHitBox().update(this.getPosition());
@@ -46,7 +49,7 @@ public class BulletImpl extends AbstractEntity implements Bullet {
                 this.attackZombie(zombie.get(), entitiesManager);
                 entitiesManager.removeEntity(this);
             }
-        }   
+        }
     }
 
     private void attackZombie(final Zombie zombie, EntitiesManager entitiesManager) {
