@@ -1,11 +1,11 @@
-package pvz.controller.impl;
+package pvz.controller.gamecontroller.impl;
 
 import java.util.Set;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.TimeUnit;
 
-import pvz.controller.api.GameController;
-import pvz.controller.api.ViewListener;
+import pvz.controller.gamecontroller.api.GameController;
+import pvz.controller.gamecontroller.api.ViewListener;
 import pvz.model.api.GameModel;
 import pvz.model.api.plants.PlantType;
 import pvz.utilities.GameEntity;

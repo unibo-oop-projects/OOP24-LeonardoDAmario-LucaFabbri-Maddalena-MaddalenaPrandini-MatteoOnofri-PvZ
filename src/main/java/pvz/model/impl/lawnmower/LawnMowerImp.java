@@ -29,8 +29,7 @@ public class LawnMowerImp extends AbstractEntity implements LawnMower {
 
     }
 
-    @Override
-    public void move() {
+    private void move() {
         final double move = this.speed * (1 / 100.0);
         final double newX = this.getPosition().x() + move;
         this.setPosition(new Position(newX, this.getPosition().y()));

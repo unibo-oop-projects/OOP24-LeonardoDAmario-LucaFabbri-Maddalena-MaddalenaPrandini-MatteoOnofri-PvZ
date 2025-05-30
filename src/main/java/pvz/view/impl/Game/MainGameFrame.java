@@ -1,10 +1,10 @@
 package pvz.view.impl.Game;
 
-import pvz.controller.api.GameController;
-import pvz.controller.api.ViewListener;
-import pvz.controller.impl.EndGame.EndGameController;
-import pvz.controller.impl.GameControllerImpl;
-import pvz.controller.impl.Menu.MenuController;
+import pvz.controller.gamecontroller.api.GameController;
+import pvz.controller.gamecontroller.api.ViewListener;
+import pvz.controller.endgamecontroller.impl.EndGameControllerImpl;
+import pvz.controller.gamecontroller.impl.GameControllerImpl;
+import pvz.controller.menucontroller.impl.MenuController;
 import pvz.model.api.Difficulty;
 import pvz.model.api.GameModel;
 import pvz.model.impl.GameModelImpl;
@@ -15,10 +15,8 @@ import pvz.view.impl.Menu.TutorialView;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
 
 public class MainGameFrame extends JFrame {
 
@@ -101,7 +99,7 @@ public class MainGameFrame extends JFrame {
 
     public void showEndGameView(boolean isVictory) {
         EndGameView endGameView = new EndGameView(isVictory, this);
-        new EndGameController(endGameView, this);
+        new EndGameControllerImpl(endGameView, this);
         views.put(END, endGameView);
         mainPanel.add(endGameView, END);
         cardLayout.show(mainPanel, END);

@@ -1,6 +1,6 @@
 package pvz.view.impl.Game;
 
-import pvz.controller.api.ViewListener;
+import pvz.controller.gamecontroller.api.ViewListener;
 import pvz.utilities.GameEntity;
 import pvz.view.api.GameView;
 

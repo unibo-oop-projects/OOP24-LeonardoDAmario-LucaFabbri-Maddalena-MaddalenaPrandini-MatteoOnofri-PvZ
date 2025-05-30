@@ -1,4 +1,4 @@
-package pvz.controller.api;
+package pvz.controller.gamecontroller.api;
 
 public interface GameController {
 

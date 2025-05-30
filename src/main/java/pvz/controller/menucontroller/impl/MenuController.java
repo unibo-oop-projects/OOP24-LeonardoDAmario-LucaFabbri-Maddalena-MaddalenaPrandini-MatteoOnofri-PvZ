@@ -1,11 +1,11 @@
-package pvz.controller.impl.Menu;
+package pvz.controller.menucontroller.impl;
 
 import pvz.model.api.Difficulty;
 import pvz.view.impl.Game.MainGameFrame;
 import pvz.view.impl.Menu.MenuView;
 import pvz.view.api.Resolution;
 
-public class MenuController {
+public class MenuController implements pvz.controller.menucontroller.api.MenuController {
 
     private final MenuView view;
     private final MainGameFrame mainFrame;
@@ -42,6 +42,26 @@ public class MenuController {
             Resolution sel = view.getSelectedResolution();
             mainFrame.setResolution(sel);
         });
+
+    }
+
+    @Override
+    public void openMenu() {
+
+    }
+
+    @Override
+    public void closeMenu() {
+
+    }
+
+    @Override
+    public void quit() {
+
+    }
+
+    @Override
+    public void handleException(Exception exception) {
 
     }
 }
