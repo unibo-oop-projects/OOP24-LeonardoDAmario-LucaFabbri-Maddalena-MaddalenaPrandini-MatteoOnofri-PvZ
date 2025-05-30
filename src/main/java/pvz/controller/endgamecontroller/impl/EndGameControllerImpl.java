@@ -1,24 +1,29 @@
 package pvz.controller.endgamecontroller.impl;
 
 import pvz.controller.endgamecontroller.api.EndGameController;
+import pvz.controller.maincontroller.api.MainController;
 import pvz.view.endgameview.impl.EndGameViewImpl;
-import pvz.view.gameview.impl.MainGameFrame;
+
 
 public class EndGameControllerImpl implements EndGameController {
 
-    public EndGameControllerImpl(EndGameViewImpl view, MainGameFrame frame) {
-        view.getBackToMenuButton().addActionListener(e -> frame.returnToMenu());
-        view.getExitButton().addActionListener(e -> System.exit(0));
+    private final MainController parentController;
+    private EndGameViewImpl view;
+
+    public EndGameControllerImpl(MainController controller) {
+        this.parentController = controller;
+
     }
 
     @Override
-    public void openEndGameMenu() {
-
+    public void openEndGameMenu(boolean hasWon) {
+        this.view = new EndGameViewImpl(this, hasWon);
     }
 
     @Override
     public void closeEndGameMenu() {
-
+        parentController.goToMenu();
+        view.close();
     }
 
     @Override

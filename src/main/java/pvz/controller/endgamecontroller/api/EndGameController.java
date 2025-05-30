@@ -4,7 +4,7 @@ import pvz.controller.maincontroller.api.Controller;
 
 public interface EndGameController extends Controller {
 
-    void openEndGameMenu();
+    void openEndGameMenu(boolean hasWon);
 
     void closeEndGameMenu();
 }

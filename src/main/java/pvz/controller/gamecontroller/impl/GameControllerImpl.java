@@ -6,12 +6,16 @@ import java.util.concurrent.TimeUnit;
 
 import pvz.controller.gamecontroller.api.GameController;
 import pvz.controller.gamecontroller.api.ViewListener;
+import pvz.controller.maincontroller.api.MainController;
+import pvz.model.game.api.Difficulty;
 import pvz.model.game.api.GameModel;
+import pvz.model.game.impl.GameModelImpl;
 import pvz.model.plants.api.PlantType;
 import pvz.model.entities.api.GameEntity;
 import pvz.utilities.Position;
+import pvz.utilities.Resolution;
 import pvz.view.gameview.api.GameView;
-import pvz.view.gameview.impl.MainGameFrame;
+import pvz.view.gameview.impl.GameViewImpl;
 
 import javax.swing.*;
 
@@ -24,39 +28,31 @@ public class GameControllerImpl implements GameController, ViewListener {
     private static final int FPS = 60;
     private static final long TIME_PER_TICK = 1000 / FPS;
 
-    private final GameModel model;
-    private final GameView view;
-    private final MainGameFrame mainFrame;
     private final LinkedBlockingQueue<Event> queue = new LinkedBlockingQueue<>();
+    private final MainController parentController;
+    private GameModel model;
+    private GameView view;
     private boolean running;
 
     private Position pendingPosition = null;
     private PlantType selectedPlantType = null;
 
-    public GameControllerImpl(final GameModel model, final GameView view, final MainGameFrame mainFrame) {
-        this.model = model;
-        this.view = view;
-        this.view.setViewListener(this);
-        this.mainFrame = mainFrame;
+    public GameControllerImpl(MainController controller) {
+        this.parentController = controller;
+
     }
 
     @Override
-    public void startGame() {
+    public void startGame(Difficulty difficulty, Resolution resolution) {
         this.running = true;
-        view.show();
-
-        SwingUtilities.invokeLater(() ->
-                SwingUtilities.invokeLater(() ->
-                        new GameLoop().start()
-                )
-        );
+        this.model = new GameModelImpl(difficulty);
+        this.view = new GameViewImpl(this, resolution);
+        new GameLoop().start();
     }
-
 
     @Override
     public void stopGame() {
         this.running = false;
-        view.close();
     }
 
     private class GameLoop extends Thread {
@@ -80,9 +76,8 @@ public class GameControllerImpl implements GameController, ViewListener {
 
                     if (model.isGameOver()) {
                         stopGame();
-                        System.out.println("Game Over");
-                        mainFrame.showEndGameView(model.isVictory());
-
+                        parentController.goToEndGame(model.isVictory());
+                        view.close();
                     }
             }
         }

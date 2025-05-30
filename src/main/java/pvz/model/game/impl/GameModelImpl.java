@@ -86,24 +86,24 @@ public class GameModelImpl implements GameModel {
      */
     @Override
     public void update(final long deltaTime) {
-    this.entitiesManager.spawnZombie(deltaTime, difficulty);
-    this.entitiesManager.getEntities().forEach(e -> {
-        e.update(deltaTime, entitiesManager);
-        int currentrow = (int) e.getPosition().y();
-        if (e instanceof Zombie && e.getPosition().x() <= 0 ) {
-            if (mowerUsed[currentrow]){
-                this.status = GameStatus.LOST;
-            }else {
-                LawnMower lawnMower = new LawnMowerImp(new Position(0, currentrow), HitBoxFactory.HitBoxType.ZOMBIE);
-                entitiesManager.addEntity(lawnMower);
-                lawnMower.update(deltaTime, entitiesManager);
-                mowerUsed[currentrow] = true;
+        this.entitiesManager.spawnZombie(deltaTime, difficulty);
+        this.entitiesManager.getEntities().forEach(e -> {
+            e.update(deltaTime, entitiesManager);
+            int currentrow = (int) e.getPosition().y();
+            if (e instanceof Zombie && e.getPosition().x() <= 0 ) {
+                if (mowerUsed[currentrow]){
+                    this.status = GameStatus.LOST;
+                }else {
+                    LawnMower lawnMower = new LawnMowerImp(new Position(0, currentrow), HitBoxFactory.HitBoxType.ZOMBIE);
+                    entitiesManager.addEntity(lawnMower);
+                    lawnMower.update(deltaTime, entitiesManager);
+                    mowerUsed[currentrow] = true;
+                }
             }
-        }
-    });
-    if(getKillCount() == killToWin) {
-        this.status = GameStatus.WON;
-    }
+        });
+            if(getKillCount() == killToWin) {
+                this.status = GameStatus.WON;
+            }
     }
 
 

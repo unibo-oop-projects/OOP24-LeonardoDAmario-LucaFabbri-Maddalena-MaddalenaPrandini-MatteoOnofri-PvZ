@@ -1,5 +1,6 @@
 package pvz.view.menuview.impl;
 
+import pvz.controller.menucontroller.api.MenuController;
 import pvz.model.game.api.Difficulty;
 import pvz.utilities.Resolution;
 
@@ -15,11 +16,15 @@ public class MenuViewImpl extends JPanel {
     private final JButton exitButton;
     private final JLabel difficultyLabel;
     private final JComboBox<Resolution> resolutionCombo;
+    private Difficulty currentDifficulty = Difficulty.NORMAL;
+    private Resolution currentResolution = Resolution.R800x600;
+    private final MenuController parentController;
+    private final JFrame frame = new JFrame();
 
-    public MenuViewImpl() {
+    public MenuViewImpl(MenuController controller) {
+
+        this.parentController = controller;
         this.setLayout(new BorderLayout());
-
-
         JLabel titleLabel = new JLabel("Piante contro Zombie", SwingConstants.CENTER);
         titleLabel.setFont(new Font("Arial", Font.BOLD, 40));
         this.add(titleLabel, BorderLayout.NORTH);
@@ -74,33 +79,70 @@ public class MenuViewImpl extends JPanel {
         tutorialButton.setFont(new Font("Arial", Font.PLAIN, 20));
         exitButton.setFont(new Font("Arial", Font.PLAIN, 20));
 
+        initListeners();
+        configureFrame();
     }
+
+    private void configureFrame() {
+        frame.setTitle("Piante contro Zombie");
+        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        frame.setSize(this.currentResolution.getWidth(), this.currentResolution.getHeight());
+        frame.add(this);
+        frame.setLocationRelativeTo(null);
+        frame.setResizable(false);
+        frame.setVisible(true);
+    }
+
+    private void initListeners() {
+        this.playButton.addActionListener(e -> {
+            parentController.startGame(currentDifficulty, currentResolution);
+        });
+
+        this.difficultyButton.addActionListener(e -> {
+            currentDifficulty = switch (currentDifficulty) {
+                case NORMAL -> Difficulty.HARD;
+                case HARD -> Difficulty.EASY;
+                case EASY -> Difficulty.NORMAL;
+            };
+            updateDifficultyLabel(currentDifficulty);
+        });
+
+        this.tutorialButton.addActionListener(e -> parentController.showTutorialView(currentResolution));
+
+        this.exitButton.addActionListener(e -> System.exit(0));
+
+        this.resolutionCombo.addActionListener(e -> {
+            Resolution sel = (Resolution) resolutionCombo.getSelectedItem();
+            setResolution(sel);
+        });
+
+    }
+
+    public void dispose() {
+        frame.dispose();
+    }
+
+    public void setResolution(Resolution resolution) {
+        Resolution previousResolution = this.currentResolution;
+        this.currentResolution = resolution;
+
+        frame.setSize(resolution.getWidth(), resolution.getHeight());
+
+        int choice = JOptionPane.showConfirmDialog(
+                this,
+                "Vuoi mantenere la nuova risoluzione?",
+                "Conferma risoluzione",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.QUESTION_MESSAGE);
+        if (choice == JOptionPane.NO_OPTION) {
+            frame.setSize(previousResolution.getWidth(), previousResolution.getHeight());
+            this.setSelectedResolution(previousResolution);
+        }
+    }
+
 
     public void updateDifficultyLabel(Difficulty difficulty) {
         this.difficultyLabel.setText("Difficoltà: " + difficulty.toString());
-    }
-
-    public JButton getPlayButton() {
-        return playButton;
-    }
-
-    public JButton getDifficultyButton() {
-        return difficultyButton;
-    }
-
-    public JButton getTutorialButton() {
-        return tutorialButton;
-    }
-
-    public JButton getExitButton() {
-        return exitButton;
-    }
-
-    public void addResolutionListener(ActionListener listener) {
-        this.resolutionCombo.addActionListener(listener);
-    }
-    public Resolution getSelectedResolution() {
-        return (Resolution) this.resolutionCombo.getSelectedItem();
     }
 
     public void setSelectedResolution(Resolution resolution) {

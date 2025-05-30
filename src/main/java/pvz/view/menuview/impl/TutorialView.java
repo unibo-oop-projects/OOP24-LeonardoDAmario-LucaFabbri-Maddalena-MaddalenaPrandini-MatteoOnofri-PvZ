@@ -1,12 +1,14 @@
 package pvz.view.menuview.impl;
 
-import pvz.view.gameview.impl.MainGameFrame;
+
+import pvz.utilities.Resolution;
 
 import javax.swing.*;
 import java.awt.*;
 
-public class TutorialView extends JPanel {
-    public TutorialView(MainGameFrame frame) {
+public class TutorialView extends JFrame {
+
+    public TutorialView(Resolution resolution) {
         this.setLayout(new BorderLayout());
 
         JTextArea text = new JTextArea();
@@ -35,7 +37,10 @@ public class TutorialView extends JPanel {
         this.add(scroll, BorderLayout.CENTER);
 
         JButton back = new JButton("Indietro");
-        back.addActionListener(e -> frame.returnToMenu());
+        back.addActionListener(e -> this.dispose());
         this.add(back, BorderLayout.SOUTH);
+
+        this.setSize(resolution.getWidth(), resolution.getHeight());
+        this.setVisible(true);
     }
 }

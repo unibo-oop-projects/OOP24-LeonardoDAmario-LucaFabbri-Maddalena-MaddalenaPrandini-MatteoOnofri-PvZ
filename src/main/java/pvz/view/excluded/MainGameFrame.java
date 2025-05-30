@@ -1,15 +1,17 @@
-package pvz.view.gameview.impl;
+/*
+package pvz.view.excluded;
 
 import pvz.controller.gamecontroller.api.GameController;
 import pvz.controller.gamecontroller.api.ViewListener;
 import pvz.controller.endgamecontroller.impl.EndGameControllerImpl;
 import pvz.controller.gamecontroller.impl.GameControllerImpl;
-import pvz.controller.menucontroller.impl.MenuController;
+import pvz.controller.menucontroller.impl.MenuControllerImpl;
 import pvz.model.game.api.Difficulty;
 import pvz.model.game.api.GameModel;
 import pvz.model.game.impl.GameModelImpl;
 import pvz.utilities.Resolution;
 import pvz.view.endgameview.impl.EndGameViewImpl;
+import pvz.view.gameview.impl.GameViewImpl;
 import pvz.view.menuview.impl.MenuViewImpl;
 import pvz.view.menuview.impl.TutorialView;
 
@@ -45,45 +47,16 @@ public class MainGameFrame extends JFrame {
 
     }
 
-    public void setResolution(Resolution resolution) {
-        Resolution previousResolution = this.resolution;
-        this.resolution = resolution;
-
-        this.setSize(resolution.getWidth(), resolution.getHeight());
-
-        int choice = JOptionPane.showConfirmDialog(
-                this,
-                "Vuoi mantenere la nuova risoluzione?",
-                "Conferma risoluzione",
-                JOptionPane.YES_NO_OPTION,
-                JOptionPane.QUESTION_MESSAGE);
-        if (choice == JOptionPane.NO_OPTION) {
-            this.setSize(previousResolution.getWidth(), previousResolution.getHeight());
-            if (views.get(MENU) instanceof MenuViewImpl menuView) {
-                menuView.setSelectedResolution(previousResolution);
-            }
-        }
-    }
-
-
 
     public static void launchGame() {
         MainGameFrame frame = new MainGameFrame();
-        frame.initMenu();
         frame.setVisible(true);
-    }
-
-    public void initMenu() {
-        MenuViewImpl menuView = new MenuViewImpl();
-        MenuController menuController = new MenuController( menuView, this);
-
-        this.addMenuView(menuView);
     }
 
 
 
     public void addMenuView(MenuViewImpl view) {
-        views.put(MENU, view);
+        //views.put(MENU, view);
         mainPanel.add(view, MENU);
         cardLayout.show(mainPanel, MENU);
     }
@@ -139,7 +112,6 @@ public class MainGameFrame extends JFrame {
             views.remove(MENU);
         }
 
-        initMenu();
 
         cardLayout.show(mainPanel, MENU);
         mainPanel.revalidate();
@@ -148,3 +120,4 @@ public class MainGameFrame extends JFrame {
 
 
 }
+*/

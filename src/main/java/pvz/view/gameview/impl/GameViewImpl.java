@@ -1,7 +1,10 @@
 package pvz.view.gameview.impl;
 
+import pvz.controller.gamecontroller.api.GameController;
 import pvz.controller.gamecontroller.api.ViewListener;
+import pvz.controller.menucontroller.api.MenuController;
 import pvz.model.entities.api.GameEntity;
+import pvz.utilities.Resolution;
 import pvz.view.gameview.api.GameView;
 
 import javax.swing.*;
@@ -14,14 +17,19 @@ public class GameViewImpl extends JPanel implements GameView {
     private final DrawPanel drawPanel;
     private final GridPanel gridPanel;
     private final JLayeredPane layeredPane = new JLayeredPane();
+    private final JFrame frame = new JFrame();
+    private final Resolution resolution;
+    private final GameController parentController;
 
     private ViewListener listener;
 
 
-    public GameViewImpl(int width, int height) {
+    public GameViewImpl(GameController controller, Resolution resolution) {
+        this.parentController = controller;
+        this.resolution = resolution;
         double scaling;
         //Formula: scaling = 0.8 * (width / 640.0)
-        switch (width) {
+        switch (resolution.getWidth()) {
             case 640 -> scaling = 0.8;         // 640×480 (VGA)
             case 800 -> scaling = 1.0;         // 800×600 (SVGA)
             case 1024 -> scaling = 1.28;       // 1024×768 (XGA)
@@ -39,9 +47,9 @@ public class GameViewImpl extends JPanel implements GameView {
         this.gridPanel = new GridPanel(scaling);
         layeredPane.setLayout(new OverlayLayout(layeredPane));
 
-        layeredPane.setPreferredSize(new Dimension(width, height));
-        drawPanel.setBounds(0, 0, width, height);
-        gridPanel.setBounds(0, 0, width + 1, height + 1);
+        layeredPane.setPreferredSize(new Dimension(resolution.getWidth(), resolution.getHeight()));
+        drawPanel.setBounds(0, 0, resolution.getWidth(), resolution.getHeight());
+        //gridPanel.setBounds(0, 0, resolution.getWidth(), + 1, resolution.getHeight() + 1);
 
 
 
@@ -50,12 +58,29 @@ public class GameViewImpl extends JPanel implements GameView {
 
         this.add(toolBar, BorderLayout.NORTH);
         this.add(layeredPane, BorderLayout.CENTER);
+
+        configureFrame();
+        setViewListener((ViewListener) this.parentController);
+
     }
+
+    private void configureFrame() {
+
+        frame.setTitle("Piante contro Zombie");
+        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        frame.setSize(this.resolution.getWidth(), this.resolution.getHeight());
+        frame.add(this);
+        frame.setLocationRelativeTo(null);
+        frame.setResizable(false);
+        frame.setVisible(true);
+    }
+
+
 
 
     @Override
     public void close() {
-
+        this.frame.dispose();
     }
 
     @Override
