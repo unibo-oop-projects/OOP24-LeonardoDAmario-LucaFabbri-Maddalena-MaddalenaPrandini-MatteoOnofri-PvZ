@@ -6,9 +6,9 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import pvz.model.api.plants.Plant;
-import pvz.model.api.plants.PlantType;
-import pvz.model.impl.plants.PlantFactory;
+import pvz.model.plants.api.Plant;
+import pvz.model.plants.api.PlantType;
+import pvz.model.plants.impl.PlantFactory;
 import pvz.utilities.Position;
 
 /**

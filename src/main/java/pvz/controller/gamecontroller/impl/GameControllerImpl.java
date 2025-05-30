@@ -6,12 +6,12 @@ import java.util.concurrent.TimeUnit;
 
 import pvz.controller.gamecontroller.api.GameController;
 import pvz.controller.gamecontroller.api.ViewListener;
-import pvz.model.api.GameModel;
-import pvz.model.api.plants.PlantType;
-import pvz.utilities.GameEntity;
+import pvz.model.game.api.GameModel;
+import pvz.model.plants.api.PlantType;
+import pvz.model.entities.api.GameEntity;
 import pvz.utilities.Position;
-import pvz.view.api.GameView;
-import pvz.view.impl.Game.MainGameFrame;
+import pvz.view.gameview.api.GameView;
+import pvz.view.gameview.impl.MainGameFrame;
 
 import javax.swing.*;
 

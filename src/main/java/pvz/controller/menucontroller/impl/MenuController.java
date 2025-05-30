@@ -1,18 +1,18 @@
 package pvz.controller.menucontroller.impl;
 
-import pvz.model.api.Difficulty;
-import pvz.view.impl.Game.MainGameFrame;
-import pvz.view.impl.Menu.MenuView;
-import pvz.view.api.Resolution;
+import pvz.model.game.api.Difficulty;
+import pvz.view.gameview.impl.MainGameFrame;
+import pvz.view.menuview.impl.MenuViewImpl;
+import pvz.utilities.Resolution;
 
 public class MenuController implements pvz.controller.menucontroller.api.MenuController {
 
-    private final MenuView view;
+    private final MenuViewImpl view;
     private final MainGameFrame mainFrame;
 
     private Difficulty currentDifficulty = Difficulty.NORMAL;
 
-    public MenuController( MenuView view, MainGameFrame mainFrame) {
+    public MenuController(MenuViewImpl view, MainGameFrame mainFrame) {
 
         this.view = view;
         this.mainFrame = mainFrame;

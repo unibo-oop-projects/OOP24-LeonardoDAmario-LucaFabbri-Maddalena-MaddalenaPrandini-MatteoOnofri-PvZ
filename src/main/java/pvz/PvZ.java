@@ -1,6 +1,6 @@
 package pvz;
 
-import pvz.view.impl.Game.MainGameFrame;
+import pvz.view.gameview.impl.MainGameFrame;
 
 import javax.swing.*;
 
