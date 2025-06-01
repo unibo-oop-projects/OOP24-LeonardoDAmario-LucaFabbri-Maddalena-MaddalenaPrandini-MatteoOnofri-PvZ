@@ -13,5 +13,7 @@ public enum EntityType {
     /** Represents a Zombie enemy. */
     ZOMBIE,
     /** Represents a bullet shot by a Peashooter. */
-    BULLET
+    BULLET,
+    /** Represents a lawnmower. */
+    LAWNMOWER
 }

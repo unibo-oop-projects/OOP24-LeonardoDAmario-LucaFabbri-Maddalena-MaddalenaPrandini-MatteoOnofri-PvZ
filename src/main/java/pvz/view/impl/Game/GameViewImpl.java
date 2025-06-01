@@ -5,64 +5,88 @@ import pvz.utilities.GameEntity;
 import pvz.view.api.GameView;
 
 import javax.swing.*;
-
 import java.awt.*;
 import java.util.Set;
 
-public class GameViewImpl implements GameView {
+public class GameViewImpl extends JPanel implements GameView {
 
-    private final JFrame frame = new JFrame("Plants vs Zombies");
     private final GameToolBar toolBar = new GameToolBar();
-    private final DrawPanel drawPanel = new DrawPanel();
-    private final GridPanel gridPanel = new GridPanel();
-
+    private final DrawPanel drawPanel;
+    private final GridPanel gridPanel;
     private final JLayeredPane layeredPane = new JLayeredPane();
 
-    private static final int WIDTH = 720;
-    private static final int HEIGHT = 400;
+    private ViewListener listener;
 
-    public GameViewImpl() {
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setLayout(new BorderLayout());
 
-        layeredPane.setPreferredSize(new Dimension(WIDTH, HEIGHT));
-        drawPanel.setBounds(0, 0, WIDTH, HEIGHT);
-        gridPanel.setBounds(0, 0, WIDTH +1, HEIGHT+1);
+    public GameViewImpl(int width, int height) {
+        double scaling;
+        //Formula: scaling = 0.8 * (width / 640.0)
+        switch (width) {
+            case 640 -> scaling = 0.8;         // 640×480 (VGA)
+            case 800 -> scaling = 1.0;         // 800×600 (SVGA)
+            case 1024 -> scaling = 1.28;       // 1024×768 (XGA)
+            case 1152 -> scaling = 1.44;       // 1152×864 (SXGA-)
+            case 1600 -> scaling = 2.0;        // 1600×1200 (UXGA)
+            case 2048 -> scaling = 2.56;       // 2048×1536 (QXGA)
+            default -> scaling = 1.5;
+        }
+
+
+
+
+
+        this.drawPanel = new DrawPanel(scaling);
+        this.gridPanel = new GridPanel(scaling);
+        layeredPane.setLayout(new OverlayLayout(layeredPane));
+
+        layeredPane.setPreferredSize(new Dimension(width, height));
+        drawPanel.setBounds(0, 0, width, height);
+        gridPanel.setBounds(0, 0, width + 1, height + 1);
+
 
 
         layeredPane.add(gridPanel, JLayeredPane.DEFAULT_LAYER);
         layeredPane.add(drawPanel, JLayeredPane.PALETTE_LAYER);
 
-        frame.add(toolBar, BorderLayout.NORTH);
-        frame.add(layeredPane, BorderLayout.CENTER);
-        frame.setSize(800, 600);
-        frame.setLocationRelativeTo(null);
+        this.add(toolBar, BorderLayout.NORTH);
+        this.add(layeredPane, BorderLayout.CENTER);
     }
 
-    @Override
-    public void show() {
-        SwingUtilities.invokeLater(() -> frame.setVisible(true));
-    }
 
     @Override
     public void close() {
-        frame.dispose();
+
     }
 
     @Override
     public boolean isVisible() {
-        return false;
+        return super.isVisible();
     }
+
 
     @Override
     public void render(Set<GameEntity> entities, int suns, int kills) {
+        System.out.println("[DEBUG] render chiamato con " + entities.size() + " entità");
         drawPanel.updateMovingEntities(Set.copyOf(entities));
         toolBar.updateStats(suns, kills);
+
+        SwingUtilities.invokeLater(() -> {
+            drawPanel.repaint();
+            gridPanel.repaint();
+            this.revalidate();
+            this.repaint();
+        });
     }
+
 
     @Override
     public void setViewListener(ViewListener listener) {
+        this.listener = listener;
         toolBar.setViewListener(listener);
         gridPanel.setViewListener(listener);
     }
+
+
+
+
 }

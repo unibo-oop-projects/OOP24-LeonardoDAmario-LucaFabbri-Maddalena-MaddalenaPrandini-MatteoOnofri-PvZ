@@ -1,16 +1,20 @@
 package pvz.view.impl.Menu;
 
 import pvz.model.api.Difficulty;
+import pvz.view.api.Resolution;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionListener;
 
 public class MenuView extends JPanel {
 
     private final JButton playButton;
     private final JButton difficultyButton;
+    private final JButton tutorialButton;
     private final JButton exitButton;
     private final JLabel difficultyLabel;
+    private final JComboBox<Resolution> resolutionCombo;
 
     public MenuView() {
         this.setLayout(new BorderLayout());
@@ -20,18 +24,36 @@ public class MenuView extends JPanel {
         titleLabel.setFont(new Font("Arial", Font.BOLD, 40));
         this.add(titleLabel, BorderLayout.NORTH);
 
+        JPanel settingsPanel = new JPanel();
+        settingsPanel.setLayout(new GridLayout(2, 1, 5, 5));
+        settingsPanel.setBackground(new Color(34, 139, 34));
+
         difficultyLabel = new JLabel("Difficoltà: Normale", SwingConstants.CENTER);
         difficultyLabel.setFont(new Font("Arial", Font.BOLD, 28));
-        this.add(difficultyLabel, BorderLayout.SOUTH);
+        settingsPanel.add(difficultyLabel);
+
+        resolutionCombo = new JComboBox<>(Resolution.values());
+        resolutionCombo.setSelectedItem(Resolution.R800x600);
+        resolutionCombo.setFont(new Font("Arial", Font.PLAIN, 18));
+        JPanel resPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        resPanel.setBackground(new Color(34, 139, 34));
+        JLabel resLabel = new JLabel("Risoluzione: ", SwingConstants.CENTER);
+        resLabel.setFont(new Font("Arial", Font.BOLD, 28));
+        resPanel.add(resLabel);
+        resPanel.add(resolutionCombo);
+        settingsPanel.add(resPanel);
+        this.add(settingsPanel, BorderLayout.SOUTH);
 
         JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new GridLayout(3, 1, 10, 10));
         playButton = new JButton("Gioca");
         difficultyButton = new JButton("Seleziona Difficoltà");
+        tutorialButton = new JButton("Tutorial");
         exitButton = new JButton("Esci");
 
         buttonPanel.add(playButton);
         buttonPanel.add(difficultyButton);
+        buttonPanel.add(tutorialButton);
         buttonPanel.add(exitButton);
 
         this.add(buttonPanel, BorderLayout.CENTER);
@@ -49,6 +71,7 @@ public class MenuView extends JPanel {
 
         playButton.setFont(new Font("Arial", Font.PLAIN, 20));
         difficultyButton.setFont(new Font("Arial", Font.PLAIN, 20));
+        tutorialButton.setFont(new Font("Arial", Font.PLAIN, 20));
         exitButton.setFont(new Font("Arial", Font.PLAIN, 20));
 
     }
@@ -65,7 +88,22 @@ public class MenuView extends JPanel {
         return difficultyButton;
     }
 
+    public JButton getTutorialButton() {
+        return tutorialButton;
+    }
+
     public JButton getExitButton() {
         return exitButton;
+    }
+
+    public void addResolutionListener(ActionListener listener) {
+        this.resolutionCombo.addActionListener(listener);
+    }
+    public Resolution getSelectedResolution() {
+        return (Resolution) this.resolutionCombo.getSelectedItem();
+    }
+
+    public void setSelectedResolution(Resolution resolution) {
+        this.resolutionCombo.setSelectedItem(resolution);
     }
 }
