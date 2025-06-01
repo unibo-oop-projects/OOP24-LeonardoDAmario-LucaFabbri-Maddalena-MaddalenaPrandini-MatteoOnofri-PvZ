@@ -24,6 +24,7 @@ import javax.swing.*;
  * including entity management, game state updates, and plant placement.
  */
 public class GameModelImpl implements GameModel {
+    private static final int TARGET_KILL_COUNT = 20;
     private final EntitiesManager entitiesManager;
     private final PlantFactory plantFactory;
 
@@ -83,7 +84,7 @@ public class GameModelImpl implements GameModel {
             this.status = GameStatus.LOST;
         }
     });
-    if(getKillCount() == 20) {
+    if(this.getKillCount()>=TARGET_KILL_COUNT) {
         this.status = GameStatus.WON;
     }
     }
