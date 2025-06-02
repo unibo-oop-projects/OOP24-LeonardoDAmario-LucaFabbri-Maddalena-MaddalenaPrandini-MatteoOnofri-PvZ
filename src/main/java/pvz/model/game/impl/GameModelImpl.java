@@ -1,21 +1,23 @@
 package pvz.model.game.impl;
+
 import pvz.model.bullets.api.Bullet;
+import pvz.model.collisions.impl.HitBoxFactory;
+import pvz.model.entities.api.EntitiesManager;
+import pvz.model.entities.api.Entity;
+import pvz.model.entities.api.EntityType;
+import pvz.model.entities.api.GameEntity;
+import pvz.model.entities.impl.EntitiesManagerImpl;
 import pvz.model.game.api.Difficulty;
 import pvz.model.game.api.GameModel;
 import pvz.model.game.api.GameStatus;
-import pvz.model.zombies.api.Zombie;
-import pvz.model.entities.api.EntitiesManager;
-import pvz.model.entities.api.Entity;
 import pvz.model.lawnmower.api.LawnMower;
+import pvz.model.lawnmower.impl.LawnMowerImp;
 import pvz.model.plants.api.Plant;
 import pvz.model.plants.api.PlantType;
-import pvz.model.collisions.impl.HitBoxFactory;
-import pvz.model.entities.impl.EntitiesManagerImpl;
-import pvz.model.lawnmower.impl.LawnMowerImp;
 import pvz.model.plants.impl.PlantFactory;
-import pvz.model.entities.api.EntityType;
-import pvz.model.entities.api.GameEntity;
+import pvz.model.zombies.api.Zombie;
 import pvz.utilities.Position;
+
 import java.util.Set;
 import java.util.stream.Collectors;
 

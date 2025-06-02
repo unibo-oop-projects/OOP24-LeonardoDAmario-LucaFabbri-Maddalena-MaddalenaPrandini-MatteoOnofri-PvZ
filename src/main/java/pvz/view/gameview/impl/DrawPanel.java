@@ -1,14 +1,12 @@
 package pvz.view.gameview.impl;
 
-import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
+import pvz.model.entities.api.GameEntity;
+import pvz.model.plants.api.PlantType;
+
+import javax.swing.*;
+import java.awt.*;
 import java.util.EnumMap;
 import java.util.Set;
-import javax.swing.JPanel;
-
-import pvz.model.plants.api.PlantType;
-import pvz.model.entities.api.GameEntity;
 
 public class DrawPanel extends JPanel {
 

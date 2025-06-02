@@ -1,16 +1,15 @@
 package pvz.model.entities.impl;
 
+import pvz.model.entities.api.EntitiesManager;
+import pvz.model.entities.api.Entity;
+import pvz.model.game.api.Difficulty;
+import pvz.model.zombies.api.Zombie;
+import pvz.model.zombies.impl.ZombieFactory;
+import pvz.utilities.Position;
+
 import java.util.HashSet;
 import java.util.Random;
 import java.util.Set;
-
-
-import pvz.model.game.api.Difficulty;
-import pvz.model.zombies.api.Zombie;
-import pvz.model.entities.api.EntitiesManager;
-import pvz.model.entities.api.Entity;
-import pvz.model.zombies.impl.ZombieFactory;
-import pvz.utilities.Position;
 
 /**
  * Implementation of the {@link EntitiesManager} interface.

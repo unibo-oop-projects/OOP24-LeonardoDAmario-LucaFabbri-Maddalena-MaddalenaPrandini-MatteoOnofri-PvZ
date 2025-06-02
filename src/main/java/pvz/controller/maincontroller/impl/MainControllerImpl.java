@@ -22,11 +22,6 @@ public class MainControllerImpl implements MainController {
             menuController.openMenu();
         }
 
-        @Override
-        public void quit() {
-
-        }
-
         public void startGame(Difficulty difficulty, Resolution resolution) {
             gameController.startGame(difficulty, resolution);
         }
@@ -42,6 +37,8 @@ public class MainControllerImpl implements MainController {
 
         @Override
         public void handleException(Exception exception) {
-
+            exception.printStackTrace();
+            System.err.println("Errore inaspettato, il gioco verrà chiuso. Controllare il log per maggiori informazioni. ");
+            System.exit(1);
         }
 }

@@ -1,23 +1,21 @@
 package pvz.controller.gamecontroller.impl;
 
-import java.util.Set;
-import java.util.concurrent.LinkedBlockingQueue;
-import java.util.concurrent.TimeUnit;
-
 import pvz.controller.gamecontroller.api.GameController;
 import pvz.controller.gamecontroller.api.ViewListener;
 import pvz.controller.maincontroller.api.MainController;
+import pvz.model.entities.api.GameEntity;
 import pvz.model.game.api.Difficulty;
 import pvz.model.game.api.GameModel;
 import pvz.model.game.impl.GameModelImpl;
 import pvz.model.plants.api.PlantType;
-import pvz.model.entities.api.GameEntity;
 import pvz.utilities.Position;
 import pvz.utilities.Resolution;
 import pvz.view.gameview.api.GameView;
 import pvz.view.gameview.impl.GameViewImpl;
 
-import javax.swing.*;
+import java.util.Set;
+import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.TimeUnit;
 
 public class GameControllerImpl implements GameController, ViewListener {
 
@@ -88,7 +86,7 @@ public class GameControllerImpl implements GameController, ViewListener {
                 try {
                     Thread.sleep(TIME_PER_TICK - frameDuration);
                 } catch (InterruptedException e) {
-                    Thread.currentThread().interrupt();
+                    handleException(e);
                 }
             }
         }
@@ -117,7 +115,7 @@ public class GameControllerImpl implements GameController, ViewListener {
                     }
                 }
             } catch (Exception e) {
-                e.printStackTrace();
+                handleException(e);
             }
         }
     }
@@ -140,5 +138,10 @@ public class GameControllerImpl implements GameController, ViewListener {
                     case ZOMBIE, BULLET, LAWNMOWER -> false;
         }
         );
+    }
+
+    @Override
+    public void handleException(Exception exception) {
+        parentController.handleException(exception);
     }
 }

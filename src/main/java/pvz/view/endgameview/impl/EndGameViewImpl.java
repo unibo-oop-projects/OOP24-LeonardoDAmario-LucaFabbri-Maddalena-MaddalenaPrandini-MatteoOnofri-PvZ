@@ -2,7 +2,6 @@ package pvz.view.endgameview.impl;
 
 
 import pvz.controller.endgamecontroller.api.EndGameController;
-import pvz.utilities.Resolution;
 import pvz.view.endgameview.api.EndGameView;
 
 import javax.swing.*;

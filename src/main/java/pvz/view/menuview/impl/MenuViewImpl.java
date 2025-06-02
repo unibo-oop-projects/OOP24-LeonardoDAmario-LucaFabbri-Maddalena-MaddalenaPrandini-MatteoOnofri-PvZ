@@ -6,7 +6,6 @@ import pvz.utilities.Resolution;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionListener;
 
 public class MenuViewImpl extends JPanel {
 

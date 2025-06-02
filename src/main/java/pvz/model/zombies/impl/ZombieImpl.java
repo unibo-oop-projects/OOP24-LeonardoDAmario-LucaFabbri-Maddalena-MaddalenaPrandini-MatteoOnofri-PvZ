@@ -1,17 +1,16 @@
 package pvz.model.zombies.impl;
 
-import pvz.model.collisions.impl.CollisionManagerImpl;
-import pvz.model.collisions.impl.HitBoxFactory.HitBoxType;
-import pvz.model.entities.impl.AbstractEntity;
-
-import java.util.Optional;
-
-import pvz.model.zombies.api.Zombie;
 import pvz.model.collisions.api.CollisionManager;
 import pvz.model.collisions.api.HitBox;
-import pvz.utilities.Position;
+import pvz.model.collisions.impl.CollisionManagerImpl;
+import pvz.model.collisions.impl.HitBoxFactory.HitBoxType;
 import pvz.model.entities.api.EntitiesManager;
+import pvz.model.entities.impl.AbstractEntity;
 import pvz.model.plants.api.Plant;
+import pvz.model.zombies.api.Zombie;
+import pvz.utilities.Position;
+
+import java.util.Optional;
 
 public class ZombieImpl extends AbstractEntity implements Zombie {
 

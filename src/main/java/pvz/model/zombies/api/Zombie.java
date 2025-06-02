@@ -1,7 +1,6 @@
 package pvz.model.zombies.api;
 
 import pvz.model.entities.api.Entity;
-
 import pvz.utilities.Position;
 
 public interface Zombie extends Entity {

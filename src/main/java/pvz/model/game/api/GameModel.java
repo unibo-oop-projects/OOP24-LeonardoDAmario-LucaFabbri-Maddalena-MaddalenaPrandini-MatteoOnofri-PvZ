@@ -1,7 +1,7 @@
 package pvz.model.game.api;
 
-import pvz.model.plants.api.PlantType;
 import pvz.model.entities.api.GameEntity;
+import pvz.model.plants.api.PlantType;
 import pvz.utilities.Position;
 
 import java.util.Set;

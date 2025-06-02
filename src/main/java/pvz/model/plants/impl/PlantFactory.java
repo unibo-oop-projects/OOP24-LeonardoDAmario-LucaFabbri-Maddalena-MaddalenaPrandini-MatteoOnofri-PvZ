@@ -1,16 +1,16 @@
 package pvz.model.plants.impl;
-import pvz.model.entities.api.EntitiesManager;
-import pvz.model.plants.api.PlantType;
+
 import pvz.model.bullets.impl.BulletImpl;
+import pvz.model.collisions.api.CollisionManager;
 import pvz.model.collisions.impl.CollisionManagerImpl;
+import pvz.model.entities.api.EntitiesManager;
 import pvz.model.plants.api.Plant;
+import pvz.model.plants.api.PlantType;
+import pvz.model.zombies.api.Zombie;
 import pvz.utilities.Position;
 
 import java.util.Objects;
 import java.util.Optional;
-
-import pvz.model.zombies.api.Zombie;
-import pvz.model.collisions.api.CollisionManager;
 
 /**
  * Factory class for creating different types of {@link Plant} instances.

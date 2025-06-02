@@ -1,6 +1,6 @@
 package pvz.utilities;
 
-import java.awt.Dimension;
+import java.awt.*;
 
 public enum Resolution {
 

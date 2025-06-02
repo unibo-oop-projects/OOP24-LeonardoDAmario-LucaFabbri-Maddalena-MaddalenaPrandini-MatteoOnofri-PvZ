@@ -1,16 +1,16 @@
 package pvz.model.bullets.impl;
 
-import java.math.BigDecimal;
-import java.util.Optional;
-
-import pvz.utilities.Position;
-import pvz.model.zombies.api.Zombie;
 import pvz.model.bullets.api.Bullet;
 import pvz.model.collisions.api.CollisionManager;
-import pvz.model.entities.api.EntitiesManager;
 import pvz.model.collisions.impl.CollisionManagerImpl;
 import pvz.model.collisions.impl.HitBoxFactory.HitBoxType;
+import pvz.model.entities.api.EntitiesManager;
 import pvz.model.entities.impl.AbstractEntity;
+import pvz.model.zombies.api.Zombie;
+import pvz.utilities.Position;
+
+import java.math.BigDecimal;
+import java.util.Optional;
 
 public class BulletImpl extends AbstractEntity implements Bullet {
 

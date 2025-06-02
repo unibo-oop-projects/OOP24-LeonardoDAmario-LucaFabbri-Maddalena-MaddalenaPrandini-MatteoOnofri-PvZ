@@ -1,14 +1,15 @@
 package pvz.model.lawnmower.impl;
 
 import pvz.model.collisions.api.CollisionManager;
-import pvz.model.zombies.api.Zombie;
-import pvz.model.entities.api.EntitiesManager;
-import pvz.model.entities.api.Entity;
-import pvz.model.lawnmower.api.LawnMower;
 import pvz.model.collisions.impl.CollisionManagerImpl;
 import pvz.model.collisions.impl.HitBoxFactory;
+import pvz.model.entities.api.EntitiesManager;
+import pvz.model.entities.api.Entity;
 import pvz.model.entities.impl.AbstractEntity;
+import pvz.model.lawnmower.api.LawnMower;
+import pvz.model.zombies.api.Zombie;
 import pvz.utilities.Position;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;

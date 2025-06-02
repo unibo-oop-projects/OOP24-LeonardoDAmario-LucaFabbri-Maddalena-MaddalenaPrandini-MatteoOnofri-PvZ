@@ -27,12 +27,7 @@ public class EndGameControllerImpl implements EndGameController {
     }
 
     @Override
-    public void quit() {
-
-    }
-
-    @Override
     public void handleException(Exception exception) {
-
+        parentController.handleException(exception);
     }
 }

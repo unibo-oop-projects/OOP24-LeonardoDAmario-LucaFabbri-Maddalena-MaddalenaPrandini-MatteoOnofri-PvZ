@@ -1,18 +1,17 @@
 package pvz.model.collisions.impl;
 
-import java.math.BigDecimal;
-import java.util.Optional;
-import java.util.Set;
-import java.util.stream.Collectors;
-
-
-import pvz.model.zombies.api.Zombie;
 import pvz.model.bullets.api.Bullet;
 import pvz.model.collisions.api.CollisionManager;
 import pvz.model.entities.api.EntitiesManager;
 import pvz.model.entities.api.Entity;
 import pvz.model.plants.api.Plant;
 import pvz.model.plants.api.PlantType;
+import pvz.model.zombies.api.Zombie;
+
+import java.math.BigDecimal;
+import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 public class CollisionManagerImpl implements CollisionManager{
 

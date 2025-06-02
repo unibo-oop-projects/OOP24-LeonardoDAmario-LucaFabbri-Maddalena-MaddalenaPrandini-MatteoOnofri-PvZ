@@ -29,13 +29,8 @@ public class MenuControllerImpl implements MenuController {
     }
 
     @Override
-    public void quit() {
-
-    }
-
-    @Override
     public void handleException(Exception exception) {
-
+        parentController.handleException(exception);
     }
 
     public void startGame(Difficulty difficulty, Resolution resolution) {

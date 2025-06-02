@@ -1,9 +1,8 @@
 package pvz.model.entities.api;
 
-import java.util.Set;
-
-
 import pvz.model.game.api.Difficulty;
+
+import java.util.Set;
 
 /**
  * Interface for managing entities in the game.
