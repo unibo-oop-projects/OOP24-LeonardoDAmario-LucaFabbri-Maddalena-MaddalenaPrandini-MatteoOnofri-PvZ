@@ -21,15 +21,15 @@ public final class HitBoxFactory {
         /**
          * Hitbox for plants.
          */
-        PLANT(0.2),
+        PLANT(0.6),
         /**
          * Hitbox for zombies.
          */
-        ZOMBIE(1.0),
+        ZOMBIE(0.5),
         /**
          * Hitbox for bullets.
          */
-        BULLET(0.5);
+        BULLET(0.2);
 
         private final double width;
 

@@ -44,7 +44,7 @@ public final class PlantFactory {
                 if (elapsedTime >= FIRE_RATE && getLife() > 0) {
                     entitiesManager.addEntity(
                             new BulletImpl(
-                                    new Position(this.getPosition().x() +  3 * this.getHitBox().getWidth(),
+                                    new Position(this.getPosition().x() + this.getHitBox().getWidth(),
                                             this.getPosition().y())));
                     elapsedTime = 0;
                 }
