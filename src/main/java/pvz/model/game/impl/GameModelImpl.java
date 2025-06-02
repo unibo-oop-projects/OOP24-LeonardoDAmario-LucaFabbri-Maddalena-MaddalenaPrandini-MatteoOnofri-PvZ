@@ -27,11 +27,12 @@ import java.util.stream.Collectors;
  * including entity management, game state updates, and plant placement.
  */
 public class GameModelImpl implements GameModel {
+    private static final int ROWS = 5;
+    private static final int COLS = 9;
     private final EntitiesManager entitiesManager;
     private final PlantFactory plantFactory;
     private int killToWin;
     private final boolean[] mowerUsed;
-
     private GameStatus status;
     private final Difficulty difficulty;
 
@@ -43,7 +44,7 @@ public class GameModelImpl implements GameModel {
         this.difficulty = difficulty;
         this.entitiesManager = new EntitiesManagerImpl(difficulty);
         this.plantFactory = new PlantFactory();
-        this.mowerUsed = new boolean[5];
+        this.mowerUsed = new boolean[ROWS];
         this.status = GameStatus.IN_PROGRESS;
         switch (difficulty) {
             case EASY -> {killToWin = 20; break;}
@@ -90,6 +91,9 @@ public class GameModelImpl implements GameModel {
     public void update(final long deltaTime) {
         this.entitiesManager.spawnZombie(deltaTime, difficulty);
         this.entitiesManager.getEntities().forEach(e -> {
+            if((e instanceof Bullet || e instanceof LawnMower) && e.getPosition().x() > COLS + 2) {
+                entitiesManager.removeEntity(e);
+            }
             e.update(deltaTime, entitiesManager);
             int currentrow = (int) e.getPosition().y();
             if (e instanceof Zombie && e.getPosition().x() <= 0 ) {

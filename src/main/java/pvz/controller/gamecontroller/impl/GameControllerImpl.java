@@ -31,8 +31,6 @@ public class GameControllerImpl implements GameController, ViewListener {
     private GameModel model;
     private GameView view;
     private boolean running;
-
-    private Position pendingPosition = null;
     private PlantType selectedPlantType = null;
 
     public GameControllerImpl(MainController controller) {

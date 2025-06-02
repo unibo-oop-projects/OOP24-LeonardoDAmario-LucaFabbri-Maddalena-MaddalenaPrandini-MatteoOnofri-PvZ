@@ -61,8 +61,5 @@ public class LawnMowerImp extends AbstractEntity implements LawnMower {
                 }
             }
         }
-        if(this.getPosition().x() > 9) {
-            entitiesManager.removeEntity(this);
-        }
     }
 }

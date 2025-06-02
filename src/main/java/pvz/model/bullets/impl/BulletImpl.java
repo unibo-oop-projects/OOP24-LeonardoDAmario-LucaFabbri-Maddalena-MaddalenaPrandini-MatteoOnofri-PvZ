@@ -38,9 +38,6 @@ public class BulletImpl extends AbstractEntity implements Bullet {
 
     @Override
     public void update(long deltaTime, EntitiesManager entitiesManager) {
-        if (this.getPosition().x() >= 10){
-            entitiesManager.removeEntity(this);
-        }
         if(this.canUpdate(deltaTime)) {            
             this.setPosition(this.move(deltaTime));
             this.getHitBox().update(this.getPosition());
