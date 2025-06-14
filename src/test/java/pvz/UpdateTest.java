@@ -4,12 +4,12 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.Test;
 
-import pvz.model.api.Difficulty;
-import pvz.model.api.entities.EntitiesManager;
-import pvz.model.api.plants.Plant;
-import pvz.model.impl.entities.EntitiesManagerImpl;
-import pvz.model.impl.plants.PlantFactory;
-import pvz.model.impl.zombies.ZombieImpl;
+import pvz.model.game.api.Difficulty;
+import pvz.model.entities.api.EntitiesManager;
+import pvz.model.plants.api.Plant;
+import pvz.model.entities.impl.EntitiesManagerImpl;
+import pvz.model.plants.impl.PlantFactory;
+import pvz.model.zombies.impl.ZombieImpl;
 import pvz.utilities.Position;
 
 /**

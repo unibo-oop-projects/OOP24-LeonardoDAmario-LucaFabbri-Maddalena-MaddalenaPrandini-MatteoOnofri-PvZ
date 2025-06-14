@@ -1,7 +1,9 @@
 package pvz.ViewTests;
 
-import pvz.view.impl.EndGameMenu.EndGameView;
-import pvz.view.impl.Game.MainGameFrame;
+import pvz.controller.endgamecontroller.impl.EndGameControllerImpl;
+import pvz.controller.maincontroller.api.MainController;
+import pvz.controller.maincontroller.impl.MainControllerImpl;
+import pvz.view.endgameview.impl.EndGameViewImpl;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -15,7 +17,8 @@ public class TestEndGameView {
 
             // Cambia questo valore per testare vittoria o sconfitta
             boolean hasWon = true;
-            EndGameView endView = new EndGameView(hasWon, new MainGameFrame());
+            EndGameViewImpl endView = new EndGameViewImpl(new EndGameControllerImpl(new MainControllerImpl() {
+            }), hasWon);
 
             endView.backToMenuButton.addActionListener((ActionEvent e) -> {
                 JOptionPane.showMessageDialog(frame, "Tornare al menu...");

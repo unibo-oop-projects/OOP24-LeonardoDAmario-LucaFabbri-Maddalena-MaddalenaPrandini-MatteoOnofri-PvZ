@@ -1,11 +1,10 @@
 package pvz;
 
-import pvz.view.impl.Game.MainGameFrame;
 
-import javax.swing.*;
+import pvz.controller.maincontroller.impl.MainControllerImpl;
 
 public class PvZ {
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(MainGameFrame::launchGame);
+        new MainControllerImpl().start();
     }
 }
