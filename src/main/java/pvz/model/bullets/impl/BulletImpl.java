@@ -18,7 +18,7 @@ public class BulletImpl extends AbstractEntity implements Bullet {
     private CollisionManager collisionManager;
 
     private static final double SPEED = 0.003;
-    private static final int DAMAGE = 25;
+    private static final int DAMAGE = 10;
     private static final long UPDATE_RATE = 300;
 
     public BulletImpl(final Position pos) {

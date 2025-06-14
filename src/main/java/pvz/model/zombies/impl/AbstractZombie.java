@@ -12,16 +12,16 @@ import pvz.utilities.Position;
 
 import java.util.Optional;
 
-public class ZombieImpl extends AbstractEntity implements Zombie {
+abstract class AbstractZombie extends AbstractEntity implements Zombie {
 
-    private int health;
-    private int speed;
-    private boolean alive;
-    private CollisionManager collisionManager;
-    private static final long ATTACK_RATE = 2000;
-    private long lastAttackTime = 0;
+    protected int health;
+    protected int speed;
+    protected boolean alive;
+    protected CollisionManager collisionManager;
+    protected static final long ATTACK_RATE = 2000;
+    protected long lastAttackTime = 0;
 
-    public ZombieImpl(final Position position, final int health, final int speed) {
+    public AbstractZombie(Position position, int health, int speed) {
         super(position, HitBoxType.ZOMBIE);
         this.health = health;
         this.speed = speed;
@@ -51,7 +51,7 @@ public class ZombieImpl extends AbstractEntity implements Zombie {
     }
 
     
-    public void move(long deltaTime) {
+    private void move(long deltaTime) {
         final double move = this.speed * (1 / 100.0); 
         final double newX = this.getPosition().x() - move; 
         this.setPosition(new Position(newX, this.getPosition().y())); 
@@ -100,7 +100,5 @@ public class ZombieImpl extends AbstractEntity implements Zombie {
 
 
     @Override
-    public int getDamage() {
-        return 35; 
-    }
+    public abstract int getDamage();
 }

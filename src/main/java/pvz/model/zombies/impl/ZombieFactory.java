@@ -3,12 +3,12 @@ import pvz.utilities.Position;
 
 public class ZombieFactory {
 
-    public static ZombieImpl createZombie(String type, Position position) {
+    public static AbstractZombie createZombie(String type, Position position) {
         return switch (type.toLowerCase()) {
-            case "basic" -> new ZombieImpl(position, 100, 1);
-            case "fast" -> new ZombieImpl(position, 80, 2); 
-            case "strong" -> new ZombieImpl(position, 150, 1);
-            case "beast" -> new ZombieImpl(position, 150, 2);
+            case "basic" -> new BasicZombie(position);
+            case "fast" -> new FastZombie(position);
+            case "strong" -> new StrongZombie(position);
+            case "beast" -> new BeastZombie(position);
             default -> throw new IllegalArgumentException("Unsupported zombie type: " + type);
         };
     }

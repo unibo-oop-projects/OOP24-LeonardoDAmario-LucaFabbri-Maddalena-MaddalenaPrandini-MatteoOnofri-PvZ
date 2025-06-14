@@ -20,10 +20,8 @@ import java.util.Set;
 public class EntitiesManagerImpl implements EntitiesManager {
     private static final int DEFAULT_SUNS = 50;
     private static final int DEFAULT_KILLS = 0;
-    private static final int SPAWN_POSITION_X = 10;
-    private static final int BOUNDS = 5;
-    private static final int SPAWN_RATE = 5000;
-    private long accumulatedTime;
+    
+    
 
     private final Set<Entity> entities = new HashSet<>();
     private final Random random = new Random();
@@ -122,45 +120,8 @@ public class EntitiesManagerImpl implements EntitiesManager {
     public int getSunCount() {
         return sunCount;
     }
-
-    /**
-     * Spawns a new zombie at a random row after a fixed interval of time has passed.
-     * The zombie is added to the entity manager.
-     *
-     * @param deltaTime the time elapsed since the last update (in milliseconds).
-     */
-    @Override
-    public void spawnZombie(final long deltaTime, Difficulty difficulty) {
-        this.accumulatedTime += deltaTime;
-        if (accumulatedTime >= SPAWN_RATE) {
-            this.accumulatedTime = 0;
-            String zombieType = getRandomZombieType(difficulty);
-            final Position spawnPosition = new Position(SPAWN_POSITION_X, random.nextInt(BOUNDS));
-            final Zombie zombie = ZombieFactory.createZombie(zombieType, spawnPosition);
-            this.addEntity(zombie);
-        }
-    }
-
-    private String getRandomZombieType(Difficulty difficulty) {
-    int randomValue = random.nextInt(100);
-
-    return switch (difficulty) {
-        case EASY -> {
-            if (randomValue < 70) yield "basic"; 
-            else if (randomValue < 90) yield "fast"; 
-            else yield "strong"; 
-        }
-        case NORMAL -> {
-            if (randomValue < 50) yield "basic"; 
-            else if (randomValue < 80) yield "fast"; 
-            else yield "strong"; 
-        }
-        case HARD -> {
-            if (randomValue < 30) yield "fast"; 
-            else if (randomValue < 60) yield "strong"; 
-            else yield "beast"; 
-        }
-    };
-}
+    
 
 }
+
+

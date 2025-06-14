@@ -16,6 +16,7 @@ import pvz.model.plants.api.Plant;
 import pvz.model.plants.api.PlantType;
 import pvz.model.plants.impl.PlantFactory;
 import pvz.model.zombies.api.Zombie;
+import pvz.model.zombies.impl.ZombieSpawnUtil;
 import pvz.utilities.Position;
 
 import java.util.Set;
@@ -35,6 +36,8 @@ public class GameModelImpl implements GameModel {
     private final boolean[] mowerUsed;
     private GameStatus status;
     private final Difficulty difficulty;
+    private long accumulatedTime;
+    private static final int SPAWN_RATE = 5000;
 
 
     /**
@@ -89,7 +92,7 @@ public class GameModelImpl implements GameModel {
      */
     @Override
     public void update(final long deltaTime) {
-        this.entitiesManager.spawnZombie(deltaTime, difficulty);
+        this.spawnZombie(deltaTime, difficulty);
         this.entitiesManager.getEntities().forEach(e -> {
             if((e instanceof Bullet || e instanceof LawnMower) && e.getPosition().x() > COLS + 2) {
                 entitiesManager.removeEntity(e);
@@ -134,6 +137,15 @@ public class GameModelImpl implements GameModel {
     @Override
     public int getSunCount() {
         return entitiesManager.getSunCount();
+    }
+
+    public void spawnZombie(final long deltaTime, Difficulty difficulty) {
+        this.accumulatedTime += deltaTime;
+        if (accumulatedTime >= SPAWN_RATE) {
+            this.accumulatedTime = 0;
+            Zombie zombie = ZombieSpawnUtil.generateRandomZombie(difficulty, ROWS);
+            this.entitiesManager.addEntity(zombie);
+        }
     }
 
     /**
