@@ -8,6 +8,7 @@ import pvz.model.entities.api.EntitiesManager;
 import pvz.model.entities.impl.AbstractEntity;
 import pvz.model.plants.api.Plant;
 import pvz.model.zombies.api.Zombie;
+import pvz.model.zombies.api.ZombieType;
 import pvz.utilities.Position;
 
 import java.util.Optional;
@@ -101,4 +102,7 @@ abstract class AbstractZombie extends AbstractEntity implements Zombie {
 
     @Override
     public abstract int getDamage();
+    
+    @Override
+    public abstract ZombieType getType();
 }

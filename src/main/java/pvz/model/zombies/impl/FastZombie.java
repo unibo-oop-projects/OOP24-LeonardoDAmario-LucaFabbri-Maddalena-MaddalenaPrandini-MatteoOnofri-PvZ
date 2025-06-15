@@ -1,5 +1,6 @@
 package pvz.model.zombies.impl;
 
+import pvz.model.zombies.api.ZombieType;
 import pvz.utilities.*;
 
 public class FastZombie extends AbstractZombie {
@@ -15,6 +16,11 @@ public class FastZombie extends AbstractZombie {
     @Override
     public int getDamage() {
         return FAST_ZOMBIE_DAMAGE;
+    }
+
+    @Override
+    public ZombieType getType() {
+        return ZombieType.FASTZOMBIE;
     }
     
 }
