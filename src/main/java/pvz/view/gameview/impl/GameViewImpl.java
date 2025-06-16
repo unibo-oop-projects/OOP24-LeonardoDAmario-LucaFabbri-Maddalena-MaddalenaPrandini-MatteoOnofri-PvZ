@@ -67,17 +67,7 @@ public class GameViewImpl extends JPanel implements GameView {
     public GameViewImpl(GameController controller, Resolution resolution) {
         this.parentController = controller;
         this.resolution = resolution;
-        double scaling;
-        //Formula: scaling = 0.8 * (width / 640.0)
-        switch (resolution.getWidth()) {
-            case 640 -> scaling = 0.8;         // 640×480 (VGA)
-            case 800 -> scaling = 1.0;         // 800×600 (SVGA)
-            case 1024 -> scaling = 1.28;       // 1024×768 (XGA)
-            case 1152 -> scaling = 1.44;       // 1152×864 (SXGA-)
-            case 1600 -> scaling = 2.0;        // 1600×1200 (UXGA)
-            case 2048 -> scaling = 2.56;       // 2048×1536 (QXGA)
-            default -> scaling = 1.5;
-        }
+        double scaling = 0.8 * resolution.getWidth() / 640.0;
 
         this.drawPanel = new DrawPanel(scaling);
         this.gridPanel = new GridPanel(scaling);
@@ -85,7 +75,6 @@ public class GameViewImpl extends JPanel implements GameView {
 
         layeredPane.setPreferredSize(new Dimension(resolution.getWidth(), resolution.getHeight()));
         drawPanel.setBounds(0, 0, resolution.getWidth(), resolution.getHeight());
-        //gridPanel.setBounds(0, 0, resolution.getWidth(), + 1, resolution.getHeight() + 1);
 
         layeredPane.add(gridPanel, JLayeredPane.DEFAULT_LAYER);
         layeredPane.add(drawPanel, JLayeredPane.PALETTE_LAYER);
@@ -125,7 +114,6 @@ public class GameViewImpl extends JPanel implements GameView {
      */
     @Override
     public void render(Set<GameEntity> entities, int suns, int kills) {
-        System.out.println("[DEBUG] render chiamato con " + entities.size() + " entità");
         drawPanel.updateMovingEntities(Set.copyOf(entities));
         toolBar.updateStats(suns, kills);
 
