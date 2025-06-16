@@ -10,7 +10,7 @@ import pvz.model.game.api.Difficulty;
 import pvz.model.game.api.GameModel;
 import pvz.model.game.api.GameStatus;
 import pvz.model.lawnmower.api.LawnMower;
-import pvz.model.lawnmower.impl.LawnMowerImp;
+import pvz.model.lawnmower.impl.LawnMowerImpl;
 import pvz.model.plants.api.Plant;
 import pvz.utilities.PlantType;
 import pvz.model.plants.impl.PlantFactory;
@@ -195,7 +195,7 @@ public class GameModelImpl implements GameModel {
      */
     private void addLawnMower(int row) {
         usedMower.set(row, true);
-        LawnMower lawnMower = new LawnMowerImp(new Position(0, row), HitBoxFactory.HitBoxType.ZOMBIE);
+        LawnMower lawnMower = new LawnMowerImpl(new Position(0, row), HitBoxFactory.HitBoxType.ZOMBIE);
         entitiesManager.addEntity(lawnMower);
         lawnMower.update(0, entitiesManager);
     }

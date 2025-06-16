@@ -21,7 +21,7 @@ public class GameViewImpl extends JPanel implements GameView {
     /**
      * The game's toolbar displaying controls and stats.
      */
-    private final GameToolBar toolBar = new GameToolBar();
+    private final GameToolBar toolBar;
 
     /**
      * Panel used to draw moving and stationary entities (plants, zombies, bullets, etc.).
@@ -69,6 +69,7 @@ public class GameViewImpl extends JPanel implements GameView {
         this.resolution = resolution;
         double scaling = 0.8 * resolution.getWidth() / 640.0;
 
+        this.toolBar = new GameToolBar(scaling);
         this.drawPanel = new DrawPanel(scaling);
         this.gridPanel = new GridPanel(scaling);
         layeredPane.setLayout(new OverlayLayout(layeredPane));

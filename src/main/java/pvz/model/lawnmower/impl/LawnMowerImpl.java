@@ -18,7 +18,7 @@ import java.util.Optional;
  * Represents the implementation of a Lawn Mower entity.
  * It moves horizontally and kills any zombie it collides with.
  */
-public class LawnMowerImp extends AbstractEntity implements LawnMower {
+public class LawnMowerImpl extends AbstractEntity implements LawnMower {
 
     /**
      * The movement speed of the lawn mower.
@@ -33,7 +33,7 @@ public class LawnMowerImp extends AbstractEntity implements LawnMower {
      * @param position   the initial position of the mower; must not be {@code null}.
      * @param hitBoxType the type of hitbox to assign to this mower.
      */
-    public LawnMowerImp(final Position position, final HitBoxFactory.HitBoxType hitBoxType) {
+    public LawnMowerImpl(final Position position, final HitBoxFactory.HitBoxType hitBoxType) {
         super(position, hitBoxType);
         this.collisionManager = new CollisionManagerImpl();
     }
