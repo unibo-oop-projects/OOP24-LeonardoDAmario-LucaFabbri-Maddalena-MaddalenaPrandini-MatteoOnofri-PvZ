@@ -14,33 +14,41 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Represents the implementation of a Lawn Mower entity.
+ * It moves horizontally and kills any zombie it collides with.
+ */
 public class LawnMowerImp extends AbstractEntity implements LawnMower {
+
     /**
-     * Constructs an entity with the given position and hitbox type.
-     *
-     * @param position   the initial position of the entity; must not be {@code null}.
-     * @param hitBoxType the type of hitbox to associate with this entity.
+     * The movement speed of the lawn mower.
      */
-    private final int speed = 4;        // velocità di scorrimento
+    private final int speed = 4;
+
     private CollisionManager collisionManager;
 
-    public LawnMowerImp(Position position, HitBoxFactory.HitBoxType hitBoxType) {
+    /**
+     * Constructs a new LawnMowerImp with the given position and hitbox type.
+     *
+     * @param position   the initial position of the mower; must not be {@code null}.
+     * @param hitBoxType the type of hitbox to assign to this mower.
+     */
+    public LawnMowerImp(final Position position, final HitBoxFactory.HitBoxType hitBoxType) {
         super(position, hitBoxType);
         this.collisionManager = new CollisionManagerImpl();
-
     }
 
-    private void move() {
-        final double move = this.speed * (1 / 100.0);
-        final double newX = this.getPosition().x() + move;
-        this.setPosition(new Position(newX, this.getPosition().y()));
-        this.getHitBox().update(this.getPosition());
-    }
-
+    /**
+     * Updates the mower's state: moves it and handles collisions with zombies.
+     *
+     * @param deltaTime       the time elapsed since the last update (in ms).
+     * @param entitiesManager the manager that contains all game entities.
+     */
     @Override
-    public void update(long deltaTime, EntitiesManager entitiesManager) {
-        Optional<Zombie> zombie = this.collisionManager.handleCollision(this, entitiesManager).map(entity -> (Zombie) entity);
-        if(zombie.isPresent()) {
+    public void update(final long deltaTime, final EntitiesManager entitiesManager) {
+        Optional<Zombie> zombie = this.collisionManager.handleCollision(this, entitiesManager)
+                .map(entity -> (Zombie) entity);
+        if (zombie.isPresent()) {
             zombie.get().forceKill();
             if (!zombie.get().isAlive()) {
                 entitiesManager.addKill();
@@ -61,5 +69,15 @@ public class LawnMowerImp extends AbstractEntity implements LawnMower {
                 }
             }
         }
+    }
+
+    /**
+     * Moves the lawn mower forward based on its speed and updates its hitbox.
+     */
+    private void move() {
+        final double move = this.speed * (1 / 100.0);
+        final double newX = this.getPosition().x() + move;
+        this.setPosition(new Position(newX, this.getPosition().y()));
+        this.getHitBox().update(this.getPosition());
     }
 }
