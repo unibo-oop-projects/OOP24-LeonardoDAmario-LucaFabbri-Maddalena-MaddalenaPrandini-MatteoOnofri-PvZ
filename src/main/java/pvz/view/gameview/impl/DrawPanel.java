@@ -1,8 +1,8 @@
 package pvz.view.gameview.impl;
 
 
-import pvz.model.entities.api.GameEntity;
-import pvz.model.plants.api.PlantType;
+import pvz.utilities.GameEntity;
+import pvz.utilities.PlantType;
 import pvz.model.zombies.api.ZombieType;
 
 import javax.swing.*;

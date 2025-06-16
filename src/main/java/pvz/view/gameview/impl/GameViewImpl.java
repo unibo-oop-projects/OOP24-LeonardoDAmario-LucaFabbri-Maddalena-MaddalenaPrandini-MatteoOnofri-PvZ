@@ -2,7 +2,7 @@ package pvz.view.gameview.impl;
 
 import pvz.controller.gamecontroller.api.GameController;
 import pvz.controller.gamecontroller.api.ViewListener;
-import pvz.model.entities.api.GameEntity;
+import pvz.utilities.GameEntity;
 import pvz.utilities.Resolution;
 import pvz.view.gameview.api.GameView;
 

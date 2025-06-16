@@ -5,7 +5,7 @@ import pvz.model.collisions.api.CollisionManager;
 import pvz.model.collisions.impl.CollisionManagerImpl;
 import pvz.model.entities.api.EntitiesManager;
 import pvz.model.plants.api.Plant;
-import pvz.model.plants.api.PlantType;
+import pvz.utilities.PlantType;
 import pvz.model.zombies.api.Zombie;
 import pvz.utilities.Position;
 

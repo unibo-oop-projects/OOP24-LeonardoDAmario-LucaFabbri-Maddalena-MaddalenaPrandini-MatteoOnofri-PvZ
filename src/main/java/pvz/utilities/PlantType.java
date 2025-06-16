@@ -1,4 +1,4 @@
-package pvz.model.plants.api;
+package pvz.utilities;
 
 /**
  * Enum representing different types of plants in the game.

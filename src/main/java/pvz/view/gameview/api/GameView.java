@@ -1,7 +1,7 @@
 package pvz.view.gameview.api;
 
 import pvz.controller.gamecontroller.api.ViewListener;
-import pvz.model.entities.api.GameEntity;
+import pvz.utilities.GameEntity;
 
 import java.util.Set;
 

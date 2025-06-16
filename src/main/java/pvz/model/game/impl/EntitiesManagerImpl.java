@@ -1,11 +1,8 @@
-package pvz.model.entities.impl;
+package pvz.model.game.impl;
 
 import pvz.model.entities.api.EntitiesManager;
 import pvz.model.entities.api.Entity;
 import pvz.model.game.api.Difficulty;
-import pvz.model.zombies.api.Zombie;
-import pvz.model.zombies.impl.ZombieFactory;
-import pvz.utilities.Position;
 
 import java.util.HashSet;
 import java.util.Random;

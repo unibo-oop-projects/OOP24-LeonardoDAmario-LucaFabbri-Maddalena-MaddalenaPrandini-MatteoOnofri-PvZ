@@ -7,7 +7,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import pvz.model.plants.api.Plant;
-import pvz.model.plants.api.PlantType;
+import pvz.utilities.PlantType;
 import pvz.model.plants.impl.PlantFactory;
 import pvz.utilities.Position;
 

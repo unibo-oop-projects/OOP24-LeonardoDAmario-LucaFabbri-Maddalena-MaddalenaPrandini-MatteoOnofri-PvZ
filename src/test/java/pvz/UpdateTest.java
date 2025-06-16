@@ -5,11 +5,10 @@ import org.junit.jupiter.api.Test;
 import pvz.model.game.api.Difficulty;
 import pvz.model.entities.api.EntitiesManager;
 import pvz.model.plants.api.Plant;
-import pvz.model.entities.impl.EntitiesManagerImpl;
+import pvz.model.game.impl.EntitiesManagerImpl;
 import pvz.model.plants.impl.PlantFactory;
 import pvz.model.zombies.api.Zombie;
 import pvz.model.zombies.impl.BasicZombie;
-import pvz.model.zombies.impl.ZombieFactory;
 import pvz.utilities.Position;
 
 import static org.junit.jupiter.api.Assertions.*;

@@ -1,6 +1,4 @@
-package pvz.model.entities.api;
-
-import pvz.utilities.Position;
+package pvz.utilities;
 
 /**
  * Represents an entity in the game with a specific {@link EntityType} and its {@link Position}.

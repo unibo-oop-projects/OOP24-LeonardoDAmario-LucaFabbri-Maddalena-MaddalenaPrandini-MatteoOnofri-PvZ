@@ -1,4 +1,4 @@
-package pvz.model.entities.api;
+package pvz.utilities;
 
 /**
  * Enumeration of all possible types of entities that can appear in the game.
