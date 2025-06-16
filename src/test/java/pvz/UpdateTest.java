@@ -3,7 +3,7 @@ package pvz;
 import org.junit.jupiter.api.Test;
 
 import pvz.model.game.api.Difficulty;
-import pvz.model.entities.api.EntitiesManager;
+import pvz.model.game.api.EntitiesManager;
 import pvz.model.plants.api.Plant;
 import pvz.model.game.impl.EntitiesManagerImpl;
 import pvz.model.plants.impl.PlantFactory;

@@ -4,7 +4,7 @@ import pvz.model.collisions.api.CollisionManager;
 import pvz.model.collisions.api.HitBox;
 import pvz.model.collisions.impl.CollisionManagerImpl;
 import pvz.model.collisions.impl.HitBoxFactory.HitBoxType;
-import pvz.model.entities.api.EntitiesManager;
+import pvz.model.game.api.EntitiesManager;
 import pvz.model.entities.impl.AbstractEntity;
 import pvz.model.plants.api.Plant;
 import pvz.model.zombies.api.Zombie;

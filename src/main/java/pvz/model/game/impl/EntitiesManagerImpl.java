@@ -1,6 +1,6 @@
 package pvz.model.game.impl;
 
-import pvz.model.entities.api.EntitiesManager;
+import pvz.model.game.api.EntitiesManager;
 import pvz.model.entities.api.Entity;
 import pvz.model.game.api.Difficulty;
 

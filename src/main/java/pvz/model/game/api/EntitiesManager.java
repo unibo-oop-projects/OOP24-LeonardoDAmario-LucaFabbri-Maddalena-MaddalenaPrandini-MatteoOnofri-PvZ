@@ -1,4 +1,6 @@
-package pvz.model.entities.api;
+package pvz.model.game.api;
+
+import pvz.model.entities.api.Entity;
 
 import java.util.Set;
 

@@ -3,7 +3,7 @@ package pvz.model.lawnmower.impl;
 import pvz.model.collisions.api.CollisionManager;
 import pvz.model.collisions.impl.CollisionManagerImpl;
 import pvz.model.collisions.impl.HitBoxFactory;
-import pvz.model.entities.api.EntitiesManager;
+import pvz.model.game.api.EntitiesManager;
 import pvz.model.entities.api.Entity;
 import pvz.model.entities.impl.AbstractEntity;
 import pvz.model.lawnmower.api.LawnMower;

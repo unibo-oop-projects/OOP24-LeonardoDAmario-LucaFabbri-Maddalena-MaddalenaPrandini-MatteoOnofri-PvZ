@@ -2,7 +2,7 @@ package pvz.model.game.impl;
 
 import pvz.model.bullets.api.Bullet;
 import pvz.model.collisions.impl.HitBoxFactory;
-import pvz.model.entities.api.EntitiesManager;
+import pvz.model.game.api.EntitiesManager;
 import pvz.model.entities.api.Entity;
 import pvz.utilities.EntityType;
 import pvz.utilities.GameEntity;
