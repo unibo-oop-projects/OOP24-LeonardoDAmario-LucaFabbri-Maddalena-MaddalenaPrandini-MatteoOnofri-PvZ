@@ -3,40 +3,67 @@ package pvz.model.collisions.impl;
 import pvz.model.collisions.api.HitBox;
 import pvz.utilities.Position;
 
+/**
+ * Factory class for creating {@link HitBox} instances for different entity types.
+ */
 public final class HitBoxFactory {
 
-    private HitBoxFactory() {}
+    /**
+     * Private constructor to prevent instantiation.
+     */
+    private HitBoxFactory() { }
 
+    /**
+     * Enum representing the types of hitboxes and their widths.
+     */
     public enum HitBoxType {
 
-        PLANT(0.2, 0.5),
-        ZOMBIE(1.0, 1.0),
-        BULLET(0.5, 0.5);
+        /**
+         * Hitbox for plants.
+         */
+        PLANT(0.6),
+        /**
+         * Hitbox for zombies.
+         */
+        ZOMBIE(0.5),
+        /**
+         * Hitbox for bullets.
+         */
+        BULLET(0.2);
 
         private final double width;
-        private final double height;
 
-        HitBoxType(double width, double height) {
+        /**
+         * Constructs a HitBoxType with the specified width.
+         *
+         * @param width the width of the hitbox type
+         */
+        HitBoxType(final double width) {
             this.width = width;
-            this.height = height;
         }
 
+        /**
+         * Gets the width of the hitbox type.
+         *
+         * @return the width
+         */
         public double getWidth() {
             return width;
         }
-
-        public double getHeight() {
-            return height;
-        }
     }
 
+    /**
+     * Creates a {@link HitBox} for the given position and type.
+     *
+     * @param pos  the position of the hitbox
+     * @param type the type of hitbox
+     * @return a new HitBox instance
+     */
     public static HitBox createHitBox(final Position pos, final HitBoxType type) {
         return new HitBox() {
 
             private double centerX = pos.x();
-            private double centerY = pos.y();
             private final double width = type.getWidth();
-            private final double height = type.getHeight();
 
             @Override
             public boolean isColliding(final HitBox hitbox) {
@@ -46,7 +73,6 @@ public final class HitBoxFactory {
             @Override
             public void update(final Position pos) {
                 this.centerX = pos.x();
-                this.centerY = pos.y();
             }
 
             @Override
@@ -55,20 +81,9 @@ public final class HitBoxFactory {
             }
 
             @Override
-            public double getY() {
-                return centerY;
-            }
-
-            @Override
             public double getWidth() {
                 return width;
             }
-
-            @Override
-            public double getHeight() {
-                return height;
-            }
-            
         };
     }
 }
