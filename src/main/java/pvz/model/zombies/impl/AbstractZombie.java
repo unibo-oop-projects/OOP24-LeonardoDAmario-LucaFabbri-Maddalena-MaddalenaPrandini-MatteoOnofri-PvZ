@@ -112,22 +112,6 @@ abstract class AbstractZombie extends AbstractEntity implements Zombie {
      * {@inheritDoc}
      */
     @Override
-    public int getHealth() {
-        return health;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public int getSpeed() {
-        return speed;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
     public void decreaseLife(final int damage) {
         this.health -= damage;
         if (this.health <= 0) {

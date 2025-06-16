@@ -24,20 +24,6 @@ public interface Zombie extends Entity {
     int getDamage();
 
     /**
-     * Gets the current health points of the zombie.
-     *
-     * @return The remaining health of the zombie.
-     */
-    int getHealth();
-
-    /**
-     * Gets the speed of the zombie.
-     *
-     * @return The speed value.
-     */
-    int getSpeed();
-
-    /**
      * Applies damage to the zombie.
      *
      * @param damage The amount of damage to apply.
@@ -56,6 +42,7 @@ public interface Zombie extends Entity {
      *
      * @param position The new position.
      */
+    @Override
     void setPosition(Position position);
 
     /**
@@ -63,6 +50,7 @@ public interface Zombie extends Entity {
      *
      * @return The current position.
      */
+    @Override
     Position getPosition();
 
     /**
