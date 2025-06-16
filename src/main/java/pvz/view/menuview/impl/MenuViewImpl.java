@@ -123,7 +123,6 @@ public class MenuViewImpl extends JPanel {
 
     public void setResolution(Resolution resolution) {
         Resolution previousResolution = this.currentResolution;
-        this.currentResolution = resolution;
 
         frame.setSize(resolution.getWidth(), resolution.getHeight());
 
@@ -133,11 +132,15 @@ public class MenuViewImpl extends JPanel {
                 "Conferma risoluzione",
                 JOptionPane.YES_NO_OPTION,
                 JOptionPane.QUESTION_MESSAGE);
+
         if (choice == JOptionPane.NO_OPTION) {
             frame.setSize(previousResolution.getWidth(), previousResolution.getHeight());
             this.setSelectedResolution(previousResolution);
+        } else {
+            this.currentResolution = resolution;
         }
     }
+
 
 
     public void updateDifficultyLabel(Difficulty difficulty) {
