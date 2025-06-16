@@ -20,6 +20,8 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
  */
 class UpdateTest {
     private static final long DELTA_TIME = 1000L;
+    private static final long PEAHOOTER_FIRE_RATE = 2000L;
+    private static final long SUNFLOWER_GENERATION_RATE = 6000L;
     private static final int SUN_VALUE = 25;
     private final PlantFactory plantFactory;
     private final EntitiesManager entitiesManager;
@@ -42,11 +44,11 @@ class UpdateTest {
         peashooter.update(1L, entitiesManager);
         assertEquals(0, entitiesManager.getEntities().size());
 
-        peashooter.update(DELTA_TIME, entitiesManager);
+        peashooter.update(PEAHOOTER_FIRE_RATE, entitiesManager);
         assertEquals(1, entitiesManager.getEntities().size());
 
         peashooter.decreaseLife(peashooter.getLife());
-        peashooter.update(DELTA_TIME * 2, entitiesManager);
+        peashooter.update(PEAHOOTER_FIRE_RATE, entitiesManager);
         assertEquals(1, entitiesManager.getEntities().size());
     }
 
@@ -60,10 +62,10 @@ class UpdateTest {
         final Plant sunflower = plantFactory.createSunflower(pos);
         final int initialSun = entitiesManager.getSunCount();
 
-        sunflower.update(DELTA_TIME, entitiesManager);
+        sunflower.update(SUNFLOWER_GENERATION_RATE / 2, entitiesManager);
         assertEquals(initialSun, entitiesManager.getSunCount());
 
-        sunflower.update(DELTA_TIME * 4, entitiesManager);
+        sunflower.update(SUNFLOWER_GENERATION_RATE, entitiesManager);
         assertEquals(initialSun + SUN_VALUE, entitiesManager.getSunCount());
 
         sunflower.decreaseLife(sunflower.getLife());

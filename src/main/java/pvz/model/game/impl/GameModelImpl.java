@@ -116,8 +116,8 @@ public class GameModelImpl implements GameModel {
      */
     @Override
     public void placePlant(final EntityType type, final Position position) {
-        PlantFactory plantFactory = new PlantFactory();
-        PlantType plantType = getPlantTypeFromEntityType(type);
+        final PlantFactory plantFactory = new PlantFactory();
+        final PlantType plantType = getPlantTypeFromEntityType(type);
         final Plant plant = switch (plantType) {
             case PEASHOOTER -> plantFactory.createPeashooter(position);
             case SUNFLOWER -> plantFactory.createSunflower(position);
@@ -138,7 +138,7 @@ public class GameModelImpl implements GameModel {
         zombieLastSpawnTime += deltaTime;
         if (zombieLastSpawnTime >= SPAWN_RATE) {
             zombieLastSpawnTime = 0;
-            Zombie zombie = ZombieSpawnUtil.generateRandomZombie(difficulty, ROWS);
+            final Zombie zombie = ZombieSpawnUtil.generateRandomZombie(difficulty, ROWS);
             entitiesManager.addEntity(zombie);
         }
     }
@@ -170,7 +170,7 @@ public class GameModelImpl implements GameModel {
      * @param zombie the zombie that has reached the row start.
      */
     private void handleZombieAtRowStart(final Zombie zombie) {
-        int row = (int) Math.round(zombie.getPosition().y());
+        final int row = (int) Math.round(zombie.getPosition().y());
         if (zombie.getPosition().x() <= 0) {
             if (usedMower.get(row)) {
                 status = GameStatus.LOST;
@@ -187,7 +187,7 @@ public class GameModelImpl implements GameModel {
      */
     private void addLawnMower(final int row) {
         usedMower.set(row, true);
-        LawnMower lawnMower = new LawnMowerImpl(new Position(0, row), HitBoxFactory.HitBoxType.ZOMBIE);
+        final LawnMower lawnMower = new LawnMowerImpl(new Position(0, row), HitBoxFactory.HitBoxType.ZOMBIE);
         entitiesManager.addEntity(lawnMower);
         lawnMower.update(0, entitiesManager);
     }
