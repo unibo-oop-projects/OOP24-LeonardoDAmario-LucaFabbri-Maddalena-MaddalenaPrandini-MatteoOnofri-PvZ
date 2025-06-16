@@ -1,7 +1,5 @@
 package pvz;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 import org.junit.jupiter.api.Test;
 
 import pvz.model.game.api.Difficulty;
@@ -9,8 +7,12 @@ import pvz.model.entities.api.EntitiesManager;
 import pvz.model.plants.api.Plant;
 import pvz.model.entities.impl.EntitiesManagerImpl;
 import pvz.model.plants.impl.PlantFactory;
-import pvz.model.zombies.impl.ZombieImpl;
+import pvz.model.zombies.api.Zombie;
+import pvz.model.zombies.impl.BasicZombie;
+import pvz.model.zombies.impl.ZombieFactory;
 import pvz.utilities.Position;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Test class for the update method of the Plant class.
@@ -74,20 +76,24 @@ class UpdateTest {
      * It checks if the Wallnut is removed from the entities manager after being attacked by a zombie.
      */
     @Test
-     void testWallnutUpdate() {
-        final Position pos = new Position(3, 3);
-        final Plant wallnut = plantFactory.createWallnut(pos);
+    void testWallNutUpdate() {
+        EntitiesManager entitiesManager = new EntitiesManagerImpl(Difficulty.EASY);
+        Position position = new Position(0, 0);
+
+        PlantFactory plantFactory = new PlantFactory();
+        Plant wallnut = plantFactory.createWallnut(position);
+
+        Zombie zombie = new BasicZombie(position);
 
         entitiesManager.addEntity(wallnut);
-        wallnut.update(1L, entitiesManager);
-        assertEquals(1, entitiesManager.getEntities().size());
-
-        final ZombieImpl zombie = new ZombieImpl(pos, 50, 1);
         entitiesManager.addEntity(zombie);
 
-        assertEquals(2, entitiesManager.getEntities().size());
+        wallnut.update(1000, entitiesManager);
 
-        wallnut.update(1L, entitiesManager);
-        assertEquals(0, entitiesManager.getEntities().size());
+        assertFalse(entitiesManager.getEntities().contains(wallnut));
+        assertFalse(entitiesManager.getEntities().contains(zombie));
+        assertEquals(1, entitiesManager.getKillCount());
     }
+
+
 }
