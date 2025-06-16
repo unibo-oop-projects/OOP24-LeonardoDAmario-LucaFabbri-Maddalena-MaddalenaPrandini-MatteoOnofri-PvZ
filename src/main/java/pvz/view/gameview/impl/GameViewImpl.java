@@ -10,19 +10,60 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.Set;
 
+/**
+ * Implementation of the {@link GameView} interface.
+ * This class is responsible for setting up and managing the visual elements of the game,
+ * including the toolbar, game grid, and drawable entities.
+ * It also connects the view to the controller via the {@link ViewListener} interface.
+ */
 public class GameViewImpl extends JPanel implements GameView {
 
+    /**
+     * The game's toolbar displaying controls and stats.
+     */
     private final GameToolBar toolBar = new GameToolBar();
+
+    /**
+     * Panel used to draw moving and stationary entities (plants, zombies, bullets, etc.).
+     */
     private final DrawPanel drawPanel;
+
+    /**
+     * Panel representing the clickable game grid where the player can place plants.
+     */
     private final GridPanel gridPanel;
+
+    /**
+     * LayeredPane to overlap the grid and drawable components (grid is below, drawPanel above).
+     */
     private final JLayeredPane layeredPane = new JLayeredPane();
+
+    /**
+     * The main application window.
+     */
     private final JFrame frame = new JFrame();
+
+    /**
+     * The chosen game resolution used to scale UI elements.
+     */
     private final Resolution resolution;
+
+    /**
+     * The controller that manages game logic and communication with the view.
+     */
     private final GameController parentController;
 
+    /**
+     * Listener that receives user input events from the view.
+     */
     private ViewListener listener;
 
-
+    /**
+     * Constructs a new GameViewImpl instance.
+     *
+     * @param controller The game controller to communicate with.
+     * @param resolution The chosen resolution for the game window.
+     */
     public GameViewImpl(GameController controller, Resolution resolution) {
         this.parentController = controller;
         this.resolution = resolution;
@@ -38,10 +79,6 @@ public class GameViewImpl extends JPanel implements GameView {
             default -> scaling = 1.5;
         }
 
-
-
-
-
         this.drawPanel = new DrawPanel(scaling);
         this.gridPanel = new GridPanel(scaling);
         layeredPane.setLayout(new OverlayLayout(layeredPane));
@@ -49,8 +86,6 @@ public class GameViewImpl extends JPanel implements GameView {
         layeredPane.setPreferredSize(new Dimension(resolution.getWidth(), resolution.getHeight()));
         drawPanel.setBounds(0, 0, resolution.getWidth(), resolution.getHeight());
         //gridPanel.setBounds(0, 0, resolution.getWidth(), + 1, resolution.getHeight() + 1);
-
-
 
         layeredPane.add(gridPanel, JLayeredPane.DEFAULT_LAYER);
         layeredPane.add(drawPanel, JLayeredPane.PALETTE_LAYER);
@@ -63,31 +98,31 @@ public class GameViewImpl extends JPanel implements GameView {
 
     }
 
-    private void configureFrame() {
-
-        frame.setTitle("Piante contro Zombie");
-        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        frame.setSize(this.resolution.getWidth(), this.resolution.getHeight());
-        frame.add(this);
-        frame.setLocationRelativeTo(null);
-        frame.setResizable(false);
-        frame.setVisible(true);
-    }
-
-
-
-
+    /**
+     * Closes the application window and disposes of the frame.
+     */
     @Override
     public void close() {
         this.frame.dispose();
     }
 
+    /**
+     * Returns whether the view is currently visible.
+     *
+     * @return true if the view is visible; false otherwise.
+     */
     @Override
     public boolean isVisible() {
         return super.isVisible();
     }
 
-
+    /**
+     * Renders the game state, including entity positions and game statistics.
+     *
+     * @param entities The set of entities to render (plants, zombies, etc.).
+     * @param suns     The current sun count.
+     * @param kills    The number of zombies defeated.
+     */
     @Override
     public void render(Set<GameEntity> entities, int suns, int kills) {
         System.out.println("[DEBUG] render chiamato con " + entities.size() + " entità");
@@ -102,7 +137,11 @@ public class GameViewImpl extends JPanel implements GameView {
         });
     }
 
-
+    /**
+     * Assigns a listener to receive user input events from the view.
+     *
+     * @param listener The {@link ViewListener} instance.
+     */
     @Override
     public void setViewListener(ViewListener listener) {
         this.listener = listener;
@@ -110,7 +149,17 @@ public class GameViewImpl extends JPanel implements GameView {
         gridPanel.setViewListener(listener);
     }
 
-
-
+    /**
+     * Configures the main application window with title, size, and visibility.
+     */
+    private void configureFrame() {
+        frame.setTitle("Piante contro Zombie");
+        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        frame.setSize(this.resolution.getWidth(), this.resolution.getHeight());
+        frame.add(this);
+        frame.setLocationRelativeTo(null);
+        frame.setResizable(false);
+        frame.setVisible(true);
+    }
 
 }

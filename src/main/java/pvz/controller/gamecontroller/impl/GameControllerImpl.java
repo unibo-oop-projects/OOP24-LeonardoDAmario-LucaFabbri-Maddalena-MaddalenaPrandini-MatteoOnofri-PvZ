@@ -13,14 +13,32 @@ import pvz.utilities.Resolution;
 import pvz.view.gameview.api.GameView;
 import pvz.view.gameview.impl.GameViewImpl;
 
+import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.TimeUnit;
 
+/**
+ * Implementation of the {@link GameController} and {@link ViewListener} interfaces.
+ * Manages the game loop, user inputs, and interaction between the model and the view.
+ */
 public class GameControllerImpl implements GameController, ViewListener {
 
+    /**
+     * Marker interface for queued input events.
+     */
     interface Event {}
+    /**
+     * Input event representing plant selection from the roaster.
+     *
+     * @param inputRoaster the selected plant
+     */
     record InputRoaster(UserInputRoaster inputRoaster) implements Event {}
+    /**
+     * Input event representing a grid cell selection.
+     *
+     * @param position the position clicked
+     */
     record InputGrid(Position position) implements Event {}
 
     private static final int FPS = 60;
@@ -33,27 +51,47 @@ public class GameControllerImpl implements GameController, ViewListener {
     private boolean running;
     private EntityType selectedPlantType = null;
 
+    /**
+     * Constructs the game controller with a reference to the main controller.
+     *
+     * @param controller the parent controller
+     */
     public GameControllerImpl(MainController controller) {
         this.parentController = controller;
 
     }
 
+    /** {@inheritDoc} */
     @Override
     public void startGame(Difficulty difficulty, Resolution resolution) {
         this.running = true;
         this.model = new GameModelImpl(difficulty);
         this.view = new GameViewImpl(this, resolution);
-        new GameLoop().start();
+        new GameLoop(model, view).start();
     }
 
+    /** {@inheritDoc} */
     @Override
     public void stopGame() {
         this.running = false;
     }
 
+    /**
+     * Inner class representing the main game loop, running in a dedicated thread.
+     * Handles game updates, rendering, user inputs, and game-over logic.
+     */
     private class GameLoop extends Thread {
+        private final GameModel model;
+        private final GameView view;
+
+        GameLoop(GameModel model, GameView view) {
+            this.model = Objects.requireNonNull(model);
+            this.view = Objects.requireNonNull(view);
+        }
+        /** {@inheritDoc} */
         @Override
         public void run() {
+            Objects.requireNonNull(view);
             long previousTime = System.currentTimeMillis();
 
             while (running) {
@@ -76,6 +114,11 @@ public class GameControllerImpl implements GameController, ViewListener {
             }
         }
 
+        /**
+         * Sleeps the thread to maintain consistent frame timing.
+         *
+         * @param currentTime the timestamp at the start of the frame
+         */
         private void waitForNextFrame(final long currentTime) {
             long frameDuration = System.currentTimeMillis() - currentTime;
             if (frameDuration < TIME_PER_TICK) {
@@ -87,6 +130,9 @@ public class GameControllerImpl implements GameController, ViewListener {
             }
         }
 
+        /**
+         * Processes any pending user input events from the queue.
+         */
         private void handleInput() {
             try {
                 Event event;
@@ -108,34 +154,44 @@ public class GameControllerImpl implements GameController, ViewListener {
                         default -> {}
                     }
                 }
-            } catch (Exception e) {
+            } catch (InterruptedException e) {
                 handleException(e);
             }
         }
     }
 
+    /** {@inheritDoc} */
     @Override
     public void processInputRoaster(UserInputRoaster input) {
         queue.add(new InputRoaster(input));
     }
 
+    /** {@inheritDoc} */
     @Override
     public void processInputGrid(Position position) {
         queue.add(new InputGrid(position)); 
     }
 
-    private boolean isCellOccupied(final Position position) {
-        Set<GameEntity> entities = model.getGameEntities();
-        return entities.stream().anyMatch(e -> e.position().equals(position)
-        && switch (e.type()){
-            case PEASHOOTER, SUNFLOWER, WALLNUT -> true;
-                    case BASICZOMBIE, STRONGZOMBIE, FASTZOMBIE, BEASTZOMBIE, BULLET, LAWNMOWER -> false;
-        }
-        );
-    }
-
+    /** {@inheritDoc} */
     @Override
     public void handleException(Exception exception) {
         parentController.handleException(exception);
+    }
+
+    /**
+     * Checks if a plant already occupies the specified position.
+     *
+     * @param position the position to check
+     * @return {@code true} if a plant is present, {@code false} otherwise
+     */
+    private boolean isCellOccupied(final Position position) {
+        final GameModel currentModel = Objects.requireNonNull(this.model);
+        Set<GameEntity> entities = currentModel.getGameEntities();
+        return entities.stream().anyMatch(e -> e.position().equals(position)
+                        && switch (e.type()){
+                    case PEASHOOTER, SUNFLOWER, WALLNUT -> true;
+                    case BASICZOMBIE, STRONGZOMBIE, FASTZOMBIE, BEASTZOMBIE, BULLET, LAWNMOWER -> false;
+                }
+        );
     }
 }

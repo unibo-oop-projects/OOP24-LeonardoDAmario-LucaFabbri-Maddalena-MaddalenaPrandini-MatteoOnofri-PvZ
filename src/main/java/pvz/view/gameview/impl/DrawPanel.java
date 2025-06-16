@@ -10,6 +10,10 @@ import java.awt.*;
 import java.util.EnumMap;
 import java.util.Set;
 
+/**
+ * Custom JPanel responsible for drawing game entities such as plants, zombies, bullets, and lawn mowers.
+ */
+
 public class DrawPanel extends JPanel {
 
     private static int cell_size;
@@ -21,6 +25,11 @@ public class DrawPanel extends JPanel {
     private final EnumMap<PlantType, Color> plantcolors = new EnumMap<>(PlantType.class);
     private final EnumMap<ZombieType, Color> zombieColors = new EnumMap<>(ZombieType.class);
 
+    /**
+     * Constructs a new DrawPanel with the specified scaling factor.
+     *
+     * @param scaling the UI scaling factor based on resolution
+     */
     public DrawPanel(double scaling) {
         this.setOpaque(false);// trasparente
         this.scaling = scaling;
@@ -35,12 +44,21 @@ public class DrawPanel extends JPanel {
         cell_size = (int)doubleCell;
     }
 
+    /**
+     * Updates the entities to be drawn and repaints the panel.
+     *
+     * @param entities the current set of game entities
+     */
     public void updateMovingEntities(Set<GameEntity> entities) {
         this.entities = entities;
         repaint();
     }
 
-
+    /**
+     * Paints the game entities onto the panel.
+     *
+     * @param g the Graphics object to protect
+     */
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
