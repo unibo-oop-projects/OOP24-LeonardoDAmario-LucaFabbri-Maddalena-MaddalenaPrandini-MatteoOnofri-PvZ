@@ -1,5 +1,6 @@
 package pvz.model.game.api;
 
+import pvz.model.entities.api.EntityType;
 import pvz.model.entities.api.GameEntity;
 import pvz.model.plants.api.PlantType;
 import pvz.utilities.Position;
@@ -30,19 +31,12 @@ public interface GameModel {
     boolean isVictory();
 
     /**
-     * Returns the current status of the game (running, over, victory).
-     *
-     * @return the {@link GameStatus} representing the game state.
-     */
-    GameStatus getGameStatus();
-
-    /**
      * Attempts to place a plant of the given type at the specified position on the game field.
      *
      * @param type     the type of plant to place (e.g., sunflower, peashooter).
      * @param position the grid position where the plant should be placed.
      */
-    void placePlant(PlantType type, Position position);
+    void placePlant(final EntityType type, final Position position);
 
     /**
      * Updates the entire game state based on the elapsed time since the last update.

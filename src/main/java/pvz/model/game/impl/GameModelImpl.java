@@ -19,9 +19,8 @@ import pvz.model.zombies.api.Zombie;
 import pvz.model.zombies.impl.ZombieSpawnUtil;
 import pvz.utilities.Position;
 
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
-
 
 /**
  * Implementation of the {@link GameModel} interface that manages the core game logic
@@ -30,180 +29,155 @@ import java.util.stream.Collectors;
 public class GameModelImpl implements GameModel {
     private static final int ROWS = 5;
     private static final int COLS = 9;
-    private final EntitiesManager entitiesManager;
-    private final PlantFactory plantFactory;
-    private int killToWin;
-    private final boolean[] mowerUsed;
-    private GameStatus status;
-    private final Difficulty difficulty;
-    private long accumulatedTime;
     private static final int SPAWN_RATE = 5000;
 
+    private static final Map<Difficulty, Integer> KILL_TO_WIN = Map.of(
+            Difficulty.EASY, 20,
+            Difficulty.NORMAL, 35,
+            Difficulty.HARD, 45
+    );
 
-    /**
-     * Constructs a new instance of the game model with default state and managers.
-     */
+    private final EntitiesManager entitiesManager;
+    private GameStatus status;
+    private final Difficulty difficulty;
+    private final List<Boolean> usedMower = new ArrayList<>(Collections.nCopies(ROWS, false));
+    private long zombieLastSpawnTime;
+
     public GameModelImpl(Difficulty difficulty) {
         this.difficulty = difficulty;
         this.entitiesManager = new EntitiesManagerImpl(difficulty);
-        this.plantFactory = new PlantFactory();
-        this.mowerUsed = new boolean[ROWS];
         this.status = GameStatus.IN_PROGRESS;
-        switch (difficulty) {
-            case EASY -> {killToWin = 20; break;}
-            case NORMAL -> {killToWin = 35; break;}
-            case HARD -> {killToWin = 45; break;}
-            default -> {killToWin = 20; break;}
-        }
     }
-
 
     @Override
     public boolean isGameOver() {
-            return status != GameStatus.IN_PROGRESS;
+        return status != GameStatus.IN_PROGRESS;
     }
 
-    /**
-     * Checks whether the player has won the game. (Currently not implemented.)
-     *
-     * @return {@code true} if the player has achieved victory.
-     * @throws UnsupportedOperationException always.
-     */
     @Override
     public boolean isVictory() {
         return status == GameStatus.WON;
     }
 
-    /**
-     * Returns the current game status.
-     *
-     * @return the {@link GameStatus} value representing the game state.
-     */
-    @Override
-    public GameStatus getGameStatus() {
-        return status;
-    }
-
-    /**
-     * Updates the state of the game based on the elapsed time.
-     * This includes spawning zombies and updating all entities.
-     *
-     * @param deltaTime the time elapsed since the last update (in milliseconds).
-     */
     @Override
     public void update(final long deltaTime) {
-        this.spawnZombie(deltaTime, difficulty);
-        this.entitiesManager.getEntities().forEach(e -> {
-            if((e instanceof Bullet || e instanceof LawnMower) && e.getPosition().x() > COLS + 2) {
-                entitiesManager.removeEntity(e);
-            }
-            e.update(deltaTime, entitiesManager);
-            int currentrow = (int) e.getPosition().y();
-            if (e instanceof Zombie && e.getPosition().x() <= 0 ) {
-                if (mowerUsed[currentrow]){
-                    this.status = GameStatus.LOST;
-                }else {
-                    LawnMower lawnMower = new LawnMowerImp(new Position(0, currentrow), HitBoxFactory.HitBoxType.ZOMBIE);
-                    entitiesManager.addEntity(lawnMower);
-                    lawnMower.update(deltaTime, entitiesManager);
-                    mowerUsed[currentrow] = true;
-                }
-            }
-        });
-            if(getKillCount() == killToWin) {
-                this.status = GameStatus.WON;
-            }
+        if (status != GameStatus.IN_PROGRESS) {
+            return;
+        }
+
+        spawnZombie(deltaTime);
+        updateEntities(deltaTime);
+        checkZombiesForMower();
+        removeOutOfFrameObjects();
+        checkGameStatus();
     }
 
+    private void spawnZombie(final long deltaTime) {
+        zombieLastSpawnTime += deltaTime;
+        if (zombieLastSpawnTime >= SPAWN_RATE) {
+            zombieLastSpawnTime = 0;
+            Zombie zombie = ZombieSpawnUtil.generateRandomZombie(difficulty, ROWS);
+            entitiesManager.addEntity(zombie);
+        }
+    }
 
-    /**
-     * Retrieves a set of all game entities currently present on the field,
-     * mapped to their respective {@link GameEntity} representations.
-     *
-     * @return a set of all game entities.
-     */
+    private void updateEntities(final long deltaTime) {
+        entitiesManager.getEntities().forEach(e -> e.update(deltaTime, entitiesManager));
+    }
+
+    private void checkZombiesForMower() {
+        entitiesManager.getEntities().stream()
+                .filter(Zombie.class::isInstance)
+                .map(Zombie.class::cast)
+                .forEach(this::handleZombieAtRowStart);
+    }
+
+    private void handleZombieAtRowStart(Zombie zombie) {
+        int row = (int) Math.round(zombie.getPosition().y());
+        if (zombie.getPosition().x() <= 0) {
+            if (usedMower.get(row)) {
+                status = GameStatus.LOST;
+            } else {
+                addLawnMower(row);
+            }
+        }
+    }
+
+    private void addLawnMower(int row) {
+        usedMower.set(row, true);
+        LawnMower lawnMower = new LawnMowerImp(new Position(0, row), HitBoxFactory.HitBoxType.ZOMBIE);
+        entitiesManager.addEntity(lawnMower);
+        lawnMower.update(0, entitiesManager);
+    }
+
+    private void removeOutOfFrameObjects() {
+        entitiesManager.getEntities().stream()
+                .filter(e -> (e instanceof Bullet || e instanceof LawnMower) && e.getPosition().x() > COLS + 2)
+                .collect(Collectors.toList())
+                .forEach(entitiesManager::removeEntity);
+    }
+
+    private void checkGameStatus() {
+        if (status == GameStatus.IN_PROGRESS && getKillCount() >= KILL_TO_WIN.get(difficulty)) {
+            status = GameStatus.WON;
+        }
+    }
+
     @Override
     public Set<GameEntity> getGameEntities() {
         return entitiesManager.getEntities().stream()
-                .map(e -> new GameEntity(getEntityType(e), e.getPosition()))
+                .map(e -> new GameEntity(getEntityTypeFromEntity(e), e.getPosition()))
                 .collect(Collectors.toSet());
     }
 
-    /**
-     * Gets the current amount of sun resources available to the player.
-     *
-     * @return the number of sun points.
-     */
     @Override
     public int getSunCount() {
         return entitiesManager.getSunCount();
     }
 
-    public void spawnZombie(final long deltaTime, Difficulty difficulty) {
-        this.accumulatedTime += deltaTime;
-        if (accumulatedTime >= SPAWN_RATE) {
-            this.accumulatedTime = 0;
-            Zombie zombie = ZombieSpawnUtil.generateRandomZombie(difficulty, ROWS);
-            this.entitiesManager.addEntity(zombie);
-        }
-    }
-
-    /**
-     * Gets the number of zombies defeated by the player.
-     *
-     * @return the total kill count.
-     */
     @Override
     public int getKillCount() {
         return entitiesManager.getKillCount();
     }
 
-    /**
-     * Places a plant of the specified type at the given position,
-     * only if the player has enough sun resources.
-     *
-     * @param type     the {@link PlantType} of the plant to place.
-     * @param position the {@link Position} on the grid where the plant should be placed.
-     */
     @Override
-    public void placePlant(final PlantType type, final Position position) {
-        final Plant plant = switch (type) {
+    public void placePlant(final EntityType type, final Position position) {
+        PlantFactory plantFactory = new PlantFactory();
+        PlantType plantType = getPlantTypeFromEntityType(type);
+        final Plant plant = switch (plantType) {
             case PEASHOOTER -> plantFactory.createPeashooter(position);
             case SUNFLOWER -> plantFactory.createSunflower(position);
             case WALLNUT -> plantFactory.createWallnut(position);
         };
-
-        if (entitiesManager.decreaseSun(type.getPrice())) { //if plant!=null
+        if (entitiesManager.decreaseSun(plantType.getPrice())) {
             entitiesManager.addEntity(plant);
         }
-
     }
 
-    /**
-     * Utility method to map a domain-level entity to its corresponding {@link EntityType}
-     * for external representation (e.g., rendering).
-     *
-     * @param entity the entity to evaluate.
-     * @return the corresponding {@link EntityType}.
-     * @throws IllegalArgumentException if the entity type is not recognized.
-     */
-    private static EntityType getEntityType(final Entity entity) {
+    private static EntityType getEntityTypeFromEntity(final Entity entity) {
         return switch (entity) {
             case Plant plant -> switch (plant.mapToEntityType()) {
                 case PEASHOOTER -> EntityType.PEASHOOTER;
                 case SUNFLOWER -> EntityType.SUNFLOWER;
                 case WALLNUT -> EntityType.WALLNUT;
             };
-
             case Zombie zombie -> switch (zombie.getType()) {
                 case BASICZOMBIE -> EntityType.BASICZOMBIE;
                 case FASTZOMBIE -> EntityType.FASTZOMBIE;
                 case STRONGZOMBIE -> EntityType.STRONGZOMBIE;
                 case BEASTZOMBIE -> EntityType.BEASTZOMBIE;
             };
+            case Bullet ignored -> EntityType.BULLET;
+            case LawnMower ignored -> EntityType.LAWNMOWER;
+            default -> throw new IllegalArgumentException();
+        };
+    }
 
-            case Bullet bullet -> EntityType.BULLET;
-            case LawnMower lawnMower -> EntityType.LAWNMOWER;
+    private static PlantType getPlantTypeFromEntityType(final EntityType entityType) {
+        return switch (entityType) {
+            case PEASHOOTER -> PlantType.PEASHOOTER;
+            case SUNFLOWER -> PlantType.SUNFLOWER;
+            case WALLNUT -> PlantType.WALLNUT;
             default -> throw new IllegalArgumentException();
         };
     }
