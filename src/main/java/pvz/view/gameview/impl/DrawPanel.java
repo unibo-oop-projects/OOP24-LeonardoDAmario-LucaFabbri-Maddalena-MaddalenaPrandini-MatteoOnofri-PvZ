@@ -124,7 +124,6 @@ public class DrawPanel extends JPanel {
                             (int) (e.position().y() * cellSize) + offset + (int) e.position().y(),
                             cellSize, mowerHeight);
                 }
-                default -> { }
             }
         }
         g2.dispose();
