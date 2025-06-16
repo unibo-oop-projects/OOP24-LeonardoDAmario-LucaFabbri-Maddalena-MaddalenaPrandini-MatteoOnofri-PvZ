@@ -14,8 +14,8 @@ public interface Zombie extends Entity {
      *
      * @param damage The damage to apply.
      */
-    void decreaseLife(final int damage);
-   
+    void decreaseLife(int damage);
+
     /**
      * Gets the damage dealt by this zombie.
      *
@@ -27,7 +27,7 @@ public interface Zombie extends Entity {
      * Gets the current health points of the zombie.
      *
      * @return The remaining health of the zombie.
-     */    
+     */
     int getHealth();
 
     /**
