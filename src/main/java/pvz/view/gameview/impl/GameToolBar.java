@@ -14,8 +14,9 @@ import java.awt.Font;
 /**
  * Toolbar component displaying plant selection buttons and game statistics (sun and kill count).
  */
-public class GameToolBar extends JPanel {
+public final class GameToolBar extends JPanel {
 
+    private static final long serialVersionUID = 1L;
     private static final int DEFAULT_FONT_SIZE = 14;
     private static final int BUTTON_WIDTH = 140;
     private static final int BUTTON_HEIGHT = 30;
@@ -28,8 +29,7 @@ public class GameToolBar extends JPanel {
     private final JButton wlButton = new JButton("Wall-nut (75)");
     private final JLabel sunCounterLabel = new JLabel("☀ Sun: 0");
     private final JLabel killCounterLabel = new JLabel("💀 Kills: 0");
-    private ViewListener listener;
-    private final double scaling;
+    private transient ViewListener listener;
 
     /**
      * Constructs the toolbar and initializes UI components.
@@ -37,21 +37,29 @@ public class GameToolBar extends JPanel {
      * @param scaling the scaling factor for UI elements
      */
     public GameToolBar(final double scaling) {
-        this.scaling = scaling;
+        super();
+        initializeUI(scaling);
+    }
 
+    /**
+     * Initializes the UI components and layout.
+     *
+     * @param scaling the scaling factor for UI elements
+     */
+    private void initializeUI(final double scaling) {
         setLayout(new FlowLayout(FlowLayout.LEFT,
                 (int) (HORIZONTAL_GAP * scaling), (int) (VERTICAL_GAP * scaling)));
         setBackground(Color.LIGHT_GRAY);
 
-        Font font = new Font("SansSerif", Font.PLAIN, (int) (DEFAULT_FONT_SIZE * scaling));
+        final Font font = new Font("SansSerif", Font.PLAIN, (int) (DEFAULT_FONT_SIZE * scaling));
         peaButton.setFont(font);
         snflButton.setFont(font);
         wlButton.setFont(font);
         sunCounterLabel.setFont(font);
         killCounterLabel.setFont(font);
 
-        int buttonWidth = (int) (BUTTON_WIDTH * scaling);
-        int buttonHeight = (int) (BUTTON_HEIGHT * scaling);
+        final int buttonWidth = (int) (BUTTON_WIDTH * scaling);
+        final int buttonHeight = (int) (BUTTON_HEIGHT * scaling);
 
         peaButton.setPreferredSize(new Dimension(buttonWidth, buttonHeight));
         snflButton.setPreferredSize(new Dimension(buttonWidth, buttonHeight));
