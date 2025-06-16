@@ -7,20 +7,39 @@ import pvz.utilities.Resolution;
 import pvz.view.menuview.impl.MenuViewImpl;
 import pvz.view.menuview.impl.TutorialView;
 
-public class MenuControllerImpl implements MenuController {
+/**
+ * Implementation of the {@link MenuController} interface.
+ * Handles the logic for opening/closing the menu, starting the game,
+ * and showing the tutorial view.
+ */
+public final class MenuControllerImpl implements MenuController {
 
+    /** The menu view instance. */
     private MenuViewImpl view;
-    private final MainController parentController;
-    public MenuControllerImpl(MainController mainController) {
 
+    /** The parent main controller. */
+    private final MainController parentController;
+
+    /**
+     * Constructs a new MenuControllerImpl with the given parent controller.
+     *
+     * @param mainController the MainController instance
+     */
+    public MenuControllerImpl(final MainController mainController) {
         this.parentController = mainController;
     }
 
+    /**
+     * Opens the main menu.
+     */
     @Override
     public void openMenu() {
         this.view = new MenuViewImpl(this);
     }
 
+    /**
+     * Closes the main menu, if open.
+     */
     @Override
     public void closeMenu() {
         if (this.view != null) {
@@ -28,18 +47,36 @@ public class MenuControllerImpl implements MenuController {
         }
     }
 
+    /**
+     * Handles exceptions by delegating to the parent controller.
+     *
+     * @param exception the exception to handle
+     */
     @Override
-    public void handleException(Exception exception) {
+    public void handleException(final Exception exception) {
         parentController.handleException(exception);
     }
 
-    public void startGame(Difficulty difficulty, Resolution resolution) {
+    /**
+     * Starts the game with the given difficulty and resolution,
+     * then closes the menu.
+     *
+     * @param difficulty the selected difficulty
+     * @param resolution the selected resolution
+     */
+    @Override
+    public void startGame(final Difficulty difficulty, final Resolution resolution) {
         parentController.startGame(difficulty, resolution);
         this.closeMenu();
     }
 
+    /**
+     * Shows the tutorial view with the given resolution.
+     *
+     * @param resolution the resolution for the tutorial window
+     */
     @Override
-    public void showTutorialView(Resolution resolution) {
+    public void showTutorialView(final Resolution resolution) {
         new TutorialView(resolution);
     }
 }

@@ -5,7 +5,6 @@ import pvz.utilities.GameEntity;
 
 import java.util.Set;
 
-;
 /**
  * Interface representing the game view in the MVC architecture.
  * It defines the methods needed to render the game state and interact with user inputs.
@@ -15,8 +14,6 @@ public interface GameView {
      * Closes the game view and releases its resources.
      */
     void close();
-
-    boolean isVisible();
 
     /**
      * Renders the current game state, including entities and stats.

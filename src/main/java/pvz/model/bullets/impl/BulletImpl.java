@@ -42,7 +42,9 @@ public final class BulletImpl extends AbstractEntity implements Bullet {
     public void update(final long deltaTime, final EntitiesManager entitiesManager) {
         this.setPosition(this.move(deltaTime));
         this.getHitBox().update(this.getPosition());
-        final Optional<Zombie> zombie = this.collisionManager.handleCollision(this, entitiesManager).map(entity -> (Zombie) entity);
+        final Optional<Zombie> zombie = this.collisionManager
+                .handleCollision(this, entitiesManager)
+                .map(entity -> (Zombie) entity);
         if (zombie.isPresent()) {
             this.attackZombie(zombie.get(), entitiesManager);
             entitiesManager.removeEntity(this);

@@ -27,19 +27,21 @@ public class GameControllerImpl implements GameController, ViewListener {
     /**
      * Marker interface for queued input events.
      */
-    interface Event {}
+    interface Event { }
+
     /**
      * Input event representing plant selection from the roaster.
      *
      * @param inputRoaster the selected plant
      */
-    record InputRoaster(UserInputRoaster inputRoaster) implements Event {}
+    record InputRoaster(UserInputRoaster inputRoaster) implements Event { }
+
     /**
      * Input event representing a grid cell selection.
      *
      * @param position the position clicked
      */
-    record InputGrid(Position position) implements Event {}
+    record InputGrid(Position position) implements Event { }
 
     private static final int FPS = 60;
     private static final long TIME_PER_TICK = 1000 / FPS;
@@ -56,14 +58,13 @@ public class GameControllerImpl implements GameController, ViewListener {
      *
      * @param controller the parent controller
      */
-    public GameControllerImpl(MainController controller) {
+    public GameControllerImpl(final MainController controller) {
         this.parentController = controller;
-
     }
 
     /** {@inheritDoc} */
     @Override
-    public void startGame(Difficulty difficulty, Resolution resolution) {
+    public void startGame(final Difficulty difficulty, final Resolution resolution) {
         this.running = true;
         this.model = new GameModelImpl(difficulty);
         this.view = new GameViewImpl(this, resolution);
@@ -84,10 +85,11 @@ public class GameControllerImpl implements GameController, ViewListener {
         private final GameModel model;
         private final GameView view;
 
-        GameLoop(GameModel model, GameView view) {
+        GameLoop(final GameModel model, final GameView view) {
             this.model = Objects.requireNonNull(model);
             this.view = Objects.requireNonNull(view);
         }
+
         /** {@inheritDoc} */
         @Override
         public void run() {
@@ -98,19 +100,19 @@ public class GameControllerImpl implements GameController, ViewListener {
                 long currentTime = System.currentTimeMillis();
                 long deltaTime = currentTime - previousTime;
 
-                    model.update(deltaTime);
-                    view.render(model.getGameEntities(), model.getSunCount(), model.getKillCount());
+                model.update(deltaTime);
+                view.render(model.getGameEntities(), model.getSunCount(), model.getKillCount());
 
-                    previousTime = currentTime;
+                previousTime = currentTime;
 
-                    waitForNextFrame(currentTime);
-                    handleInput();
+                waitForNextFrame(currentTime);
+                handleInput();
 
-                    if (model.isGameOver()) {
-                        stopGame();
-                        parentController.goToEndGame(model.isVictory());
-                        view.close();
-                    }
+                if (model.isGameOver()) {
+                    stopGame();
+                    parentController.goToEndGame(model.isVictory());
+                    view.close();
+                }
             }
         }
 
@@ -142,16 +144,16 @@ public class GameControllerImpl implements GameController, ViewListener {
                             selectedPlantType = switch (inputRoaster) {
                                 case PEASHOOTER -> EntityType.PEASHOOTER;
                                 case SUNFLOWER -> EntityType.SUNFLOWER;
-                                case WALLNUT   -> EntityType.WALLNUT;
+                                case WALLNUT -> EntityType.WALLNUT;
                             };
                         }
                         case InputGrid(var pos) -> {
-                            if(selectedPlantType != null && !isCellOccupied(pos)){
+                            if (selectedPlantType != null && !isCellOccupied(pos)) {
                                 model.placePlant(selectedPlantType, pos);
                             }
                             selectedPlantType = null;
                         }
-                        default -> {}
+                        default -> { }
                     }
                 }
             } catch (InterruptedException e) {
@@ -162,19 +164,19 @@ public class GameControllerImpl implements GameController, ViewListener {
 
     /** {@inheritDoc} */
     @Override
-    public void processInputRoaster(UserInputRoaster input) {
+    public void processInputRoaster(final UserInputRoaster input) {
         queue.add(new InputRoaster(input));
     }
 
     /** {@inheritDoc} */
     @Override
-    public void processInputGrid(Position position) {
-        queue.add(new InputGrid(position)); 
+    public void processInputGrid(final Position position) {
+        queue.add(new InputGrid(position));
     }
 
     /** {@inheritDoc} */
     @Override
-    public void handleException(Exception exception) {
+    public void handleException(final Exception exception) {
         parentController.handleException(exception);
     }
 
@@ -188,7 +190,7 @@ public class GameControllerImpl implements GameController, ViewListener {
         final GameModel currentModel = Objects.requireNonNull(this.model);
         Set<GameEntity> entities = currentModel.getGameEntities();
         return entities.stream().anyMatch(e -> e.position().equals(position)
-                        && switch (e.type()){
+                        && switch (e.type()) {
                     case PEASHOOTER, SUNFLOWER, WALLNUT -> true;
                     case BASICZOMBIE, STRONGZOMBIE, FASTZOMBIE, BEASTZOMBIE, BULLET, LAWNMOWER -> false;
                 }

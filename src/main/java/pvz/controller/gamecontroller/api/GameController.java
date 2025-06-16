@@ -23,5 +23,4 @@ public interface GameController extends Controller {
      */
 
     void stopGame();
-    
 }

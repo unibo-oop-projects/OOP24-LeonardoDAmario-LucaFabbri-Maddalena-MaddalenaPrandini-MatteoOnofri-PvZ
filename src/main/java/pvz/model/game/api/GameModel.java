@@ -35,7 +35,7 @@ public interface GameModel {
      * @param type     the type of plant to place (e.g., sunflower, peashooter).
      * @param position the position on the grid where to place the plant.
      */
-    void placePlant(final EntityType type, final Position position);
+    void placePlant(EntityType type, Position position);
 
     /**
      * Updates the entire game state based on the elapsed time since the last update.

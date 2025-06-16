@@ -18,7 +18,11 @@ import pvz.model.zombies.api.Zombie;
 import pvz.model.zombies.impl.ZombieSpawnUtil;
 import pvz.utilities.Position;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
@@ -49,31 +53,26 @@ public class GameModelImpl implements GameModel {
      *
      * @param difficulty the game difficulty level.
      */
-    public GameModelImpl(Difficulty difficulty) {
+    public GameModelImpl(final Difficulty difficulty) {
         this.difficulty = difficulty;
         this.entitiesManager = new EntitiesManagerImpl(difficulty);
         this.status = GameStatus.IN_PROGRESS;
     }
 
-    /**
-     * @inheritDoc
-     */
+    /** {@inheritDoc} */
     @Override
     public boolean isGameOver() {
         return status != GameStatus.IN_PROGRESS;
     }
 
-    /**
-     * @inheritDoc
-     */
+    /** {@inheritDoc} */
     @Override
     public boolean isVictory() {
         return status == GameStatus.WON;
     }
 
-    /**
-     * @inheritDoc
-     * * <p>
+    /** {@inheritDoc}
+     * <p>
      * Updates all entities, spawns zombies as necessary, checks for lawnmower activation,
      * removes out-of-frame objects, and updates the game status accordingly.
      */
@@ -90,9 +89,7 @@ public class GameModelImpl implements GameModel {
         checkGameStatus();
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public Set<GameEntity> getGameEntities() {
         return entitiesManager.getEntities().stream()
@@ -100,24 +97,19 @@ public class GameModelImpl implements GameModel {
                 .collect(Collectors.toSet());
     }
 
-    /**
-     * @inheritDoc
-     */
+    /** {@inheritDoc} */
     @Override
     public int getSunCount() {
         return entitiesManager.getSunCount();
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public int getKillCount() {
         return entitiesManager.getKillCount();
     }
 
-    /**
-     * {@inheritDoc}
+    /** {@inheritDoc}
      * <p>
      * Attempts to place a plant of the given type at the specified position,
      * checking sun resources before adding the plant to entitiesManager.
@@ -177,7 +169,7 @@ public class GameModelImpl implements GameModel {
      *
      * @param zombie the zombie that has reached the row start.
      */
-    private void handleZombieAtRowStart(Zombie zombie) {
+    private void handleZombieAtRowStart(final Zombie zombie) {
         int row = (int) Math.round(zombie.getPosition().y());
         if (zombie.getPosition().x() <= 0) {
             if (usedMower.get(row)) {
@@ -193,7 +185,7 @@ public class GameModelImpl implements GameModel {
      *
      * @param row the row index where the lawn mower should be added.
      */
-    private void addLawnMower(int row) {
+    private void addLawnMower(final int row) {
         usedMower.set(row, true);
         LawnMower lawnMower = new LawnMowerImpl(new Position(0, row), HitBoxFactory.HitBoxType.ZOMBIE);
         entitiesManager.addEntity(lawnMower);

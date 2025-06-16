@@ -2,13 +2,26 @@ package pvz.view.gameview.impl;
 
 import pvz.controller.gamecontroller.api.ViewListener;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.Box;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.Color;
+import java.awt.Font;
 
 /**
  * Toolbar component displaying plant selection buttons and game statistics (sun and kill count).
  */
 public class GameToolBar extends JPanel {
+
+    private static final int DEFAULT_FONT_SIZE = 14;
+    private static final int BUTTON_WIDTH = 140;
+    private static final int BUTTON_HEIGHT = 30;
+    private static final int HORIZONTAL_GAP = 10;
+    private static final int VERTICAL_GAP = 5;
+    private static final int STRUT_WIDTH = 20;
 
     private final JButton peaButton = new JButton("Peashooter (50)");
     private final JButton snflButton = new JButton("Sunflower (25)");
@@ -26,18 +39,19 @@ public class GameToolBar extends JPanel {
     public GameToolBar(final double scaling) {
         this.scaling = scaling;
 
-        setLayout(new FlowLayout(FlowLayout.LEFT, (int) (10 * scaling), (int) (5 * scaling)));
+        setLayout(new FlowLayout(FlowLayout.LEFT,
+                (int) (HORIZONTAL_GAP * scaling), (int) (VERTICAL_GAP * scaling)));
         setBackground(Color.LIGHT_GRAY);
 
-        Font font = new Font("SansSerif", Font.PLAIN, (int) (14 * scaling));
+        Font font = new Font("SansSerif", Font.PLAIN, (int) (DEFAULT_FONT_SIZE * scaling));
         peaButton.setFont(font);
         snflButton.setFont(font);
         wlButton.setFont(font);
         sunCounterLabel.setFont(font);
         killCounterLabel.setFont(font);
 
-        int buttonWidth = (int) (140 * scaling);
-        int buttonHeight = (int) (30 * scaling);
+        int buttonWidth = (int) (BUTTON_WIDTH * scaling);
+        int buttonHeight = (int) (BUTTON_HEIGHT * scaling);
 
         peaButton.setPreferredSize(new Dimension(buttonWidth, buttonHeight));
         snflButton.setPreferredSize(new Dimension(buttonWidth, buttonHeight));
@@ -46,13 +60,13 @@ public class GameToolBar extends JPanel {
         add(peaButton);
         add(snflButton);
         add(wlButton);
-        add(Box.createHorizontalStrut((int) (20 * scaling)));
+        add(Box.createHorizontalStrut((int) (STRUT_WIDTH * scaling)));
         add(sunCounterLabel);
         add(killCounterLabel);
 
-        peaButton.addActionListener(e -> PlantSelection(ViewListener.UserInputRoaster.PEASHOOTER));
-        snflButton.addActionListener(e -> PlantSelection(ViewListener.UserInputRoaster.SUNFLOWER));
-        wlButton.addActionListener(e -> PlantSelection(ViewListener.UserInputRoaster.WALLNUT));
+        peaButton.addActionListener(e -> plantSelection(ViewListener.UserInputRoaster.PEASHOOTER));
+        snflButton.addActionListener(e -> plantSelection(ViewListener.UserInputRoaster.SUNFLOWER));
+        wlButton.addActionListener(e -> plantSelection(ViewListener.UserInputRoaster.WALLNUT));
     }
 
     /**
@@ -69,7 +83,7 @@ public class GameToolBar extends JPanel {
      *
      * @param input the selected plant input
      */
-    private void PlantSelection(final ViewListener.UserInputRoaster input) {
+    private void plantSelection(final ViewListener.UserInputRoaster input) {
         if (listener != null) {
             listener.processInputRoaster(input);
         }
