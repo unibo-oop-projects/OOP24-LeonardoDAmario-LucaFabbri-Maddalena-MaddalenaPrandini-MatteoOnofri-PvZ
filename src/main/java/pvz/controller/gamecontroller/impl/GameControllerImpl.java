@@ -3,6 +3,7 @@ package pvz.controller.gamecontroller.impl;
 import pvz.controller.gamecontroller.api.GameController;
 import pvz.controller.gamecontroller.api.ViewListener;
 import pvz.controller.maincontroller.api.MainController;
+import pvz.model.entities.api.EntityType;
 import pvz.model.entities.api.GameEntity;
 import pvz.model.game.api.Difficulty;
 import pvz.model.game.api.GameModel;
@@ -31,7 +32,7 @@ public class GameControllerImpl implements GameController, ViewListener {
     private GameModel model;
     private GameView view;
     private boolean running;
-    private PlantType selectedPlantType = null;
+    private EntityType selectedPlantType = null;
 
     public GameControllerImpl(MainController controller) {
         this.parentController = controller;
@@ -54,7 +55,6 @@ public class GameControllerImpl implements GameController, ViewListener {
     private class GameLoop extends Thread {
         @Override
         public void run() {
-            System.out.println("[GAMELOOP] Starting main loop");
             long previousTime = System.currentTimeMillis();
 
             while (running) {
@@ -67,7 +67,6 @@ public class GameControllerImpl implements GameController, ViewListener {
                     previousTime = currentTime;
 
                     waitForNextFrame(currentTime);
-                    System.out.println("[GAMELOOP] Running frame");
                     handleInput();
 
                     if (model.isGameOver()) {
@@ -90,18 +89,16 @@ public class GameControllerImpl implements GameController, ViewListener {
         }
 
         private void handleInput() {
-            System.out.println("[CONTROLLER] Polling input...");
             try {
                 Event event;
                 while ((event = queue.poll(1, TimeUnit.MILLISECONDS)) != null) {
                     switch (event) {
                         case InputRoaster(var inputRoaster) -> {
                             selectedPlantType = switch (inputRoaster) {
-                                case PEASHOOTER -> PlantType.PEASHOOTER;
-                                case SUNFLOWER -> PlantType.SUNFLOWER;
-                                case WALLNUT   -> PlantType.WALLNUT;
+                                case PEASHOOTER -> EntityType.PEASHOOTER;
+                                case SUNFLOWER -> EntityType.SUNFLOWER;
+                                case WALLNUT   -> EntityType.WALLNUT;
                             };
-                            System.out.println("[CONTROLLER] Selected plant type: " + selectedPlantType);
                         }
                         case InputGrid(var pos) -> {
                             if(selectedPlantType != null && !isCellOccupied(pos)){
