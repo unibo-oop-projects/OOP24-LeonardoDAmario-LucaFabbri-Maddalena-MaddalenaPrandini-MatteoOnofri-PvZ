@@ -14,7 +14,7 @@ import java.util.Optional;
 
 /**
  * Factory class for creating different types of {@link Plant} instances.
- * Each plant has unique behavior implemented via anonymous inner classes.
+ * Each method instantiates a specific type of plant with its own behavior.
  */
 public final class PlantFactory {
 
@@ -27,17 +27,23 @@ public final class PlantFactory {
      * @throws NullPointerException if the position is null.
      */
     public Plant createPeashooter(final Position position) {
-        Objects.requireNonNull(position, "Position cannot be null");
+        Objects.requireNonNull(position);
         return new AbstractPlant(position) {
 
             private static final double FIRE_RATE = 1000;
             private double elapsedTime;
 
+            /**
+             * {@inheritDoc}
+             */
             @Override
             public PlantType mapToEntityType() {
                 return PlantType.PEASHOOTER;
             }
 
+            /**
+             * {@inheritDoc}
+             */
             @Override
             public void update(final long deltaTime, final EntitiesManager entitiesManager) {
                 elapsedTime = elapsedTime + deltaTime;
@@ -50,6 +56,9 @@ public final class PlantFactory {
                 }
             }
 
+            /**
+             * {@inheritDoc}
+             */
             @Override
             protected int getMaxLife() {
                 return PlantType.PEASHOOTER.getLife();
@@ -66,19 +75,24 @@ public final class PlantFactory {
      * @throws NullPointerException if the position is null.
      */
     public Plant createSunflower(final Position position) {
-        Objects.requireNonNull(position, "Position cannot be null");
+        Objects.requireNonNull(position);
         return new AbstractPlant(position) {
 
             private static final int SUN_VALUE = 25;
             private static final long SUN_GENERATION_INTERVAL = 4000;
             private long lastSunTime;
 
+            /**
+             * {@inheritDoc}
+             */
             @Override
             public PlantType mapToEntityType() {
                 return PlantType.SUNFLOWER;
             }
 
-
+            /**
+             * {@inheritDoc}
+             */
             @Override
             public void update(final long deltaTime, final EntitiesManager entitiesManager) {
                 if (this.getLife() <= 0) {
@@ -91,6 +105,9 @@ public final class PlantFactory {
                 }
             }
 
+            /**
+             * {@inheritDoc}
+             */
             @Override
             protected int getMaxLife() {
                 return PlantType.SUNFLOWER.getLife();
@@ -107,16 +124,22 @@ public final class PlantFactory {
      * @throws NullPointerException if the position is null.
      */
     public Plant createWallnut(final Position position) {
-        Objects.requireNonNull(position, "Position cannot be null");
+        Objects.requireNonNull(position);
         return new AbstractPlant(position) {
 
             private final CollisionManager collisionManager = new CollisionManagerImpl();
 
+            /**
+             * {@inheritDoc}
+             */
             @Override
             public PlantType mapToEntityType() {
                 return PlantType.WALLNUT;
             }
 
+            /**
+             * {@inheritDoc}
+             */
             @Override
             public void update(final long deltaTime, final EntitiesManager entitiesManager) {
                 final Optional<Zombie> zombie = collisionManager.handleCollision(this, entitiesManager)
@@ -128,6 +151,9 @@ public final class PlantFactory {
                 }
             }
 
+            /**
+             * {@inheritDoc}
+             */
             @Override
             protected int getMaxLife() {
                 return PlantType.WALLNUT.getLife();

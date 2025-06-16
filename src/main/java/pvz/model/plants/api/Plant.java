@@ -10,7 +10,7 @@ import pvz.utilities.PlantType;
 public interface Plant extends Entity {
 
     /**
-     * Returns the current life (health points) of the plant.
+     * Gets the current life (health points) of the plant.
      *
      * @return The remaining life of the plant.
      */

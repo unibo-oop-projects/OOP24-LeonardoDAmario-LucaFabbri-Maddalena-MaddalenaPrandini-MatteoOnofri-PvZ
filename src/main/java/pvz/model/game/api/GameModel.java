@@ -9,16 +9,16 @@ import java.util.Set;
 /**
  * Interface representing the core game model for the Plants vs. Zombies game.
  * <p>
- * Provides methods for controlling the game lifecycle, placing plants, updating game state,
- * and retrieving key information such as sun count, kills, and game entities.
+ * Defines methods to control the game lifecycle, manage plants, update game state,
+ * and retrieve key information such as sun count, kills, and game entities.
  */
 public interface GameModel {
 
 
     /**
-     * Checks if the game is over.
+     * Checks if the game has ended.
      *
-     * @return {@code true} if the game has ended, {@code false} otherwise.
+     * @return {@code true} if the game is over, {@code false} otherwise.
      */
     boolean isGameOver();
 
@@ -30,10 +30,10 @@ public interface GameModel {
     boolean isVictory();
 
     /**
-     * Attempts to place a plant of the given type at the specified position on the game field.
+     * Attempts to place a plant of the specified type at the given position on the game field.
      *
      * @param type     the type of plant to place (e.g., sunflower, peashooter).
-     * @param position the grid position where the plant should be placed.
+     * @param position the position on the grid where to place the plant.
      */
     void placePlant(final EntityType type, final Position position);
 
@@ -45,16 +45,16 @@ public interface GameModel {
     void update(long deltaTime);
 
     /**
-     * Returns a set of all current game entities, including plants, zombies, and projectiles.
+     * Retrieves all active entities currently in the game.
      *
-     * @return a {@link Set} of {@link GameEntity} objects representing all active entities.
+     * @return a set of {@link GameEntity} representing all game entities.
      */
     Set<GameEntity> getGameEntities();
 
     /**
      * Returns the current amount of sun resources available to the player.
      *
-     * @return the number of sun points.
+     * @return the current number of sun points.
      */
     int getSunCount();
 

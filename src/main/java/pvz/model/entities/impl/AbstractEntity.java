@@ -9,8 +9,8 @@ import pvz.utilities.Position;
 /**
  * Abstract base class for all entities in the game.
  * <p>
- * Provides common functionality for position and hitbox management.
- * All specific entities (e.g., plants, zombies, bullets) should extend this class.
+ * Provides common implementations for position handling and hitbox management.
+ * Specific entity types (e.g., plants, zombies, bullets) should extend this class.
  */
 public abstract class AbstractEntity implements Entity {
 
@@ -18,10 +18,10 @@ public abstract class AbstractEntity implements Entity {
     private final HitBox hitBox;
 
     /**
-     * Constructs an entity with the given position and hitbox type.
+     * Constructs an entity with the specifies initial position and hitbox type.
      *
      * @param position the initial position of the entity; must not be {@code null}.
-     * @param hitBoxType the type of hitbox to associate with this entity.
+     * @param hitBoxType the type of hitbox for collision detencion.
      */
     public AbstractEntity(final Position position, final HitBoxType hitBoxType) {
         this.position = position;
@@ -29,9 +29,7 @@ public abstract class AbstractEntity implements Entity {
     }
 
     /**
-     * Sets the new position of the entity.
-     *
-     * @param position the new position to set; must not be {@code null}.
+     * @inheritDoc
      */
     @Override
     public void setPosition(final Position position) {
@@ -39,9 +37,7 @@ public abstract class AbstractEntity implements Entity {
     }
 
     /**
-     * Gets the current position of the entity.
-     *
-     * @return the current {@link Position} of the entity.
+     * @inheritDoc
      */
     @Override
     public Position getPosition() {
@@ -49,9 +45,7 @@ public abstract class AbstractEntity implements Entity {
     }
 
     /**
-     * Gets the {@link HitBox} of the entity.
-     *
-     * @return the hitbox associated with the entity.
+     * @inheritDoc
      */
     @Override
     public HitBox getHitBox() {

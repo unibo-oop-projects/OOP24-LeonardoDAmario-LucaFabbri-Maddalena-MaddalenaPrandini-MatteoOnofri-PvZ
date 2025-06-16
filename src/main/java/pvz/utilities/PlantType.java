@@ -2,7 +2,7 @@ package pvz.utilities;
 
 /**
  * Enum representing different types of plants in the game.
- * Each plant type has a specific price associated with it.
+ * Each type is associated with a life value and planting cost
  */
 public enum PlantType {
 
@@ -25,11 +25,11 @@ public enum PlantType {
     private final int life;
 
     /**
-     * Constructs a PlantType with the specified price and life values.
+     * Constructs a {@code PlantType} with the specified price and life values.
      *
-     * @param price The cost to plant this plant type.
-     * @param life  The initial life (health) of this plant type.
-     * @throws IllegalArgumentException if price or life are negative.
+     * @param price The cost in sun points to plant this type.
+     * @param life  The initial life (health) of the plant.
+     * @throws IllegalArgumentException if {@code price] or [@code life] are negative.
      */
     PlantType(final int price, final int life) {
         if (life < 0) {
