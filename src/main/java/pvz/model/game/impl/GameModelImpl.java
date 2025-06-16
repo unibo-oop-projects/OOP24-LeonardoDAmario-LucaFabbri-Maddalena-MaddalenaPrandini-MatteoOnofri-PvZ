@@ -12,15 +12,18 @@ import pvz.model.game.api.GameStatus;
 import pvz.model.lawnmower.api.LawnMower;
 import pvz.model.lawnmower.impl.LawnMowerImp;
 import pvz.model.plants.api.Plant;
-import pvz.utilities.PlantType;
 import pvz.model.plants.impl.PlantFactory;
 import pvz.model.zombies.api.Zombie;
 import pvz.model.zombies.impl.ZombieSpawnUtil;
+import pvz.utilities.PlantType;
 import pvz.utilities.Position;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
-
 /**
  * Concrete implementation of {@link GameModel}.
  * <p>
@@ -49,7 +52,7 @@ public class GameModelImpl implements GameModel {
      *
      * @param difficulty the game difficulty level.
      */
-    public GameModelImpl(Difficulty difficulty) {
+    public GameModelImpl(final Difficulty difficulty) {
         this.difficulty = difficulty;
         this.entitiesManager = new EntitiesManagerImpl(difficulty);
         this.status = GameStatus.IN_PROGRESS;
@@ -124,8 +127,8 @@ public class GameModelImpl implements GameModel {
      */
     @Override
     public void placePlant(final EntityType type, final Position position) {
-        PlantFactory plantFactory = new PlantFactory();
-        PlantType plantType = getPlantTypeFromEntityType(type);
+        final PlantFactory plantFactory = new PlantFactory();
+        final PlantType plantType = getPlantTypeFromEntityType(type);
         final Plant plant = switch (plantType) {
             case PEASHOOTER -> plantFactory.createPeashooter(position);
             case SUNFLOWER -> plantFactory.createSunflower(position);
@@ -146,7 +149,7 @@ public class GameModelImpl implements GameModel {
         zombieLastSpawnTime += deltaTime;
         if (zombieLastSpawnTime >= SPAWN_RATE) {
             zombieLastSpawnTime = 0;
-            Zombie zombie = ZombieSpawnUtil.generateRandomZombie(difficulty, ROWS);
+            final Zombie zombie = ZombieSpawnUtil.generateRandomZombie(difficulty, ROWS);
             entitiesManager.addEntity(zombie);
         }
     }
@@ -177,8 +180,8 @@ public class GameModelImpl implements GameModel {
      *
      * @param zombie the zombie that has reached the row start.
      */
-    private void handleZombieAtRowStart(Zombie zombie) {
-        int row = (int) Math.round(zombie.getPosition().y());
+    private void handleZombieAtRowStart(final Zombie zombie) {
+        final int row = (int) Math.round(zombie.getPosition().y());
         if (zombie.getPosition().x() <= 0) {
             if (usedMower.get(row)) {
                 status = GameStatus.LOST;
@@ -193,9 +196,9 @@ public class GameModelImpl implements GameModel {
      *
      * @param row the row index where the lawn mower should be added.
      */
-    private void addLawnMower(int row) {
+    private void addLawnMower(final int row) {
         usedMower.set(row, true);
-        LawnMower lawnMower = new LawnMowerImp(new Position(0, row), HitBoxFactory.HitBoxType.ZOMBIE);
+        final LawnMower lawnMower = new LawnMowerImp(new Position(0, row), HitBoxFactory.HitBoxType.ZOMBIE);
         entitiesManager.addEntity(lawnMower);
         lawnMower.update(0, entitiesManager);
     }

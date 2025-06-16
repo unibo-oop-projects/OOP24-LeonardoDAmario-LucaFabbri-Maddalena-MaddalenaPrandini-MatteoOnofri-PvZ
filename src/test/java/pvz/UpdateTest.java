@@ -11,7 +11,8 @@ import pvz.model.zombies.api.Zombie;
 import pvz.model.zombies.impl.BasicZombie;
 import pvz.utilities.Position;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 /**
  * Test class for the update method of the Plant class.
@@ -76,13 +77,13 @@ class UpdateTest {
      */
     @Test
     void testWallNutUpdate() {
-        EntitiesManager entitiesManager = new EntitiesManagerImpl(Difficulty.EASY);
-        Position position = new Position(0, 0);
+        final EntitiesManager entitiesManager = new EntitiesManagerImpl(Difficulty.EASY);
+        final Position position = new Position(0, 0);
 
-        PlantFactory plantFactory = new PlantFactory();
-        Plant wallnut = plantFactory.createWallnut(position);
+        final PlantFactory plantFactory = new PlantFactory();
+        final Plant wallnut = plantFactory.createWallnut(position);
 
-        Zombie zombie = new BasicZombie(position);
+        final Zombie zombie = new BasicZombie(position);
 
         entitiesManager.addEntity(wallnut);
         entitiesManager.addEntity(zombie);
