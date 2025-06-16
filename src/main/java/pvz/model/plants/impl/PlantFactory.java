@@ -30,7 +30,7 @@ public final class PlantFactory {
         Objects.requireNonNull(position);
         return new AbstractPlant(position) {
 
-            private static final double FIRE_RATE = 1000;
+            private static final double FIRE_RATE = 1750;
             private double elapsedTime;
 
             /**
@@ -50,7 +50,7 @@ public final class PlantFactory {
                 if (elapsedTime >= FIRE_RATE && getLife() > 0) {
                     entitiesManager.addEntity(
                             new BulletImpl(
-                                    new Position(this.getPosition().x() +  3 * this.getHitBox().getWidth(),
+                                    new Position(this.getPosition().x() + this.getHitBox().getWidth(),
                                             this.getPosition().y())));
                     elapsedTime = 0;
                 }
@@ -79,7 +79,7 @@ public final class PlantFactory {
         return new AbstractPlant(position) {
 
             private static final int SUN_VALUE = 25;
-            private static final long SUN_GENERATION_INTERVAL = 4000;
+            private static final long SUN_GENERATION_INTERVAL = 6000;
             private long lastSunTime;
 
             /**
