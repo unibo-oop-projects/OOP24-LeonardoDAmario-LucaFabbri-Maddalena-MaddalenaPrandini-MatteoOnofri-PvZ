@@ -6,7 +6,6 @@ import pvz.model.collisions.api.CollisionManager;
 import pvz.model.collisions.impl.CollisionManagerImpl;
 import pvz.model.bullets.api.Bullet;
 import pvz.model.bullets.impl.BulletImpl;
-import pvz.model.game.api.Difficulty;
 import pvz.model.game.api.EntitiesManager;
 import pvz.model.game.impl.EntitiesManagerImpl;
 import pvz.model.plants.api.Plant;
@@ -38,7 +37,7 @@ final class CollisionsTest {
     @BeforeEach
     void setUp() {
         collisionManager = new CollisionManagerImpl();
-        entitiesManager = new EntitiesManagerImpl(Difficulty.NORMAL);
+        entitiesManager = new EntitiesManagerImpl();
         plantFactory = new PlantFactory();
     }
 

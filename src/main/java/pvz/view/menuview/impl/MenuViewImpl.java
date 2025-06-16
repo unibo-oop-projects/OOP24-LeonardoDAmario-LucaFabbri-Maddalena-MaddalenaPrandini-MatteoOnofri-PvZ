@@ -26,6 +26,8 @@ import java.awt.GridLayout;
  */
 public final class MenuViewImpl extends JPanel implements MenuView {
 
+    private static final long serialVersionUID = 1L;
+    private static final String FONT_NAME = "Arial";
     private static final int TITLE_FONT_SIZE = 40;
     private static final int DIFFICULTY_FONT_SIZE = 28;
     private static final int RES_LABEL_FONT_SIZE = 28;
@@ -53,7 +55,7 @@ public final class MenuViewImpl extends JPanel implements MenuView {
     private final JLabel difficultyLabel;
     private final JComboBox<Resolution> resolutionCombo;
     private Difficulty currentDifficulty = Difficulty.NORMAL;
-    private Resolution currentResolution = Resolution.R800x600;
+    private Resolution currentResolution = Resolution.R_800X600;
     private final MenuController parentController;
     private final JFrame frame = new JFrame();
 
@@ -65,32 +67,32 @@ public final class MenuViewImpl extends JPanel implements MenuView {
     public MenuViewImpl(final MenuController controller) {
         this.parentController = controller;
         this.setLayout(new BorderLayout());
-        JLabel titleLabel = new JLabel("Piante contro Zombie", SwingConstants.CENTER);
-        titleLabel.setFont(new Font("Arial", Font.BOLD, TITLE_FONT_SIZE));
+        final JLabel titleLabel = new JLabel("Piante contro Zombie", SwingConstants.CENTER);
+        titleLabel.setFont(new Font(FONT_NAME, Font.BOLD, TITLE_FONT_SIZE));
         this.add(titleLabel, BorderLayout.NORTH);
 
-        JPanel settingsPanel = new JPanel();
+        final JPanel settingsPanel = new JPanel();
         settingsPanel.setLayout(new GridLayout(SETTINGS_PANEL_GRID_ROWS, SETTINGS_PANEL_GRID_COLS,
                 SETTINGS_PANEL_GRID_HGAP, SETTINGS_PANEL_GRID_VGAP));
         settingsPanel.setBackground(BACKGROUND_COLOR);
 
         difficultyLabel = new JLabel("Difficoltà: Normale", SwingConstants.CENTER);
-        difficultyLabel.setFont(new Font("Arial", Font.BOLD, DIFFICULTY_FONT_SIZE));
+        difficultyLabel.setFont(new Font(FONT_NAME, Font.BOLD, DIFFICULTY_FONT_SIZE));
         settingsPanel.add(difficultyLabel);
 
         resolutionCombo = new JComboBox<>(Resolution.values());
-        resolutionCombo.setSelectedItem(Resolution.R800x600);
-        resolutionCombo.setFont(new Font("Arial", Font.PLAIN, BUTTON_FONT_SIZE));
-        JPanel resPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        resolutionCombo.setSelectedItem(Resolution.R_800X600);
+        resolutionCombo.setFont(new Font(FONT_NAME, Font.PLAIN, BUTTON_FONT_SIZE));
+        final JPanel resPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
         resPanel.setBackground(BACKGROUND_COLOR);
-        JLabel resLabel = new JLabel("Risoluzione: ", SwingConstants.CENTER);
-        resLabel.setFont(new Font("Arial", Font.BOLD, RES_LABEL_FONT_SIZE));
+        final JLabel resLabel = new JLabel("Risoluzione: ", SwingConstants.CENTER);
+        resLabel.setFont(new Font(FONT_NAME, Font.BOLD, RES_LABEL_FONT_SIZE));
         resPanel.add(resLabel);
         resPanel.add(resolutionCombo);
         settingsPanel.add(resPanel);
         this.add(settingsPanel, BorderLayout.SOUTH);
 
-        JPanel buttonPanel = new JPanel();
+        final JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new GridLayout(BUTTON_PANEL_GRID_ROWS, BUTTON_PANEL_GRID_COLS,
                 BUTTON_PANEL_GRID_HGAP, BUTTON_PANEL_GRID_VGAP));
         playButton = new JButton("Gioca");
@@ -113,10 +115,10 @@ public final class MenuViewImpl extends JPanel implements MenuView {
         titleLabel.setBorder(BorderFactory.createEmptyBorder(0, 0, TITLE_BORDER_BOTTOM, 0));
         difficultyLabel.setBorder(BorderFactory.createEmptyBorder(DIFFICULTY_BORDER_TOP, 0, 0, 0));
 
-        playButton.setFont(new Font("Arial", Font.PLAIN, BUTTON_FONT_SIZE));
-        difficultyButton.setFont(new Font("Arial", Font.PLAIN, BUTTON_FONT_SIZE));
-        tutorialButton.setFont(new Font("Arial", Font.PLAIN, BUTTON_FONT_SIZE));
-        exitButton.setFont(new Font("Arial", Font.PLAIN, BUTTON_FONT_SIZE));
+        playButton.setFont(new Font(FONT_NAME, Font.PLAIN, BUTTON_FONT_SIZE));
+        difficultyButton.setFont(new Font(FONT_NAME, Font.PLAIN, BUTTON_FONT_SIZE));
+        tutorialButton.setFont(new Font(FONT_NAME, Font.PLAIN, BUTTON_FONT_SIZE));
+        exitButton.setFont(new Font(FONT_NAME, Font.PLAIN, BUTTON_FONT_SIZE));
 
         initListeners();
         configureFrame();
@@ -139,9 +141,7 @@ public final class MenuViewImpl extends JPanel implements MenuView {
      * Initializes button and combo listeners.
      */
     private void initListeners() {
-        this.playButton.addActionListener(e -> {
-            parentController.startGame(currentDifficulty, currentResolution);
-        });
+        this.playButton.addActionListener(e -> parentController.startGame(currentDifficulty, currentResolution));
 
         this.difficultyButton.addActionListener(e -> {
             currentDifficulty = switch (currentDifficulty) {
@@ -157,10 +157,9 @@ public final class MenuViewImpl extends JPanel implements MenuView {
         this.exitButton.addActionListener(e -> System.exit(0));
 
         this.resolutionCombo.addActionListener(e -> {
-            Resolution sel = (Resolution) resolutionCombo.getSelectedItem();
+            final Resolution sel = (Resolution) resolutionCombo.getSelectedItem();
             setResolution(sel);
         });
-
     }
 
     /**
@@ -176,11 +175,11 @@ public final class MenuViewImpl extends JPanel implements MenuView {
      * @param resolution the new Resolution to use
      */
     public void setResolution(final Resolution resolution) {
-        Resolution previousResolution = this.currentResolution;
+        final Resolution previousResolution = this.currentResolution;
 
         frame.setSize(resolution.getWidth(), resolution.getHeight());
 
-        int choice = JOptionPane.showConfirmDialog(
+        final int choice = JOptionPane.showConfirmDialog(
                 this,
                 "Vuoi mantenere la nuova risoluzione?",
                 "Conferma risoluzione",

@@ -9,12 +9,17 @@ import pvz.controller.menucontroller.api.MenuController;
 import pvz.controller.menucontroller.impl.MenuControllerImpl;
 import pvz.model.game.api.Difficulty;
 import pvz.utilities.Resolution;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Implementation of the {@link MainController} interface.
  * Manages the flow of the application: menu, game, end-game, and error handling.
  */
 public final class MainControllerImpl implements MainController {
+
+    /** Logger for this class. */
+    private static final Logger LOGGER = Logger.getLogger(MainControllerImpl.class.getName());
 
     /** The game controller instance. */
     private final GameController gameController = new GameControllerImpl(this);
@@ -63,14 +68,12 @@ public final class MainControllerImpl implements MainController {
     }
 
     /**
-     * Handles any uncaught exceptions, prints the stack trace, and exits the application.
+     * Handles any uncaught exceptions, logs the error, and exits the application.
      *
      * @param exception the exception to handle
      */
     @Override
     public void handleException(final Exception exception) {
-        exception.printStackTrace();
-        System.err.println("Errore inaspettato, il gioco verrà chiuso. Controllare il log per maggiori informazioni.");
-        System.exit(1);
+        LOGGER.log(Level.SEVERE, "Unexpected error occurred, the game will be closed. See the log for more info.", exception);
     }
 }

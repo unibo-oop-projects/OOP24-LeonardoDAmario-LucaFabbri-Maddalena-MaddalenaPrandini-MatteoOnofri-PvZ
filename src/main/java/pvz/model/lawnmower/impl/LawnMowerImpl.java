@@ -23,12 +23,12 @@ public class LawnMowerImpl extends AbstractEntity implements LawnMower {
     /**
      * The movement speed of the lawn mower.
      */
-    private final int speed = 4;
+    private static final int SPEED = 4;
 
-    private CollisionManager collisionManager;
+    private final CollisionManager collisionManager;
 
     /**
-     * Constructs a new LawnMowerImp with the given position and hitbox type.
+     * Constructs a new LawnMowerImpl with the given position and hitbox type.
      *
      * @param position   the initial position of the mower; must not be {@code null}.
      * @param hitBoxType the type of hitbox to assign to this mower.
@@ -46,7 +46,7 @@ public class LawnMowerImpl extends AbstractEntity implements LawnMower {
      */
     @Override
     public void update(final long deltaTime, final EntitiesManager entitiesManager) {
-        Optional<Zombie> zombie = this.collisionManager.handleCollision(this, entitiesManager)
+        final Optional<Zombie> zombie = this.collisionManager.handleCollision(this, entitiesManager)
                 .map(entity -> (Zombie) entity);
         if (zombie.isPresent()) {
             zombie.get().forceKill();
@@ -56,10 +56,11 @@ public class LawnMowerImpl extends AbstractEntity implements LawnMower {
             }
         }
         this.move();
-        List<Entity> snapshot = new ArrayList<>(entitiesManager.getEntities());
-        for (Entity e : snapshot) {
+        final List<Entity> snapshot = new ArrayList<>(entitiesManager.getEntities());
+        final double epsilon = 1e-6;
+        for (final Entity e : snapshot) {
             if (e instanceof Zombie z
-                    && z.getPosition().y() == this.getPosition().y()
+                    && Math.abs(z.getPosition().y() - this.getPosition().y()) < epsilon
                     && this.getHitBox().isColliding(z.getHitBox())) {
 
                 z.forceKill();
@@ -75,7 +76,7 @@ public class LawnMowerImpl extends AbstractEntity implements LawnMower {
      * Moves the lawn mower forward based on its speed and updates its hitbox.
      */
     private void move() {
-        final double move = this.speed * (1 / 100.0);
+        final double move = SPEED * (1 / 100.0);
         final double newX = this.getPosition().x() + move;
         this.setPosition(new Position(newX, this.getPosition().y()));
         this.getHitBox().update(this.getPosition());

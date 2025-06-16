@@ -2,7 +2,6 @@ package pvz;
 
 import org.junit.jupiter.api.Test;
 
-import pvz.model.game.api.Difficulty;
 import pvz.model.game.api.EntitiesManager;
 import pvz.model.plants.api.Plant;
 import pvz.model.game.impl.EntitiesManagerImpl;
@@ -28,7 +27,7 @@ class UpdateTest {
 
      UpdateTest() {
         this.plantFactory = new PlantFactory();
-        this.entitiesManager = new EntitiesManagerImpl(Difficulty.EASY);
+        this.entitiesManager = new EntitiesManagerImpl();
     }
 
     /**
@@ -79,7 +78,7 @@ class UpdateTest {
      */
     @Test
     void testWallNutUpdate() {
-        final EntitiesManager entitiesManager = new EntitiesManagerImpl(Difficulty.EASY);
+        final EntitiesManager entitiesManager = new EntitiesManagerImpl();
         final Position position = new Position(0, 0);
 
         final PlantFactory plantFactory = new PlantFactory();

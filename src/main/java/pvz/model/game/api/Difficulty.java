@@ -18,7 +18,6 @@ public enum Difficulty {
             case EASY -> "Facile";
             case NORMAL -> "Normale";
             case HARD -> "Difficile";
-            default -> "";
         };
     }
 }

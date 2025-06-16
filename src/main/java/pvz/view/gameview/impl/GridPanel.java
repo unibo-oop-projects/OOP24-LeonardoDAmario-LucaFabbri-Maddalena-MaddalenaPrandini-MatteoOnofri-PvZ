@@ -10,12 +10,15 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.Serializable;
 
 /**
  * Panel representing the plant placement grid.
  * Handles mouse input and draws the background grid.
  */
-public class GridPanel extends JPanel {
+public final class GridPanel extends JPanel implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     private static final int ROWS = 5;
     private static final int COLS = 9;
@@ -54,20 +57,20 @@ public class GridPanel extends JPanel {
     @Override
     protected void paintComponent(final Graphics g) {
         super.paintComponent(g);
-        Graphics2D g2 = (Graphics2D) g.create();
+        final Graphics2D g2 = (Graphics2D) g.create();
 
         g2.setColor(Color.BLACK);
 
-        int totalWidth = COLS * cellSize;
-        int totalHeight = ROWS * cellSize;
+        final int totalWidth = COLS * cellSize;
+        final int totalHeight = ROWS * cellSize;
 
         for (int x = 0; x <= COLS; x++) {
-            int xPos = MARGIN_X + x * cellSize;
+            final int xPos = MARGIN_X + x * cellSize;
             g2.drawLine(xPos, MARGIN_Y, xPos, MARGIN_Y + totalHeight);
         }
 
         for (int y = 0; y <= ROWS; y++) {
-            int yPos = MARGIN_Y + y * cellSize;
+            final int yPos = MARGIN_Y + y * cellSize;
             g2.drawLine(MARGIN_X, yPos, MARGIN_X + totalWidth, yPos);
         }
         g2.dispose();
@@ -90,8 +93,8 @@ public class GridPanel extends JPanel {
         this.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(final MouseEvent e) {
-                int x = (e.getX() - MARGIN_X) / cellSize;
-                int y = (e.getY() - MARGIN_Y) / cellSize;
+                final int x = (e.getX() - MARGIN_X) / cellSize;
+                final int y = (e.getY() - MARGIN_Y) / cellSize;
 
                 if (x >= 0 && x < COLS && y >= 0 && y < ROWS && listener != null) {
                     listener.processInputGrid(new Position(x, y));

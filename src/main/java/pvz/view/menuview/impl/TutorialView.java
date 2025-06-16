@@ -2,30 +2,28 @@ package pvz.view.menuview.impl;
 
 import pvz.utilities.Resolution;
 
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
-import java.awt.BorderLayout;
-import java.awt.Font;
+import javax.swing.*;
+import java.awt.*;
 
 /**
- * A simple JFrame that shows the game tutorial to the user.
+ * A dialog that shows the game tutorial to the user.
  */
-public class TutorialView extends JFrame {
+public final class TutorialView {
 
     private static final int TEXT_FONT_SIZE = 18;
+    private final JDialog dialog;
 
     /**
-     * Constructs the TutorialView window.
+     * Shows the TutorialView window.
      *
      * @param resolution the Resolution used to set the window size
      */
     public TutorialView(final Resolution resolution) {
-        this.setLayout(new BorderLayout());
+        this.dialog = new JDialog();
+        dialog.setTitle("Tutorial");
+        dialog.setModal(true);
 
-        JTextArea text = new JTextArea();
-        text.setText("""
+        final JTextArea text = new JTextArea("""
                 - Uccidi 20 Zombie per vincere!
 
                 - Se uno Zombie arriva oltre le tue piante hai perso!
@@ -46,14 +44,18 @@ public class TutorialView extends JFrame {
         text.setLineWrap(true);
         text.setWrapStyleWord(true);
 
-        JScrollPane scroll = new JScrollPane(text);
-        this.add(scroll, BorderLayout.CENTER);
+        final JScrollPane scroll = new JScrollPane(text);
 
-        JButton back = new JButton("Indietro");
-        back.addActionListener(e -> this.dispose());
-        this.add(back, BorderLayout.SOUTH);
+        final JButton back = new JButton("Indietro");
+        back.addActionListener(e -> dialog.dispose());
 
-        this.setSize(resolution.getWidth(), resolution.getHeight());
-        this.setVisible(true);
+        final JPanel panel = new JPanel(new BorderLayout());
+        panel.add(scroll, BorderLayout.CENTER);
+        panel.add(back, BorderLayout.SOUTH);
+
+        dialog.getContentPane().add(panel);
+        dialog.setSize(resolution.getWidth(), resolution.getHeight());
+        dialog.setLocationRelativeTo(null);
+        dialog.setVisible(true);
     }
 }

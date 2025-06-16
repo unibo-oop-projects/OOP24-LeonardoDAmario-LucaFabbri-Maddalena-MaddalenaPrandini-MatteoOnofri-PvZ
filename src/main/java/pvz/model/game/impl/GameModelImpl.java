@@ -55,7 +55,7 @@ public class GameModelImpl implements GameModel {
      */
     public GameModelImpl(final Difficulty difficulty) {
         this.difficulty = difficulty;
-        this.entitiesManager = new EntitiesManagerImpl(difficulty);
+        this.entitiesManager = new EntitiesManagerImpl();
         this.status = GameStatus.IN_PROGRESS;
     }
 

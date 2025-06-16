@@ -2,10 +2,7 @@ package pvz.model.game.impl;
 
 import pvz.model.game.api.EntitiesManager;
 import pvz.model.entities.api.Entity;
-import pvz.model.game.api.Difficulty;
-
 import java.util.HashSet;
-import java.util.Random;
 import java.util.Set;
 
 /**
@@ -19,18 +16,13 @@ public class EntitiesManagerImpl implements EntitiesManager {
     private static final int DEFAULT_KILLS = 0;
 
     private final Set<Entity> entities = new HashSet<>();
-    private final Random random = new Random();
-    private final Difficulty difficulty;
     private int sunCount;
     private int killCount;
 
     /**
      * Constructs a new EntitiesManager with default sun and kill counts.
-     *
-     * @param difficulty the game difficulty level
      */
-    public EntitiesManagerImpl(final Difficulty difficulty) {
-        this.difficulty = difficulty;
+    public EntitiesManagerImpl() {
         this.sunCount = DEFAULT_SUNS;
         this.killCount = DEFAULT_KILLS;
     }

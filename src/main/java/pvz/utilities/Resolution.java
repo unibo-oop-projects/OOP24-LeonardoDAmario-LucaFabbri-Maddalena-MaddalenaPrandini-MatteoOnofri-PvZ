@@ -6,19 +6,19 @@ package pvz.utilities;
 public enum Resolution {
 
     /** 640×480 (VGA) resolution. */
-    R640x480(640, 480, "640×480 (VGA)"),
+    R_640X480(640, 480, "640×480 (VGA)"),
     /** 800×600 (SVGA) resolution. */
-    R800x600(800, 600, "800×600 (SVGA)"),
+    R_800X600(800, 600, "800×600 (SVGA)"),
     /** 1024×768 (XGA) resolution. */
-    R1024x768(1024, 768, "1024×768 (XGA)"),
+    R_1024X768(1024, 768, "1024×768 (XGA)"),
     /** 1152×864 (SXGA-) resolution. */
-    R1152x864(1152, 864, "1152×864 (SXGA-)"),
+    R_1152X864(1152, 864, "1152×864 (SXGA-)"),
     /** 1600×1200 (UXGA) resolution. */
-    R1600x1200(1600, 1200, "1600×1200 (UXGA)"),
+    R_1600X1200(1600, 1200, "1600×1200 (UXGA)"),
     /** 2048×1536 (QXGA) resolution. */
-    R2048x1536(2048, 1536, "2048×1536 (QXGA)"),
+    R_2048X1536(2048, 1536, "2048×1536 (QXGA)"),
     /** 3840×2160 (4K UHD) resolution. */
-    R3840x2160(3840, 2160, "3840×2160 (4K UHD)");
+    R_3840X2160(3840, 2160, "3840×2160 (4K UHD)");
 
     /** The width of the resolution, in pixels. */
     private final int width;
