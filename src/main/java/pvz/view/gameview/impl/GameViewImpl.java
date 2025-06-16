@@ -6,8 +6,14 @@ import pvz.utilities.GameEntity;
 import pvz.utilities.Resolution;
 import pvz.view.gameview.api.GameView;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.JFrame;
+import javax.swing.JLayeredPane;
+import javax.swing.OverlayLayout;
+import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
+import javax.swing.WindowConstants;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.util.Set;
 
 /**
@@ -18,10 +24,13 @@ import java.util.Set;
  */
 public class GameViewImpl extends JPanel implements GameView {
 
+    private static final double SCALING_FACTOR = 0.8;
+    private static final double BASE_WIDTH = 640.0;
+
     /**
      * The game's toolbar displaying controls and stats.
      */
-    private final GameToolBar toolBar = new GameToolBar();
+    private final GameToolBar toolBar;
 
     /**
      * Panel used to draw moving and stationary entities (plants, zombies, bullets, etc.).
@@ -64,11 +73,12 @@ public class GameViewImpl extends JPanel implements GameView {
      * @param controller The game controller to communicate with.
      * @param resolution The chosen resolution for the game window.
      */
-    public GameViewImpl(GameController controller, Resolution resolution) {
+    public GameViewImpl(final GameController controller, final Resolution resolution) {
         this.parentController = controller;
         this.resolution = resolution;
-        double scaling = 0.8 * resolution.getWidth() / 640.0;
+        double scaling = SCALING_FACTOR * resolution.getWidth() / BASE_WIDTH;
 
+        this.toolBar = new GameToolBar(scaling);
         this.drawPanel = new DrawPanel(scaling);
         this.gridPanel = new GridPanel(scaling);
         layeredPane.setLayout(new OverlayLayout(layeredPane));
@@ -79,12 +89,12 @@ public class GameViewImpl extends JPanel implements GameView {
         layeredPane.add(gridPanel, JLayeredPane.DEFAULT_LAYER);
         layeredPane.add(drawPanel, JLayeredPane.PALETTE_LAYER);
 
+        this.setLayout(new BorderLayout());
         this.add(toolBar, BorderLayout.NORTH);
         this.add(layeredPane, BorderLayout.CENTER);
 
         configureFrame();
         setViewListener((ViewListener) this.parentController);
-
     }
 
     /**
@@ -113,7 +123,7 @@ public class GameViewImpl extends JPanel implements GameView {
      * @param kills    The number of zombies defeated.
      */
     @Override
-    public void render(Set<GameEntity> entities, int suns, int kills) {
+    public void render(final Set<GameEntity> entities, final int suns, final int kills) {
         drawPanel.updateMovingEntities(Set.copyOf(entities));
         toolBar.updateStats(suns, kills);
 
@@ -131,7 +141,7 @@ public class GameViewImpl extends JPanel implements GameView {
      * @param listener The {@link ViewListener} instance.
      */
     @Override
-    public void setViewListener(ViewListener listener) {
+    public void setViewListener(final ViewListener listener) {
         this.listener = listener;
         toolBar.setViewListener(listener);
         gridPanel.setViewListener(listener);
@@ -149,5 +159,4 @@ public class GameViewImpl extends JPanel implements GameView {
         frame.setResizable(false);
         frame.setVisible(true);
     }
-
 }

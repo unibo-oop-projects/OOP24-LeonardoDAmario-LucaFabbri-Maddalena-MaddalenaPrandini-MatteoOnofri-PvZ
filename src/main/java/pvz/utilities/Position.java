@@ -8,5 +8,4 @@ package pvz.utilities;
  * @param y the vertical coordinate
  */
 public record Position(double x, double y) {
-    
 }

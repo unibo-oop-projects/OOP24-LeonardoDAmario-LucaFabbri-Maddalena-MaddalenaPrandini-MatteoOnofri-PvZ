@@ -17,8 +17,6 @@ import java.util.Set;
 public class EntitiesManagerImpl implements EntitiesManager {
     private static final int DEFAULT_SUNS = 50;
     private static final int DEFAULT_KILLS = 0;
-    
-    
 
     private final Set<Entity> entities = new HashSet<>();
     private final Random random = new Random();
@@ -28,8 +26,10 @@ public class EntitiesManagerImpl implements EntitiesManager {
 
     /**
      * Constructs a new EntitiesManager with default sun and kill counts.
+     *
+     * @param difficulty the game difficulty level
      */
-    public EntitiesManagerImpl(Difficulty difficulty) {
+    public EntitiesManagerImpl(final Difficulty difficulty) {
         this.difficulty = difficulty;
         this.sunCount = DEFAULT_SUNS;
         this.killCount = DEFAULT_KILLS;
@@ -117,8 +117,4 @@ public class EntitiesManagerImpl implements EntitiesManager {
     public int getSunCount() {
         return sunCount;
     }
-    
-
 }
-
-

@@ -10,12 +10,12 @@ import pvz.model.game.api.Difficulty;
 import pvz.model.game.api.GameModel;
 import pvz.model.game.api.GameStatus;
 import pvz.model.lawnmower.api.LawnMower;
-import pvz.model.lawnmower.impl.LawnMowerImp;
+import pvz.model.lawnmower.impl.LawnMowerImpl;
 import pvz.model.plants.api.Plant;
+import pvz.utilities.PlantType;
 import pvz.model.plants.impl.PlantFactory;
 import pvz.model.zombies.api.Zombie;
 import pvz.model.zombies.impl.ZombieSpawnUtil;
-import pvz.utilities.PlantType;
 import pvz.utilities.Position;
 
 import java.util.ArrayList;
@@ -24,6 +24,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
+
 /**
  * Concrete implementation of {@link GameModel}.
  * <p>
@@ -58,25 +59,20 @@ public class GameModelImpl implements GameModel {
         this.status = GameStatus.IN_PROGRESS;
     }
 
-    /**
-     * @inheritDoc
-     */
+    /** {@inheritDoc} */
     @Override
     public boolean isGameOver() {
         return status != GameStatus.IN_PROGRESS;
     }
 
-    /**
-     * @inheritDoc
-     */
+    /** {@inheritDoc} */
     @Override
     public boolean isVictory() {
         return status == GameStatus.WON;
     }
 
-    /**
-     * @inheritDoc
-     * * <p>
+    /** {@inheritDoc}
+     * <p>
      * Updates all entities, spawns zombies as necessary, checks for lawnmower activation,
      * removes out-of-frame objects, and updates the game status accordingly.
      */
@@ -93,9 +89,7 @@ public class GameModelImpl implements GameModel {
         checkGameStatus();
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public Set<GameEntity> getGameEntities() {
         return entitiesManager.getEntities().stream()
@@ -103,32 +97,27 @@ public class GameModelImpl implements GameModel {
                 .collect(Collectors.toSet());
     }
 
-    /**
-     * @inheritDoc
-     */
+    /** {@inheritDoc} */
     @Override
     public int getSunCount() {
         return entitiesManager.getSunCount();
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public int getKillCount() {
         return entitiesManager.getKillCount();
     }
 
-    /**
-     * {@inheritDoc}
+    /** {@inheritDoc}
      * <p>
      * Attempts to place a plant of the given type at the specified position,
      * checking sun resources before adding the plant to entitiesManager.
      */
     @Override
     public void placePlant(final EntityType type, final Position position) {
-        final PlantFactory plantFactory = new PlantFactory();
-        final PlantType plantType = getPlantTypeFromEntityType(type);
+        PlantFactory plantFactory = new PlantFactory();
+        PlantType plantType = getPlantTypeFromEntityType(type);
         final Plant plant = switch (plantType) {
             case PEASHOOTER -> plantFactory.createPeashooter(position);
             case SUNFLOWER -> plantFactory.createSunflower(position);
@@ -149,7 +138,7 @@ public class GameModelImpl implements GameModel {
         zombieLastSpawnTime += deltaTime;
         if (zombieLastSpawnTime >= SPAWN_RATE) {
             zombieLastSpawnTime = 0;
-            final Zombie zombie = ZombieSpawnUtil.generateRandomZombie(difficulty, ROWS);
+            Zombie zombie = ZombieSpawnUtil.generateRandomZombie(difficulty, ROWS);
             entitiesManager.addEntity(zombie);
         }
     }
@@ -181,7 +170,7 @@ public class GameModelImpl implements GameModel {
      * @param zombie the zombie that has reached the row start.
      */
     private void handleZombieAtRowStart(final Zombie zombie) {
-        final int row = (int) Math.round(zombie.getPosition().y());
+        int row = (int) Math.round(zombie.getPosition().y());
         if (zombie.getPosition().x() <= 0) {
             if (usedMower.get(row)) {
                 status = GameStatus.LOST;
@@ -198,7 +187,7 @@ public class GameModelImpl implements GameModel {
      */
     private void addLawnMower(final int row) {
         usedMower.set(row, true);
-        final LawnMower lawnMower = new LawnMowerImp(new Position(0, row), HitBoxFactory.HitBoxType.ZOMBIE);
+        LawnMower lawnMower = new LawnMowerImpl(new Position(0, row), HitBoxFactory.HitBoxType.ZOMBIE);
         entitiesManager.addEntity(lawnMower);
         lawnMower.update(0, entitiesManager);
     }
