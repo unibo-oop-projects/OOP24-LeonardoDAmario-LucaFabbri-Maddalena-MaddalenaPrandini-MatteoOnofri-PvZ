@@ -24,6 +24,7 @@ import java.util.Set;
  */
 public class GameViewImpl extends JPanel implements GameView {
 
+    private static final long serialVersionUID = 1L;
     private static final double SCALING_FACTOR = 0.8;
     private static final double BASE_WIDTH = 640.0;
 
@@ -65,7 +66,7 @@ public class GameViewImpl extends JPanel implements GameView {
     /**
      * Listener that receives user input events from the view.
      */
-    private ViewListener listener;
+    private transient ViewListener listener;
 
     /**
      * Constructs a new GameViewImpl instance.
@@ -76,7 +77,7 @@ public class GameViewImpl extends JPanel implements GameView {
     public GameViewImpl(final GameController controller, final Resolution resolution) {
         this.parentController = controller;
         this.resolution = resolution;
-        double scaling = SCALING_FACTOR * resolution.getWidth() / BASE_WIDTH;
+        final double scaling = SCALING_FACTOR * resolution.getWidth() / BASE_WIDTH;
 
         this.toolBar = new GameToolBar(scaling);
         this.drawPanel = new DrawPanel(scaling);
