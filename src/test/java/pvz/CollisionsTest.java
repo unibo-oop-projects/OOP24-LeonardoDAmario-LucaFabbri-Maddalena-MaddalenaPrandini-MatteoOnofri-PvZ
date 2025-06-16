@@ -9,7 +9,7 @@ import pvz.model.bullets.impl.BulletImpl;
 import pvz.model.game.api.EntitiesManager;
 import pvz.model.game.impl.EntitiesManagerImpl;
 import pvz.model.plants.api.Plant;
-import pvz.model.plants.impl.PlantFactory;
+import pvz.model.plants.impl.PlantFactoryImpl;
 import pvz.model.zombies.api.Zombie;
 import pvz.model.zombies.impl.BasicZombie;
 import pvz.utilities.Position;
@@ -29,7 +29,7 @@ final class CollisionsTest {
 
     private CollisionManager collisionManager;
     private EntitiesManager entitiesManager;
-    private PlantFactory plantFactory;
+    private PlantFactoryImpl plantFactory;
 
     /**
      * Sets up the test environment before each test.
@@ -38,7 +38,7 @@ final class CollisionsTest {
     void setUp() {
         collisionManager = new CollisionManagerImpl();
         entitiesManager = new EntitiesManagerImpl();
-        plantFactory = new PlantFactory();
+        plantFactory = new PlantFactoryImpl();
     }
 
     @Test

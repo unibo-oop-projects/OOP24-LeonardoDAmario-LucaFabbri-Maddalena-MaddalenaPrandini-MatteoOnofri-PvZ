@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 import pvz.model.game.api.EntitiesManager;
 import pvz.model.plants.api.Plant;
 import pvz.model.game.impl.EntitiesManagerImpl;
-import pvz.model.plants.impl.PlantFactory;
+import pvz.model.plants.impl.PlantFactoryImpl;
 import pvz.model.zombies.api.Zombie;
 import pvz.model.zombies.impl.BasicZombie;
 import pvz.utilities.Position;
@@ -22,11 +22,11 @@ class UpdateTest {
     private static final long PEAHOOTER_FIRE_RATE = 2000L;
     private static final long SUNFLOWER_GENERATION_RATE = 6000L;
     private static final int SUN_VALUE = 25;
-    private final PlantFactory plantFactory;
+    private final PlantFactoryImpl plantFactory;
     private final EntitiesManager entitiesManager;
 
      UpdateTest() {
-        this.plantFactory = new PlantFactory();
+        this.plantFactory = new PlantFactoryImpl();
         this.entitiesManager = new EntitiesManagerImpl();
     }
 
@@ -81,7 +81,7 @@ class UpdateTest {
         final EntitiesManager entitiesManager = new EntitiesManagerImpl();
         final Position position = new Position(0, 0);
 
-        final PlantFactory plantFactory = new PlantFactory();
+        final PlantFactoryImpl plantFactory = new PlantFactoryImpl();
         final Plant wallnut = plantFactory.createWallnut(position);
 
         final Zombie zombie = new BasicZombie(position);

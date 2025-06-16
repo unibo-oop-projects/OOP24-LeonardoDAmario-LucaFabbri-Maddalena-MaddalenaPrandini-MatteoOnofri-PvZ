@@ -4,6 +4,7 @@ import pvz.model.bullets.api.Bullet;
 import pvz.model.collisions.impl.HitBoxFactory;
 import pvz.model.game.api.EntitiesManager;
 import pvz.model.entities.api.Entity;
+import pvz.model.plants.impl.PlantFactoryImpl;
 import pvz.utilities.EntityType;
 import pvz.utilities.GameEntity;
 import pvz.model.game.api.Difficulty;
@@ -13,7 +14,6 @@ import pvz.model.lawnmower.api.LawnMower;
 import pvz.model.lawnmower.impl.LawnMowerImpl;
 import pvz.model.plants.api.Plant;
 import pvz.utilities.PlantType;
-import pvz.model.plants.impl.PlantFactory;
 import pvz.model.zombies.api.Zombie;
 import pvz.model.zombies.impl.ZombieSpawnUtil;
 import pvz.utilities.Position;
@@ -116,7 +116,7 @@ public class GameModelImpl implements GameModel {
      */
     @Override
     public void placePlant(final EntityType type, final Position position) {
-        final PlantFactory plantFactory = new PlantFactory();
+        final PlantFactoryImpl plantFactory = new PlantFactoryImpl();
         final PlantType plantType = getPlantTypeFromEntityType(type);
         final Plant plant = switch (plantType) {
             case PEASHOOTER -> plantFactory.createPeashooter(position);

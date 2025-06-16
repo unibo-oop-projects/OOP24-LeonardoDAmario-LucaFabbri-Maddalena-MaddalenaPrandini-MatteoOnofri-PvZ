@@ -7,17 +7,17 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import pvz.model.plants.api.Plant;
+import pvz.model.plants.impl.PlantFactoryImpl;
 import pvz.utilities.PlantType;
-import pvz.model.plants.impl.PlantFactory;
 import pvz.utilities.Position;
 
 /**
- * Unit tests for the {@link PlantFactory} class.
+ * Unit tests for the {@link PlantFactoryImpl} class.
  * Ensures that plants are correctly created and initialized.
  */
 class PlantFactoryTest {
 
-    private PlantFactory factory;
+    private PlantFactoryImpl factory;
     private Position somePos;
 
     /**
@@ -25,7 +25,7 @@ class PlantFactoryTest {
      */
     @BeforeEach
     public void setUp() {
-        factory = new PlantFactory();
+        factory = new PlantFactoryImpl();
         somePos = new Position(4, 2);
     }
 
