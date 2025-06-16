@@ -1,7 +1,9 @@
 package pvz.view.gameview.impl;
 
+
 import pvz.model.entities.api.GameEntity;
 import pvz.model.plants.api.PlantType;
+import pvz.model.zombies.api.ZombieType;
 
 import javax.swing.*;
 import java.awt.*;
@@ -17,6 +19,7 @@ public class DrawPanel extends JPanel {
 
     private Set<GameEntity> entities = Set.of();
     private final EnumMap<PlantType, Color> plantcolors = new EnumMap<>(PlantType.class);
+    private final EnumMap<ZombieType, Color> zombieColors = new EnumMap<>(ZombieType.class);
 
     public DrawPanel(double scaling) {
         this.setOpaque(false);// trasparente
@@ -24,6 +27,10 @@ public class DrawPanel extends JPanel {
         plantcolors.put(PlantType.PEASHOOTER, new Color(34, 139, 34));
         plantcolors.put(PlantType.SUNFLOWER, new Color(255, 215, 0));
         plantcolors.put(PlantType.WALLNUT, new Color(139, 69, 19));
+        zombieColors.put(ZombieType.BASICZOMBIE, new Color(255, 128, 128));
+        zombieColors.put(ZombieType.FASTZOMBIE, new Color(255, 64, 64));     
+        zombieColors.put(ZombieType.STRONGZOMBIE, new Color(192, 0, 64));   
+        zombieColors.put(ZombieType.BEASTZOMBIE, new Color(128, 0, 128));
         double doubleCell = scaling * 80;
         cell_size = (int)doubleCell;
     }
@@ -60,8 +67,16 @@ public class DrawPanel extends JPanel {
                     g2.setColor(c);
                     g2.fillRect(plantX, plantY, cell_size/2, cell_size/2);
                 }
-                case ZOMBIE -> {
-                    g2.setColor(Color.RED);
+                case BASICZOMBIE, STRONGZOMBIE, FASTZOMBIE, BEASTZOMBIE -> {
+                    ZombieType zombie = switch (e.type()) {
+                        case BASICZOMBIE -> ZombieType.BASICZOMBIE;
+                        case FASTZOMBIE -> ZombieType.FASTZOMBIE;
+                        case STRONGZOMBIE -> ZombieType.STRONGZOMBIE;
+                        case BEASTZOMBIE -> ZombieType.BEASTZOMBIE;
+                        default -> null;
+                    };
+                    Color c = zombieColors.getOrDefault(zombie, Color.GREEN);
+                    g2.setColor(c);
                     g2.fillRect(pixelX-MARGIN_X, pixelY-MARGIN_Y, cell_size/2, cell_size);
                 }
                 case BULLET ->{

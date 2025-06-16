@@ -194,7 +194,14 @@ public class GameModelImpl implements GameModel {
                 case SUNFLOWER -> EntityType.SUNFLOWER;
                 case WALLNUT -> EntityType.WALLNUT;
             };
-            case Zombie zombie -> EntityType.ZOMBIE;
+
+            case Zombie zombie -> switch (zombie.getType()) {
+                case BASICZOMBIE -> EntityType.BASICZOMBIE;
+                case FASTZOMBIE -> EntityType.FASTZOMBIE;
+                case STRONGZOMBIE -> EntityType.STRONGZOMBIE;
+                case BEASTZOMBIE -> EntityType.BEASTZOMBIE;
+            };
+
             case Bullet bullet -> EntityType.BULLET;
             case LawnMower lawnMower -> EntityType.LAWNMOWER;
             default -> throw new IllegalArgumentException();

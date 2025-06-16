@@ -1,5 +1,6 @@
 package pvz.model.zombies.impl;
 
+import pvz.model.zombies.api.ZombieType;
 import pvz.utilities.*;
 
 public class BasicZombie extends AbstractZombie {
@@ -15,6 +16,11 @@ public class BasicZombie extends AbstractZombie {
     @Override
     public int getDamage() {
         return BASIC_ZOMBIE_DAMAGE;
+    }
+
+    @Override
+    public ZombieType getType() {
+        return ZombieType.BASICZOMBIE;
     }
     
 }
