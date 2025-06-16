@@ -15,6 +15,7 @@ import pvz.view.gameview.impl.GameViewImpl;
 
 import java.util.Objects;
 import java.util.Set;
+import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.TimeUnit;
 
@@ -23,51 +24,47 @@ import java.util.concurrent.TimeUnit;
  * Manages the game loop, user inputs, and interaction between the model and the view.
  */
 public class GameControllerImpl implements GameController, ViewListener {
-
+    private static final int FPS = 60;
+    private static final long TIME_PER_TICK = 1000 / FPS;
+    private final BlockingQueue<Event> queue = new LinkedBlockingQueue<>();
+    private final MainController parentController;
+    private GameModel model;
+    private boolean running;
+    private EntityType selectedPlantType;
     /**
      * Marker interface for queued input events.
      */
-    interface Event {}
+    interface Event { }
     /**
      * Input event representing plant selection from the roaster.
      *
      * @param inputRoaster the selected plant
      */
-    record InputRoaster(UserInputRoaster inputRoaster) implements Event {}
+    record InputRoaster(UserInputRoaster inputRoaster) implements Event { }
     /**
      * Input event representing a grid cell selection.
      *
      * @param position the position clicked
      */
-    record InputGrid(Position position) implements Event {}
-
-    private static final int FPS = 60;
-    private static final long TIME_PER_TICK = 1000 / FPS;
-
-    private final LinkedBlockingQueue<Event> queue = new LinkedBlockingQueue<>();
-    private final MainController parentController;
-    private GameModel model;
-    private GameView view;
-    private boolean running;
-    private EntityType selectedPlantType = null;
+    record InputGrid(Position position) implements Event { }
 
     /**
      * Constructs the game controller with a reference to the main controller.
      *
      * @param controller the parent controller
      */
-    public GameControllerImpl(MainController controller) {
+    public GameControllerImpl(final MainController controller) {
         this.parentController = controller;
 
     }
 
     /** {@inheritDoc} */
     @Override
-    public void startGame(Difficulty difficulty, Resolution resolution) {
+    public void startGame(final Difficulty difficulty, final Resolution resolution) {
         this.running = true;
         this.model = new GameModelImpl(difficulty);
-        this.view = new GameViewImpl(this, resolution);
-        new GameLoop(model, view).start();
+        final GameView localGameView = new GameViewImpl(this, resolution);
+        new GameLoop(model, localGameView).start();
     }
 
     /** {@inheritDoc} */
@@ -84,19 +81,18 @@ public class GameControllerImpl implements GameController, ViewListener {
         private final GameModel model;
         private final GameView view;
 
-        GameLoop(GameModel model, GameView view) {
+        GameLoop(final GameModel model, final GameView view) {
             this.model = Objects.requireNonNull(model);
             this.view = Objects.requireNonNull(view);
         }
         /** {@inheritDoc} */
         @Override
         public void run() {
-            Objects.requireNonNull(view);
             long previousTime = System.currentTimeMillis();
 
             while (running) {
-                long currentTime = System.currentTimeMillis();
-                long deltaTime = currentTime - previousTime;
+                final long currentTime = System.currentTimeMillis();
+                final long deltaTime = currentTime - previousTime;
 
                 model.update(deltaTime);
                 view.render(model.getGameEntities(), model.getSunCount(), model.getKillCount());
@@ -120,10 +116,10 @@ public class GameControllerImpl implements GameController, ViewListener {
          * @param currentTime the timestamp at the start of the frame
          */
         private void waitForNextFrame(final long currentTime) {
-            long frameDuration = System.currentTimeMillis() - currentTime;
+            final long frameDuration = System.currentTimeMillis() - currentTime;
             if (frameDuration < TIME_PER_TICK) {
                 try {
-                    Thread.sleep(TIME_PER_TICK - frameDuration);
+                    sleep(TIME_PER_TICK - frameDuration);
                 } catch (InterruptedException e) {
                     handleException(e);
                 }
@@ -136,7 +132,7 @@ public class GameControllerImpl implements GameController, ViewListener {
         private void handleInput() {
             try {
                 Event event;
-                while ((event = queue.poll(1, TimeUnit.MILLISECONDS)) != null) {
+                while ((event=queue.poll(1, TimeUnit.MILLISECONDS)) != null) {
                     switch (event) {
                         case InputRoaster(var inputRoaster) -> {
                             selectedPlantType = switch (inputRoaster) {
@@ -146,12 +142,12 @@ public class GameControllerImpl implements GameController, ViewListener {
                             };
                         }
                         case InputGrid(var pos) -> {
-                            if(selectedPlantType != null && !isCellOccupied(pos)){
+                            if (selectedPlantType != null && !isCellOccupied(pos)) {
                                 model.placePlant(selectedPlantType, pos);
                             }
                             selectedPlantType = null;
                         }
-                        default -> {}
+                        default -> { }
                     }
                 }
             } catch (InterruptedException e) {
@@ -162,19 +158,19 @@ public class GameControllerImpl implements GameController, ViewListener {
 
     /** {@inheritDoc} */
     @Override
-    public void processInputRoaster(UserInputRoaster input) {
+    public void processInputRoaster(final UserInputRoaster input) {
         queue.add(new InputRoaster(input));
     }
 
     /** {@inheritDoc} */
     @Override
-    public void processInputGrid(Position position) {
+    public void processInputGrid(final Position position) {
         queue.add(new InputGrid(position));
     }
 
     /** {@inheritDoc} */
     @Override
-    public void handleException(Exception exception) {
+    public void handleException(final Exception exception) {
         parentController.handleException(exception);
     }
 
@@ -186,9 +182,9 @@ public class GameControllerImpl implements GameController, ViewListener {
      */
     private boolean isCellOccupied(final Position position) {
         final GameModel currentModel = Objects.requireNonNull(this.model);
-        Set<GameEntity> entities = currentModel.getGameEntities();
+        final Set<GameEntity> entities = currentModel.getGameEntities();
         return entities.stream().anyMatch(e -> e.position().equals(position)
-                        && switch (e.type()){
+                        && switch (e.type()) {
                     case PEASHOOTER, SUNFLOWER, WALLNUT -> true;
                     case BASICZOMBIE, STRONGZOMBIE, FASTZOMBIE, BEASTZOMBIE, BULLET, LAWNMOWER -> false;
                 }
