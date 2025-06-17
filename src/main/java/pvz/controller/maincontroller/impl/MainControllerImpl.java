@@ -61,10 +61,11 @@ public final class MainControllerImpl implements MainController {
      * Navigates to the end-game screen.
      *
      * @param hasWon true if the player has won, false otherwise
+     * @param resolution the resolution to use for the end-game screen
      */
     @Override
-    public void goToEndGame(final boolean hasWon) {
-        endGameController.openEndGameMenu(hasWon);
+    public void goToEndGame(final boolean hasWon, final Resolution resolution) {
+        endGameController.openEndGameMenu(hasWon, resolution);
     }
 
     /**
@@ -88,7 +89,6 @@ public final class MainControllerImpl implements MainController {
     public void quit() {
         menuController.closeMenu();
         endGameController.closeEndGameMenu();
-        gameController.stopGame();
     }
 
 }

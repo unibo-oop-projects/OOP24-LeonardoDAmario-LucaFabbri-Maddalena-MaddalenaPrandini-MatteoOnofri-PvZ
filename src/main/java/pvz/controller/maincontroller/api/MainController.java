@@ -32,6 +32,7 @@ public interface MainController extends Controller {
      * Navigates to the end-game screen, showing win or loss.
      *
      * @param hasWon true if the player has won, false otherwise
+     * @param resolution the resolution to use for the end-game screen
      */
-    void goToEndGame(boolean hasWon);
+    void goToEndGame(boolean hasWon, Resolution resolution);
 }

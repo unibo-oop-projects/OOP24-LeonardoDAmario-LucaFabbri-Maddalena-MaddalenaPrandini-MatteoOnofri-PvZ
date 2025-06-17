@@ -211,4 +211,12 @@ public final class MenuViewImpl extends JPanel implements MenuView {
     public void setSelectedResolution(final Resolution resolution) {
         this.resolutionCombo.setSelectedItem(resolution);
     }
+
+    /**
+     * Closes the menu view and disposes of the associated window.
+     */
+    @Override
+    public void close() {
+        this.frame.dispose();
+    }
 }

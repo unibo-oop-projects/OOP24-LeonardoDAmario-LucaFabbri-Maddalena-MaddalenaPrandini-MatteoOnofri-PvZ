@@ -31,6 +31,7 @@ public class GameControllerImpl implements GameController, ViewListener {
     private GameModel model;
     private boolean running;
     private EntityType selectedPlantType;
+    private Resolution resolution;
     /**
      * Marker interface for queued input events.
      */
@@ -62,6 +63,7 @@ public class GameControllerImpl implements GameController, ViewListener {
     /** {@inheritDoc} */
     @Override
     public void startGame(final Difficulty difficulty, final Resolution resolution) {
+        this.resolution = resolution;
         this.running = true;
         this.model = new GameModelImpl(difficulty);
         final GameView view = GameViewImpl.createGameViewImpl(this, resolution);
@@ -107,7 +109,7 @@ public class GameControllerImpl implements GameController, ViewListener {
 
                 if (model.isGameOver()) {
                     stopGame();
-                    parentController.goToEndGame(model.isVictory());
+                    parentController.goToEndGame(model.isVictory(), resolution);
                     view.close();
                 }
             }

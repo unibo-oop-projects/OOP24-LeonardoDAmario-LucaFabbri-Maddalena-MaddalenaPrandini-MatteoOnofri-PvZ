@@ -99,7 +99,7 @@ public final class GameViewImpl extends JPanel implements GameView {
      * This method is called after the view is created to ensure all components are ready.
      */
     private void initialize() {
-        initComponents(); // qui puoi chiamare add o altri metodi overridabili
+        initComponents();
     }
 
     /**

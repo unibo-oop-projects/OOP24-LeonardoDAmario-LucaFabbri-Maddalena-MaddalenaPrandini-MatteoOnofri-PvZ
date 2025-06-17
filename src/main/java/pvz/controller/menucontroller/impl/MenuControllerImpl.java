@@ -43,7 +43,8 @@ public final class MenuControllerImpl implements MenuController {
     @Override
     public void closeMenu() {
         if (this.view != null) {
-            this.view.dispose();
+                this.view.close();
+            this.view = null;
         }
     }
 
