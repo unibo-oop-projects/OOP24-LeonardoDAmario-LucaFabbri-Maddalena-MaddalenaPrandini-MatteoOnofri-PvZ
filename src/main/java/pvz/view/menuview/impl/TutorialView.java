@@ -31,12 +31,15 @@ public final class TutorialView {
         dialog.setModal(true);
 
         final JTextArea text = new JTextArea("""
-                - Uccidi 20 Zombie per vincere!
+                - Uccidi 20 Zombie per vincere in modalità facile, 35 in normale e 45 in difficile!
 
-                - Se uno Zombie arriva oltre le tue piante hai perso!
+                - In modalità difficile spawneranno anche degli zombie BEAST!! Saranno molto difficili da uccidere!
+
+                - Se uno Zombie arriva oltre le tue piante due volte hai perso!
+                  (La prima volta si attiverà il tosaerba!)
 
                 - Per continuare a piantare piante ti servono i soli!
-                Assicurati di piantare sempre i girasoli per generare i tuoi soli!
+                Assicurati di piantare SEMPRE i girasoli per generare i tuoi soli!
 
                 PIANTE DISPONIBILI:
 
