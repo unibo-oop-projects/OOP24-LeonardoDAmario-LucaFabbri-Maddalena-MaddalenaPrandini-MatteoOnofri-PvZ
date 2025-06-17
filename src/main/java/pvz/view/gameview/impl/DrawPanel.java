@@ -73,6 +73,7 @@ public class DrawPanel extends JPanel {
      *
      * @param g the Graphics object to protect
      */
+    @SuppressWarnings("PMD")
     @Override
     protected void paintComponent(final Graphics g) {
         super.paintComponent(g);
