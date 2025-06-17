@@ -27,7 +27,7 @@ public final class GridPanel extends JPanel implements Serializable {
     private static final int MARGIN_Y = 0;
 
     private final int cellSize;
-    private ViewListener listener;
+    private transient ViewListener listener;
 
     /**
      * Constructs a new grid panel with the given scaling factor.

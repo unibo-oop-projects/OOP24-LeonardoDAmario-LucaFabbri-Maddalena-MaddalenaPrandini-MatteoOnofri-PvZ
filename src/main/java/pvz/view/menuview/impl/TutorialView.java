@@ -2,8 +2,15 @@ package pvz.view.menuview.impl;
 
 import pvz.utilities.Resolution;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.JButton;
+import javax.swing.JDialog;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+import java.awt.BorderLayout;
+import java.awt.Font;
+
+
 
 /**
  * A dialog that shows the game tutorial to the user.

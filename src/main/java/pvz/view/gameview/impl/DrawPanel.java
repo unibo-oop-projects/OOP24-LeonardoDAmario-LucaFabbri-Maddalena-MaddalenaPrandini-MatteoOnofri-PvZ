@@ -124,7 +124,9 @@ public class DrawPanel extends JPanel {
                             (int) (e.position().y() * cellSize) + offset + (int) e.position().y(),
                             cellSize, mowerHeight);
                 }
-                default -> { }
+                default -> {
+                    throw new IllegalArgumentException("Unknown entity type: " + e.type());
+                }
             }
         }
         g2.dispose();

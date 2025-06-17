@@ -41,7 +41,9 @@ public final class EndGameControllerImpl implements EndGameController {
     @Override
     public void closeEndGameMenu() {
         parentController.goToMenu();
-        view.close();
+        if (view != null) {
+            view.close();
+        }
     }
 
     /**
@@ -52,5 +54,17 @@ public final class EndGameControllerImpl implements EndGameController {
     @Override
     public void handleException(final Exception exception) {
         parentController.handleException(exception);
+    }
+
+    /**
+     * Requests the termination of the application by delegating
+     * the operation to the parent controller.
+     * <p>
+     * This method propagates the quit command to the main controller,
+     * which is responsible for properly shutting down the application.
+     */
+    @Override
+    public void quit() {
+        parentController.quit();
     }
 }

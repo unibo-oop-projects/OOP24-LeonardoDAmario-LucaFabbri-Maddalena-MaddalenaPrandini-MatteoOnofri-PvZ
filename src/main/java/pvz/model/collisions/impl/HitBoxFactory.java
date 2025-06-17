@@ -29,7 +29,11 @@ public final class HitBoxFactory {
         /**
          * Hitbox for bullets.
          */
-        BULLET(0.2);
+        BULLET(0.2),
+        /**
+         * Hitbox for lawnmowers.
+         */
+        LAWNMOWER(0.5);
 
         private final double width;
 

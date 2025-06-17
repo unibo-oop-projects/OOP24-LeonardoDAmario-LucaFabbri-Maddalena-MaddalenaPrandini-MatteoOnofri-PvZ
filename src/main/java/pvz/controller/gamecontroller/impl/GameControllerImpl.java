@@ -64,7 +64,7 @@ public class GameControllerImpl implements GameController, ViewListener {
     public void startGame(final Difficulty difficulty, final Resolution resolution) {
         this.running = true;
         this.model = new GameModelImpl(difficulty);
-        final GameView view = new GameViewImpl(this, resolution);
+        final GameView view = GameViewImpl.createGameViewImpl(this, resolution);
         new GameLoop(model, view).start();
     }
 
@@ -176,6 +176,18 @@ public class GameControllerImpl implements GameController, ViewListener {
     @Override
     public void handleException(final Exception exception) {
         parentController.handleException(exception);
+    }
+
+    /**
+     * Requests the termination of the application by delegating
+     * the operation to the parent controller.
+     * <p>
+     * This method propagates the quit command to the main controller,
+     * which is responsible for properly shutting down the application.
+     */
+    @Override
+    public void quit() {
+        parentController.quit();
     }
 
     /**
