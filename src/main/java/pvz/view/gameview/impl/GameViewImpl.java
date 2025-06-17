@@ -23,7 +23,7 @@ import java.util.Set;
  * It also connects the view to the controller via the {@link ViewListener} interface.
  */
 @SuppressWarnings("PMD.ConstructorCallsOverridableMethod")
-public class GameViewImpl extends JPanel implements GameView {
+public final class GameViewImpl extends JPanel implements GameView {
 
     private static final long serialVersionUID = 1L;
     private static final double SCALING_FACTOR = 0.8;
@@ -62,27 +62,45 @@ public class GameViewImpl extends JPanel implements GameView {
     /**
      * The controller that manages game logic and communication with the view.
      */
-    private final GameController parentController;
+    private final transient GameController parentController;
+
 
     /**
-     * Constructs a new GameViewImpl instance.
+     * Constructs the game view with the specified controller and resolution.
      *
-     * @param controller The game controller to communicate with.
-     * @param resolution The chosen resolution for the game window.
+     * @param controller The {@link GameController} instance managing game logic.
+     * @param resolution The {@link Resolution} for scaling UI components.
      */
-    public GameViewImpl(final GameController controller, final Resolution resolution) {
+    private GameViewImpl(final GameController controller, final Resolution resolution) {
         super(new BorderLayout());
         this.parentController = controller;
         this.resolution = resolution;
         final double scaling = SCALING_FACTOR * resolution.getWidth() / BASE_WIDTH;
-
         this.toolBar = new GameToolBar(scaling);
         this.drawPanel = new DrawPanel(scaling);
         this.gridPanel = new GridPanel(scaling);
-
-        initComponents();
     }
 
+    /**
+     * Factory method to create and initialize a new GameViewImpl instance.
+     *
+     * @param controller The {@link GameController} instance managing game logic.
+     * @param resolution The {@link Resolution} for scaling UI components.
+     * @return A fully initialized GameViewImpl instance.
+     */
+    public static GameViewImpl createGameViewImpl(final GameController controller, final Resolution resolution) {
+        final GameViewImpl view = new GameViewImpl(controller, resolution);
+        view.initialize();
+        return view;
+    }
+
+    /**
+     * Initializes the game view by setting up UI components and layout.
+     * This method is called after the view is created to ensure all components are ready.
+     */
+    private void initialize() {
+        initComponents(); // qui puoi chiamare add o altri metodi overridabili
+    }
 
     /**
      * Initializes and lays out all UI components.

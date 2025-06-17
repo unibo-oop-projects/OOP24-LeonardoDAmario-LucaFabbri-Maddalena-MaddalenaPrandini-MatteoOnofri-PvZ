@@ -64,7 +64,7 @@ public class GameControllerImpl implements GameController, ViewListener {
     public void startGame(final Difficulty difficulty, final Resolution resolution) {
         this.running = true;
         this.model = new GameModelImpl(difficulty);
-        final GameView view = new GameViewImpl(this, resolution);
+        final GameView view = GameViewImpl.createGameViewImpl(this, resolution);
         new GameLoop(model, view).start();
     }
 

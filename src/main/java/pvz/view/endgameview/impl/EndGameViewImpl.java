@@ -25,7 +25,7 @@ public final class EndGameViewImpl extends JPanel implements EndGameView, Serial
 
     private final JButton backToMenuButton = new JButton("Torna al menu");
     private final JButton exitButton = new JButton("Esci");
-    private final EndGameController parentController;
+    private final transient EndGameController parentController;
     private final JFrame frame = new JFrame();
 
     private static final int MESSAGE_FONT_SIZE = 40;

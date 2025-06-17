@@ -56,7 +56,7 @@ public final class MenuViewImpl extends JPanel implements MenuView {
     private final JComboBox<Resolution> resolutionCombo;
     private Difficulty currentDifficulty = Difficulty.NORMAL;
     private Resolution currentResolution = Resolution.R_800X600;
-    private final MenuController parentController;
+    private final transient MenuController parentController;
     private final JFrame frame = new JFrame();
 
     /**
