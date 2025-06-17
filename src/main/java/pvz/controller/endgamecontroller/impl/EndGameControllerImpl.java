@@ -53,6 +53,9 @@ public final class EndGameControllerImpl implements EndGameController {
     @Override
     public void goToMenu() {
         parentController.goToMenu();
+        if (view != null) {
+            view.close();
+        }
     }
 
     /**

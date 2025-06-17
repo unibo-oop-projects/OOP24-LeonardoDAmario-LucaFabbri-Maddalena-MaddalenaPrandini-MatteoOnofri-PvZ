@@ -140,7 +140,6 @@ class ZombieTest {
         entitiesManager.addEntity(zombie);
         entitiesManager.addEntity(plant);
 
-        // simulates zombie attacking the plant
         for (int i = 0; i < 10; i++) {
             zombie.update(UPDATE_ATTACK, entitiesManager);
         }
