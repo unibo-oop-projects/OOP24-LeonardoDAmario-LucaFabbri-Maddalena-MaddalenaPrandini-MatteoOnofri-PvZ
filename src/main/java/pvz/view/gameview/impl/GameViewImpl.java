@@ -22,6 +22,7 @@ import java.util.Set;
  * including the toolbar, game grid, and drawable entities.
  * It also connects the view to the controller via the {@link ViewListener} interface.
  */
+@SuppressWarnings("PMD.ConstructorCallsOverridableMethod")
 public class GameViewImpl extends JPanel implements GameView {
 
     private static final long serialVersionUID = 1L;
@@ -64,17 +65,13 @@ public class GameViewImpl extends JPanel implements GameView {
     private final GameController parentController;
 
     /**
-     * Listener that receives user input events from the view.
-     */
-    private transient ViewListener listener;
-
-    /**
      * Constructs a new GameViewImpl instance.
      *
      * @param controller The game controller to communicate with.
      * @param resolution The chosen resolution for the game window.
      */
     public GameViewImpl(final GameController controller, final Resolution resolution) {
+        super(new BorderLayout());
         this.parentController = controller;
         this.resolution = resolution;
         final double scaling = SCALING_FACTOR * resolution.getWidth() / BASE_WIDTH;
@@ -82,18 +79,22 @@ public class GameViewImpl extends JPanel implements GameView {
         this.toolBar = new GameToolBar(scaling);
         this.drawPanel = new DrawPanel(scaling);
         this.gridPanel = new GridPanel(scaling);
-        layeredPane.setLayout(new OverlayLayout(layeredPane));
 
+        initComponents();
+    }
+
+
+    /**
+     * Initializes and lays out all UI components.
+     */
+    private void initComponents() {
+        layeredPane.setLayout(new OverlayLayout(layeredPane));
         layeredPane.setPreferredSize(new Dimension(resolution.getWidth(), resolution.getHeight()));
         drawPanel.setBounds(0, 0, resolution.getWidth(), resolution.getHeight());
-
         layeredPane.add(gridPanel, JLayeredPane.DEFAULT_LAYER);
         layeredPane.add(drawPanel, JLayeredPane.PALETTE_LAYER);
-
-        this.setLayout(new BorderLayout());
         this.add(toolBar, BorderLayout.NORTH);
         this.add(layeredPane, BorderLayout.CENTER);
-
         configureFrame();
         setViewListener((ViewListener) this.parentController);
     }
@@ -104,16 +105,6 @@ public class GameViewImpl extends JPanel implements GameView {
     @Override
     public void close() {
         this.frame.dispose();
-    }
-
-    /**
-     * Returns whether the view is currently visible.
-     *
-     * @return true if the view is visible; false otherwise.
-     */
-    @Override
-    public boolean isVisible() {
-        return super.isVisible();
     }
 
     /**
@@ -143,7 +134,6 @@ public class GameViewImpl extends JPanel implements GameView {
      */
     @Override
     public void setViewListener(final ViewListener listener) {
-        this.listener = listener;
         toolBar.setViewListener(listener);
         gridPanel.setViewListener(listener);
     }
