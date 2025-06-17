@@ -187,7 +187,7 @@ public class GameModelImpl implements GameModel {
      */
     private void addLawnMower(final int row) {
         usedMower.set(row, true);
-        final LawnMower lawnMower = new LawnMowerImpl(new Position(0, row), HitBoxFactory.HitBoxType.ZOMBIE);
+        final LawnMower lawnMower = new LawnMowerImpl(new Position(0, row), HitBoxFactory.HitBoxType.LAWNMOWER);
         entitiesManager.addEntity(lawnMower);
         lawnMower.update(0, entitiesManager);
     }
