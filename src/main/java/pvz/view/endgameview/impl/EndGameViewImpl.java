@@ -79,7 +79,7 @@ public final class EndGameViewImpl extends JPanel implements EndGameView, Serial
     private void initActionListeners() {
         backToMenuButton.addActionListener(e -> parentController.closeEndGameMenu());
         exitButton.addActionListener(e -> {
-            frame.dispose();
+            parentController.quit();
         });
     }
 }

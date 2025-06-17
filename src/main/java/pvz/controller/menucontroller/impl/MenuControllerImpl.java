@@ -58,6 +58,18 @@ public final class MenuControllerImpl implements MenuController {
     }
 
     /**
+     * Requests the termination of the application by delegating
+     * the operation to the parent controller.
+     * <p>
+     * This method propagates the quit command to the main controller,
+     * which is responsible for properly shutting down the application.
+     */
+    @Override
+    public void quit() {
+        parentController.quit();
+    }
+
+    /**
      * Starts the game with the given difficulty and resolution,
      * then closes the menu.
      *
@@ -79,4 +91,6 @@ public final class MenuControllerImpl implements MenuController {
     public void showTutorialView(final Resolution resolution) {
         new TutorialView(resolution);
     }
+
+
 }

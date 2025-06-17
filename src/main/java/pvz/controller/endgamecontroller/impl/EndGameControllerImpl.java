@@ -53,4 +53,16 @@ public final class EndGameControllerImpl implements EndGameController {
     public void handleException(final Exception exception) {
         parentController.handleException(exception);
     }
+
+    /**
+     * Requests the termination of the application by delegating
+     * the operation to the parent controller.
+     * <p>
+     * This method propagates the quit command to the main controller,
+     * which is responsible for properly shutting down the application.
+     */
+    @Override
+    public void quit() {
+        parentController.quit();
+    }
 }

@@ -75,5 +75,20 @@ public final class MainControllerImpl implements MainController {
     @Override
     public void handleException(final Exception exception) {
         LOGGER.log(Level.SEVERE, "Unexpected error occurred, the game will be closed. See the log for more info.", exception);
+        this.quit();
     }
+
+    /**
+     * Quits the application by closing the main game, menu, and end-game views.
+     * <p>
+     * This method ensures that all relevant controllers properly shut down their respective
+     * components, releasing resources and stopping any active game processes before exit.
+     */
+    @Override
+    public void quit() {
+        menuController.closeMenu();
+        endGameController.closeEndGameMenu();
+        gameController.stopGame();
+    }
+
 }

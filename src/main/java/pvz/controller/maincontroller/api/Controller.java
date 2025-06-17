@@ -12,4 +12,13 @@ public interface Controller {
      * @param exception the exception to handle
      */
     void handleException(Exception exception);
+
+    /**
+     * Requests the orderly shutdown of the application and releases all resources.
+     * <p>
+     * Implementations should ensure that all relevant processes and user interfaces
+     * are properly closed before termination.
+     */
+    void quit();
+
 }

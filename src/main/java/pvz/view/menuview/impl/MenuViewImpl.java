@@ -154,7 +154,7 @@ public final class MenuViewImpl extends JPanel implements MenuView {
 
         this.tutorialButton.addActionListener(e -> parentController.showTutorialView(currentResolution));
 
-        this.exitButton.addActionListener(e -> System.exit(0));
+        this.exitButton.addActionListener(e -> parentController.quit());
 
         this.resolutionCombo.addActionListener(e -> {
             final Resolution sel = (Resolution) resolutionCombo.getSelectedItem();

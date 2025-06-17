@@ -179,6 +179,18 @@ public class GameControllerImpl implements GameController, ViewListener {
     }
 
     /**
+     * Requests the termination of the application by delegating
+     * the operation to the parent controller.
+     * <p>
+     * This method propagates the quit command to the main controller,
+     * which is responsible for properly shutting down the application.
+     */
+    @Override
+    public void quit() {
+        parentController.quit();
+    }
+
+    /**
      * Checks if a plant already occupies the specified position.
      *
      * @param position the position to check
